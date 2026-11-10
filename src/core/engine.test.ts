@@ -70,13 +70,13 @@ describe('rewards', () => {
     expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
   })
   it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
-    // Hell T5 bonus (1x): 1 ticket + 10 godStones (stages 1-2) + 18.5
-    // liberationStones (stages 3-5) + 1 relic. At 3x: 3 tickets + 30 + 55.5
-    // + 3 relics, plus the Hell 3x clear row (6 tickets, powder 60, …).
+    // Stage rewards are claimed per stage: a Hell T5 kill pays ONLY stage 5
+    // (1 ticket + 8.5 liberationStones + 1 relic at 1x). At 3x: 3 tickets +
+    // 25.5 + 3 relics, plus the Hell 3x clear row (6 tickets, powder 60, …).
     const r = computeRun(input())
     expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
-    expect(r.perGiantAttempt.godStones).toBeCloseTo(30)
-    expect(r.perGiantAttempt.liberationStones).toBeCloseTo(55.5)
+    expect(r.perGiantAttempt.godStones).toBeUndefined()
+    expect(r.perGiantAttempt.liberationStones).toBeCloseTo(25.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
     expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
     expect(r.perGiantAttempt.giantMarks).toBeUndefined()

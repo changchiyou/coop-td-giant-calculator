@@ -39,8 +39,8 @@ export function findRewardRow(
   return scaleRewards(base.rewards, multiplier)
 }
 
-/** Giant kill rewards (cumulative through `tier`) for difficulty × tier.
- *  Giant type is reward-irrelevant. */
+/** Giant kill rewards for difficulty × tier: base ticket + that stage's
+ *  drop only (stages are claimed separately). Giant type is irrelevant. */
 export function findGiantBonus(
   rows: GiantTierRow[],
   difficulty: Difficulty,

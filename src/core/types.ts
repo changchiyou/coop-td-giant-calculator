@@ -60,10 +60,10 @@ export interface RewardRow {
   rewards: RewardSet
 }
 
-/** Entry of data/giant-tiers.json — cumulative giant kill rewards
- *  (base ticket + stages 1..tier) keyed by difficulty × tier (1–5),
- *  stored at 1x; the 3x/5x columns scale linearly. Giant type is
- *  NOT reward-relevant. */
+/** Entry of data/giant-tiers.json — giant kill rewards keyed by
+ *  difficulty × tier (1–5), stored at 1x: base ticket + ONLY that
+ *  stage's drop (stages are claimed separately). The 3x/5x columns
+ *  scale linearly. Giant type is NOT reward-relevant. */
 export interface GiantTierRow {
   difficulty: Difficulty
   tier: number

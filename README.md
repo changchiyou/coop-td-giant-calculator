@@ -25,9 +25,9 @@ react-i18next (en / zh-TW / ja / ko), zod (data-table validation), vitest.
 - `src/data/` — data-driven reward tables (JSON, zod-validated at load):
   - `rewards.json` — difficulty × run-multiplier clear rewards
     (seeded from <https://meowdb.com/db/coop-td/rewards>).
-  - `giant-tiers.json` — cumulative giant kill rewards for difficulty ×
-    tier(1–5) at 1x (base gacha tickets + stage drops, OCR'd from the
-    official wiki table; giant type is reward-irrelevant).
+  - `giant-tiers.json` — giant kill rewards for difficulty × tier(1–5)
+    at 1x (base gacha tickets + that stage's drop only — stages are
+    claimed separately; OCR'd from the official wiki table).
   - `costs.json` — stamina economy: fixed 5 stamina per run at 1x, regen
     rate, daily ad stamina, diamond purchase ladder (50/50/50/100/300/500
     then 1000 each, +25 stamina), default assumed purchases, Hell+ altar waits.
