@@ -7,6 +7,7 @@ import {
   findGiantBonus,
   findRewardRow,
   formatMinutes,
+  staminaBudgetParts,
 } from './engine'
 import type { CalcInput, RunConfig } from './types'
 import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
@@ -21,7 +22,6 @@ const DEFAULT: RunConfig = {
   mutualTicketing: false,
   giantMarkPerGiant: 1,
   runsPerGiantTicket: 5,
-  wavesPerRun: 100,
   secPerWave: 12,
   altarWaitSec: 30,
 }
@@ -42,9 +42,9 @@ describe('runMinutes', () => {
     // 1200 + 90 = 1290s = 21.5m
     expect(computeRun(input({ boughtNoAdsSpeed2x: false })).minutesPerRun).toBeCloseTo(21.5)
   })
-  it('Hard has no altar waits', () => {
-    // 100 × 12 / 2 = 600s = 10m
-    expect(computeRun(input({ difficulty: 'hard' })).minutesPerRun).toBeCloseTo(10)
+  it('Hard: 90 waves, no altar waits', () => {
+    // 90 × 12 / 2 = 540s = 9m (waves are fixed per difficulty)
+    expect(computeRun(input({ difficulty: 'hard' })).minutesPerRun).toBeCloseTo(9)
   })
 })
 
@@ -112,6 +112,10 @@ describe('stamina plan', () => {
     expect(r.staminaBudget).toBe(490)
     expect(r.extraStamina).toBe(0)
     expect(r.extraDiamonds).toBe(0)
+  })
+  it('budget 490 decomposes as regen + ads + purchases', () => {
+    const parts = staminaBudgetParts(COSTS)
+    expect(parts).toEqual({ regen: 240, ads: 100, purchases: 150, total: 490 })
   })
   it('overage walks the diamond ladder past the default budget', () => {
     // 20 cycles: 80×5 + 20×15 = 700 → 210 over → 9 purchases

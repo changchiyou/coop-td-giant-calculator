@@ -67,13 +67,22 @@ export function scaleRewards(a: RewardSet, factor: number): RewardSet {
   return out
 }
 
-/** Real-time minutes per run: waves × sec/wave ÷ speed, plus altar idle
- *  on Hell and above. */
+/** Real-time minutes per run: waves (fixed per difficulty in costs.json:
+ *  Hard 90, Hell+ 100) × sec/wave ÷ speed, plus altar idle on Hell+. */
 export function runMinutes(input: CalcInput): number {
   const { config, costs } = input
   const speed = config.boughtNoAdsSpeed2x ? 2 : 1
+  const waves = costs.wavesByDifficulty[config.difficulty]
   const altars = config.difficulty === 'hard' ? 0 : costs.altarWaitsHellPlus
-  return (config.wavesPerRun * config.secPerWave) / speed + altars * config.altarWaitSec
+  return (waves * config.secPerWave) / speed + altars * config.altarWaitSec
+}
+
+/** Daily stamina budget decomposed for the on-page formula readout. */
+export function staminaBudgetParts(costs: CostData) {
+  const regen = Math.floor((24 * 60) / costs.staminaRegenMinutes)
+  const ads = costs.adStaminaPerDay
+  const purchases = costs.defaultDiamondPurchases * costs.staminaPerPurchase
+  return { regen, ads, purchases, total: regen + ads + purchases }
 }
 
 /** Diamonds for n stamina purchases walking the ladder, then repeat cost. */

@@ -10,7 +10,10 @@ export type RunMultiplier = 1 | 3 | 5
  *  ticket-farming runs + one giant attempt. Every run INCLUDING the giant
  *  attempt itself adds one unit of ticket progress, keeping tickets
  *  break-even. Ticket "tickets" are gacha tickets (抽獎券), not giant
- *  entry tickets; giant fights hand out extra gacha tickets on top. */
+ *  entry tickets; giant fights hand out extra gacha tickets on top.
+ *
+ *  Waves per run is NOT an input: it is fixed per difficulty in
+ *  costs.json (Hard 90, Hell and above 100). */
 export interface RunConfig {
   boughtNoAdsSpeed2x: boolean
   /** Giant Invasion difficulty being farmed. */
@@ -29,8 +32,6 @@ export interface RunConfig {
   giantMarkPerGiant: number
   /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
   runsPerGiantTicket: number
-  /** Waves per run. */
-  wavesPerRun: number
   /** Seconds per wave at 1x game speed. */
   secPerWave: number
   /** Idle seconds spent per altar pick (Hell+ only). */
@@ -88,6 +89,8 @@ export interface CostData {
   defaultDiamondPurchases: number
   /** Altar picks mid-run on Hell and above. */
   altarWaitsHellPlus: number
+  /** Wave count per run, fixed per difficulty (Hard 90, Hell+ 100). */
+  wavesByDifficulty: Record<Difficulty, number>
 }
 
 export interface CalcInput {

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 
-import { computeRun, formatMinutes, RESOURCE_KEYS } from '../core/engine'
+import { computeRun, formatMinutes, staminaBudgetParts, RESOURCE_KEYS } from '../core/engine'
 import type { CalcResult, RewardSet } from '../core/types'
 import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
 import { useRunStore } from '../store/useRunStore'
@@ -56,6 +56,8 @@ export function ResultPanel() {
   )
 
   const staminaOver = result.extraStamina > 0
+  const parts = staminaBudgetParts(COSTS)
+  const ladder = [...COSTS.diamondPurchaseCosts, `…${COSTS.diamondPurchaseRepeatCost}`].join('/')
 
   return (
     <section className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
@@ -91,6 +93,17 @@ export function ResultPanel() {
         <div className="space-y-1">
           <Stat label={t('results.staminaNeeded')} value={nf.format(result.staminaNeeded)} />
           <Stat label={t('results.staminaBudget')} value={nf.format(result.staminaBudget)} />
+          <p className="pt-1 text-xs leading-relaxed text-slate-500">
+            {t('results.budgetFormula', {
+              regen: parts.regen,
+              regenMin: COSTS.staminaRegenMinutes,
+              ads: parts.ads,
+              purchases: parts.purchases,
+              n: COSTS.defaultDiamondPurchases,
+              each: COSTS.staminaPerPurchase,
+              total: parts.total,
+            })}
+          </p>
           {staminaOver && (
             <>
               <Stat label={t('results.extraStamina')} value={nf.format(result.extraStamina)} warn />
@@ -102,6 +115,15 @@ export function ResultPanel() {
             </>
           )}
         </div>
+        <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
+          {t('results.economyRules', {
+            stamina: COSTS.staminaPerRun,
+            regenMin: COSTS.staminaRegenMinutes,
+            ads: COSTS.adStaminaPerDay,
+            ladder,
+            each: COSTS.staminaPerPurchase,
+          })}
+        </p>
       </div>
 
       <div className="space-y-4">
