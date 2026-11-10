@@ -70,13 +70,13 @@ describe('rewards', () => {
     expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
   })
   it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
-    // Hell T5 bonus (1x): 1 ticket + 28.5 liberationStones (every stage pays
-    // Hell's own special) + 1 relic. At 3x: 3 tickets + 85.5 + 3 relics,
-    // plus the Hell 3x clear row (6 tickets, powder 60, …). No godStones.
+    // Hell T5 bonus (1x): 1 ticket + 10 godStones (stages 1-2) + 18.5
+    // liberationStones (stages 3-5) + 1 relic. At 3x: 3 tickets + 30 + 55.5
+    // + 3 relics, plus the Hell 3x clear row (6 tickets, powder 60, …).
     const r = computeRun(input())
     expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
-    expect(r.perGiantAttempt.godStones).toBeUndefined()
-    expect(r.perGiantAttempt.liberationStones).toBeCloseTo(85.5)
+    expect(r.perGiantAttempt.godStones).toBeCloseTo(30)
+    expect(r.perGiantAttempt.liberationStones).toBeCloseTo(55.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
     expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
     expect(r.perGiantAttempt.giantMarks).toBeUndefined()
@@ -86,13 +86,13 @@ describe('rewards', () => {
     expect(r.perGiantAttempt.giantMarks).toBe(2)
     expect(r.totalRewards.giantMarks).toBe(20)
   })
-  it('deepSea giant stages pay only Royal Jelly', () => {
+  it('deepSea stages 1-2 pay Jelly, 3-5 Royal Jelly', () => {
     const r = computeRun(input({ difficulty: 'deepSea', giantTier: 1 }))
     // clear row 3x: tickets 9; bonus 3x: 4×3=12 → 21
     expect(r.perGiantAttempt.tickets).toBeCloseTo(21)
-    // jelly only from the clear row (3x = 6); stages pay royalJelly 40×3
-    expect(r.perGiantAttempt.jelly).toBeCloseTo(6)
-    expect(r.perGiantAttempt.royalJelly).toBeCloseTo(120)
+    // jelly: clear 3x row 6 + stage-1 bonus 40×3 = 126; no royal at T1
+    expect(r.perGiantAttempt.jelly).toBeCloseTo(126)
+    expect(r.perGiantAttempt.royalJelly).toBeUndefined()
   })
   it('totals accumulate both phases', () => {
     const r = computeRun(input())
