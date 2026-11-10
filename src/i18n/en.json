@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Coop TD Giant Farming Calculator",
+    "subtitle": "Estimate time and rewards for farming Giant Invasion",
+    "reset": "Reset to defaults"
+  },
+  "inputs": {
+    "section": "Inputs",
+    "bought3xStamina": "Bought 3x Stamina pack",
+    "boughtNoAdsSpeed2x": "Bought Ad-free + 2x Speed",
+    "runMultiplier": "Stamina multiplier per run",
+    "difficulty": "Giant difficulty",
+    "giantTier": "Giant tier cleared",
+    "giantType": "Expected Giant type",
+    "runMinutes": "Minutes per run (real time)",
+    "sessions": "Planned runs",
+    "useAdDoubleReward": "Watch ads for double reward (~1/5 of runs)"
+  },
+  "mode": {
+    "hard": "Hard",
+    "hell": "Hell",
+    "abyss": "Abyss",
+    "deepSea": "Deep Sea"
+  },
+  "giantType": {
+    "any": "Any / mixed",
+    "hitCount": "Hit-count",
+    "shield": "Shield",
+    "healing": "Healing"
+  },
+  "multiplier": { "1": "1x", "3": "3x", "5": "5x" },
+  "tier": { "n": "Tier {{n}}" },
+  "results": {
+    "section": "Results",
+    "totalTime": "Total time",
+    "perRunTime": "Time per run",
+    "totalRewards": "Total rewards",
+    "perRun": "Per run",
+    "perHour": "Per hour",
+    "runsPerDay": "Runs / day (stamina cap)",
+    "empty": "Pick inputs to see results."
+  },
+  "resource": {
+    "exp": "EXP",
+    "silver": "Silver",
+    "tickets": "Tickets",
+    "powder": "Magic Powder",
+    "jelly": "Jelly",
+    "pearl": "Pearl"
+  },
+  "footer": {
+    "disclaimer": "Reward tables are seed data from meowdb.com — verify in-game. Giant tier bonuses await official mapping."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Coop TD ジャイアント周回収益計算",
+    "subtitle": "ジャイアント襲来周回にかかる時間と報酬を試算",
+    "reset": "初期値に戻す"
+  },
+  "inputs": {
+    "section": "入力",
+    "bought3xStamina": "3倍スタミナパック購入済み",
+    "boughtNoAdsSpeed2x": "広告除去 + 2倍速購入済み",
+    "runMultiplier": "周回ごとのスタミナ倍率",
+    "difficulty": "ジャイアント難易度",
+    "giantTier": "周回できるジャイアント階級",
+    "giantType": "想定ジャイアントタイプ",
+    "runMinutes": "1周あたりの実時間（分）",
+    "sessions": "周回予定回数",
+    "useAdDoubleReward": "広告視聴で報酬2倍（約1/5の周回）"
+  },
+  "mode": {
+    "hard": "ハード",
+    "hell": "ヘル",
+    "abyss": "アビス",
+    "deepSea": "ディープシー"
+  },
+  "giantType": {
+    "any": "任意／混合",
+    "hitCount": "攻撃回数型",
+    "shield": "シールド型",
+    "healing": "回復型"
+  },
+  "multiplier": { "1": "1倍", "3": "3倍", "5": "5倍" },
+  "tier": { "n": "{{n}}階" },
+  "results": {
+    "section": "計算結果",
+    "totalTime": "合計時間",
+    "perRunTime": "1周あたり",
+    "totalRewards": "合計報酬",
+    "perRun": "1周平均",
+    "perHour": "1時間平均",
+    "runsPerDay": "1日あたりの周回数（スタミナ上限）",
+    "empty": "入力を変更すると結果が表示されます。"
+  },
+  "resource": {
+    "exp": "経験値",
+    "silver": "シルバー",
+    "tickets": "チケット",
+    "powder": "マジックパウダー",
+    "jelly": "ゼリー",
+    "pearl": "パール"
+  },
+  "footer": {
+    "disclaimer": "報酬表は meowdb.com のシードデータです。ゲーム内数値を確認してください。ジャイアント階級報酬は公式マップ待ち。"
+  }
+}

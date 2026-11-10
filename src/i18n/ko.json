@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Coop TD 거인 사냥 수익 계산기",
+    "subtitle": "거인 침공 사냥에 필요한 시간과 보상 계산",
+    "reset": "기본값으로 초기화"
+  },
+  "inputs": {
+    "section": "입력",
+    "bought3xStamina": "3배 체력 팩 구매함",
+    "boughtNoAdsSpeed2x": "광고 제거 + 게임 속도 x2 구매함",
+    "runMultiplier": "런별 체력 배율",
+    "difficulty": "거인 난이도",
+    "giantTier": "사냥 가능한 거인 등급",
+    "giantType": "예상 거인 유형",
+    "runMinutes": "런당 실소요 시간(분)",
+    "sessions": "예정 사냥 횟수",
+    "useAdDoubleReward": "광고 시청 보상 2배 (약 1/5 런)"
+  },
+  "mode": {
+    "hard": "어려움",
+    "hell": "지옥",
+    "abyss": "심연",
+    "deepSea": "심해"
+  },
+  "giantType": {
+    "any": "아무 유형 / 혼합",
+    "hitCount": "공격 횟수형",
+    "shield": "방패형",
+    "healing": "치유형"
+  },
+  "multiplier": { "1": "1배", "3": "3배", "5": "5배" },
+  "tier": { "n": "{{n}}등급" },
+  "results": {
+    "section": "결과",
+    "totalTime": "총 소요 시간",
+    "perRunTime": "런당 시간",
+    "totalRewards": "총 보상",
+    "perRun": "런당 평균",
+    "perHour": "시간당 평균",
+    "runsPerDay": "일일 가능 런 수 (체력 한도)",
+    "empty": "입력을 조정하면 결과가 표시됩니다."
+  },
+  "resource": {
+    "exp": "경험치",
+    "silver": "실버",
+    "tickets": "티켓",
+    "powder": "마법 가루",
+    "jelly": "젤리",
+    "pearl": "진주"
+  },
+  "footer": {
+    "disclaimer": "보상 표는 meowdb.com 시드 데이터입니다. 게임 내 수치를 확인하세요. 거인 등급 보상은 공식 매핑 대기 중."
+  }
+}

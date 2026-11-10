@@ -1,0 +1,17 @@
+{
+  "_source": "https://meowdb.com/db/coop-td/rewards (official community-cafe matrix)",
+  "rewards": [
+    { "difficulty": "hard", "multiplier": 1, "rewards": { "exp": 1350, "silver": 2700, "tickets": 2 } },
+    { "difficulty": "hard", "multiplier": 3, "rewards": { "exp": 4050, "silver": 8100, "tickets": 6 } },
+    { "difficulty": "hard", "multiplier": 5, "rewards": { "exp": 6750, "silver": 13500, "tickets": 10 } },
+    { "difficulty": "hell", "multiplier": 1, "rewards": { "exp": 2500, "silver": 5000, "tickets": 2, "powder": 20 } },
+    { "difficulty": "hell", "multiplier": 3, "rewards": { "exp": 7500, "silver": 15000, "tickets": 6, "powder": 60 } },
+    { "difficulty": "hell", "multiplier": 5, "rewards": { "exp": 12500, "silver": 25000, "tickets": 10, "powder": 100 } },
+    { "difficulty": "abyss", "multiplier": 1, "rewards": { "exp": 3000, "silver": 6000, "tickets": 2, "powder": 53, "jelly": 5 } },
+    { "difficulty": "abyss", "multiplier": 3, "rewards": { "exp": 9000, "silver": 18000, "tickets": 6, "powder": 159, "jelly": 15 } },
+    { "difficulty": "abyss", "multiplier": 5, "rewards": { "exp": 15000, "silver": 30000, "tickets": 10, "powder": 265, "jelly": 25 } },
+    { "difficulty": "deepSea", "multiplier": 1, "rewards": { "exp": 4000, "silver": 8000, "tickets": 3, "powder": 75, "jelly": 2 } },
+    { "difficulty": "deepSea", "multiplier": 3, "rewards": { "exp": 12000, "silver": 24000, "tickets": 9, "powder": 225, "jelly": 6 } },
+    { "difficulty": "deepSea", "multiplier": 5, "rewards": { "exp": 20000, "silver": 40000, "tickets": 15, "powder": 375, "jelly": 10 } }
+  ]
+}

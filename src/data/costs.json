@@ -1,0 +1,8 @@
+{
+  "_source": "PLACEHOLDER stamina economy — every number is user-editable via UI defaults; replace with official values when confirmed.",
+  "staminaPackDailyBonus": 0,
+  "staminaRegenPerTick": 1,
+  "staminaRegenMinutes": 6,
+  "runsPerDayBase": 10,
+  "runsPerDay3x": 30
+}

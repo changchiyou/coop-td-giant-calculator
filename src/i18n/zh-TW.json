@@ -1,0 +1,54 @@
+{
+  "app": {
+    "title": "Coop TD 巨人刷取收益計算器",
+    "subtitle": "估算刷巨人入侵所花費的時間與收益",
+    "reset": "恢復預設值"
+  },
+  "inputs": {
+    "section": "輸入條件",
+    "bought3xStamina": "已購買三倍體力",
+    "boughtNoAdsSpeed2x": "已購買免廣告 + 遊戲速度 x2",
+    "runMultiplier": "每次開場體力倍率",
+    "difficulty": "巨人難度",
+    "giantTier": "可刷到的巨人階級",
+    "giantType": "預期巨人類型",
+    "runMinutes": "單次花費時間（真實分鐘）",
+    "sessions": "預計刷取次數",
+    "useAdDoubleReward": "觀看廣告領取雙倍獎勵（約 1/5 場次）"
+  },
+  "mode": {
+    "hard": "困難",
+    "hell": "地獄",
+    "abyss": "深淵",
+    "deepSea": "深海"
+  },
+  "giantType": {
+    "any": "任意／混合",
+    "hitCount": "攻擊次數型",
+    "shield": "護盾型",
+    "healing": "治療型"
+  },
+  "multiplier": { "1": "1 倍", "3": "3 倍", "5": "5 倍" },
+  "tier": { "n": "{{n}} 階" },
+  "results": {
+    "section": "計算結果",
+    "totalTime": "總花費時間",
+    "perRunTime": "單次時間",
+    "totalRewards": "總收益",
+    "perRun": "平均每場",
+    "perHour": "平均每小時",
+    "runsPerDay": "每日可刷場次（體力上限）",
+    "empty": "調整輸入條件即可查看結果。"
+  },
+  "resource": {
+    "exp": "經驗值",
+    "silver": "銀幣",
+    "tickets": "入場券",
+    "powder": "魔法粉末",
+    "jelly": "果漿",
+    "pearl": "珍珠"
+  },
+  "footer": {
+    "disclaimer": "獎勵表為 meowdb.com 種子資料，請以遊戲內數值為準；巨人階級獎勵待官方對照表。"
+  }
+}
