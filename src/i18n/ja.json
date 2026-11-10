@@ -14,10 +14,9 @@
     "ticketMultiplier": "チケット周回のスタミナ倍率",
     "giantMultiplier": "ジャイアント戦のスタミナ倍率",
     "advanced": "詳細設定",
-    "runsPerGiantTicket": "ジャイアント入場券1枚に必要な周回回数",
-    "runsPerGiantTicketHint": "ジャイアント戦も含め、この回数だけ周回すると入場券が1枚入手できます（デフォルト 5）。",
     "secPerWave": "1ウェーブの秒数（1倍速）",
-    "altarWaitSec": "祭壇選択の待ち時間（秒、地獄以上）"
+    "altarWaitSec": "祭壇選択の待ち時間（秒、地獄以上）",
+    "showExpSilver": "報酬表に経験値とシルバーを表示"
   },
   "mode": {
     "hard": "困難",

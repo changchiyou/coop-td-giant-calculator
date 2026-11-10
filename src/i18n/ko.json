@@ -14,10 +14,9 @@
     "ticketMultiplier": "티켓 파밍 스태미너 배율",
     "giantMultiplier": "자이언트전 스태미너 배율",
     "advanced": "고급 설정",
-    "runsPerGiantTicket": "자이언트 입장권 1장 필요 횟수",
-    "runsPerGiantTicketHint": "자이언트전을 포함해 이 횟수를 채우면 입장권 1장을 획득합니다 (기본 5).",
     "secPerWave": "웨이브당 초 (1배속)",
-    "altarWaitSec": "제단 선택 대기 (초, 지옥 이상)"
+    "altarWaitSec": "제단 선택 대기 (초, 지옥 이상)",
+    "showExpSilver": "보상 표에 경험치와 은화 표시"
   },
   "mode": {
     "hard": "어려움",

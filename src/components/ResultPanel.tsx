@@ -9,8 +9,10 @@ import { useRunStore } from '../store/useRunStore'
 
 const nf = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 })
 
-function RewardGrid({ rewards, t }: { rewards: RewardSet; t: TFunction }) {
-  const keys = RESOURCE_KEYS.filter((k) => (rewards[k] ?? 0) !== 0)
+function RewardGrid({ rewards, t, hideExpSilver }: { rewards: RewardSet; t: TFunction; hideExpSilver: boolean }) {
+  const keys = RESOURCE_KEYS.filter(
+    (k) => (rewards[k] ?? 0) !== 0 && !(hideExpSilver && (k === 'exp' || k === 'silver')),
+  )
   if (keys.length === 0) return <span className="text-sm text-slate-500">—</span>
   return (
     <dl className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3">
@@ -51,7 +53,7 @@ export function ResultPanel() {
   const block = (title: string, rewards: RewardSet) => (
     <div>
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{title}</h3>
-      <RewardGrid rewards={rewards} t={t} />
+      <RewardGrid rewards={rewards} t={t} hideExpSilver={!config.showExpSilver} />
     </div>
   )
 

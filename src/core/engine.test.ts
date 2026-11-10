@@ -19,7 +19,7 @@ const DEFAULT: RunConfig = {
   ticketMultiplier: 1,
   giantMultiplier: 3,
   cycles: 10,
-  runsPerGiantTicket: 5,
+  showExpSilver: false,
   secPerWave: 12,
   altarWaitSec: 30,
 }

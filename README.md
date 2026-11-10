@@ -1,10 +1,11 @@
 # Coop TD Giant Farming Calculator
 
 Static web calculator (GitHub Pages) for planning Giant Invasion farming in
-Coop TD: Together, planned in whole **cycles**: `N−1` ticket-farming runs +
-one giant attempt (each run costs fixed 5 stamina; EVERY run including the
-giant attempt adds one unit of ticket progress, so `N` runs earn exactly one
-giant entry ticket and tickets always break even; N is adjustable, default 5).
+Coop TD: Together, planned in whole **cycles**: 4 ticket-farming runs +
+one giant attempt (each run costs fixed 5 stamina; every giant entry ticket
+needs a fixed 5 runs — every run including the giant attempt adds one unit
+of ticket progress, so tickets always break even). EXP and silver rows are
+hidden by default (checkbox to show).
 Giant fights pay extra gacha tickets and stage rewards (God Stones / Liberation
 Stones / Jelly / Royal Jelly / Giant Marks per the official announcement
 tables, ranges taken as midpoints; each giant kill pays base 1 mark + the

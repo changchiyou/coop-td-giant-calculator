@@ -14,10 +14,9 @@
     "ticketMultiplier": "Stamina multiplier for ticket runs",
     "giantMultiplier": "Stamina multiplier for giant runs",
     "advanced": "Advanced",
-    "runsPerGiantTicket": "Runs per giant entry ticket",
-    "runsPerGiantTicketHint": "Every run — giant runs included — adds one progress unit; a full set earns one giant entry ticket (default 5).",
     "secPerWave": "Seconds per wave (1x speed)",
-    "altarWaitSec": "Altar pick wait (sec, Hell+)"
+    "altarWaitSec": "Altar pick wait (sec, Hell+)",
+    "showExpSilver": "Show EXP and silver in reward tables"
   },
   "mode": {
     "hard": "Hard",

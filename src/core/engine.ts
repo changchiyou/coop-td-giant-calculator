@@ -100,11 +100,12 @@ export function computeRun(input: CalcInput): CalcResult {
   const { config, rewards, giantTiers, costs } = input
 
   const minutesPerRun = runMinutes(input) / 60
-  // Cycle plan: cycles × (N−1 ticket runs + 1 giant attempt). The giant
-  // attempt itself accrues one unit of ticket progress, so only N−1
-  // farming runs are needed per cycle to keep tickets break-even.
+  // Cycle plan: cycles × (4 ticket runs + 1 giant attempt). The giant
+  // attempt itself accrues one unit of ticket progress, so only 4 farming
+  // runs are needed per cycle to keep tickets break-even. Runs per giant
+  // entry ticket are a fixed game constant (5) in costs.json.
   const cycles = Math.max(0, config.cycles)
-  const runsPerCycle = Math.max(1, config.runsPerGiantTicket)
+  const runsPerCycle = Math.max(1, costs.runsPerGiantTicket)
   const ticketRuns = cycles * (runsPerCycle - 1)
   const giantAttempts = cycles
 

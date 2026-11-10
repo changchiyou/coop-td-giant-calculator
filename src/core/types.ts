@@ -6,11 +6,12 @@ export type RunMultiplier = 1 | 3 | 5
 
 /** Everything the user can tweak. All fields have defaults in the store.
  *
- *  Planning unit is the CYCLE: one giant run = `runsPerGiantTicket` − 1
- *  ticket-farming runs + one giant attempt. Every run INCLUDING the giant
- *  attempt itself adds one unit of ticket progress, keeping tickets
- *  break-even. Ticket "tickets" are gacha tickets (抽獎券), not giant
- *  entry tickets; giant fights hand out extra gacha tickets on top.
+ *  Planning unit is the CYCLE: one giant run = 5 − 1 ticket-farming runs +
+ *  one giant attempt (runs per giant entry ticket are FIXED at 5 in
+ *  costs.json, not an input). Every run INCLUDING the giant attempt itself
+ *  adds one unit of ticket progress, keeping tickets break-even. Ticket
+ *  "tickets" are gacha tickets (抽獎券), not giant entry tickets; giant
+ *  fights hand out extra gacha tickets on top.
  *
  *  Waves per run is NOT an input: it is fixed per difficulty in
  *  costs.json (Hard 90, Hell and above 100). */
@@ -24,13 +25,14 @@ export interface RunConfig {
   ticketMultiplier: RunMultiplier
   /** Stamina multiplier paid on giant attempts (default 3x). */
   giantMultiplier: RunMultiplier
-  /** Planned full cycles (each = runsPerGiantTicket − 1 runs + 1 giant). */
+  /** Planned full cycles (each = 4 runs + 1 giant, ticket fixed at 5). */
   cycles: number
+  /** Show EXP / silver rows in the reward tables (hidden by default —
+   *  they dwarf every other number and skew the per-hour view). */
+  showExpSilver: boolean
   /** Giant Marks are NOT an input: each giant kill pays base 1 + the
    *  stage drop, both baked into giant-tiers.json `giantMarks` and
    *  scaled by the giant multiplier (3x/5x are linear per the table). */
-  /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
-  runsPerGiantTicket: number
   /** Seconds per wave at 1x game speed. */
   secPerWave: number
   /** Idle seconds spent per altar pick (Hell+ only). */
@@ -90,6 +92,8 @@ export interface CostData {
   altarWaitsHellPlus: number
   /** Wave count per run, fixed per difficulty (Hard 90, Hell+ 100). */
   wavesByDifficulty: Record<Difficulty, number>
+  /** Runs to earn one giant entry ticket: fixed game constant (5). */
+  runsPerGiantTicket: number
 }
 
 export interface CalcInput {

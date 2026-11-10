@@ -48,6 +48,8 @@ export const costDataSchema = z
     staminaPerPurchase: z.number().positive(),
     defaultDiamondPurchases: z.number().int().nonnegative(),
     altarWaitsHellPlus: z.number().int().nonnegative(),
+    /** Runs to earn one giant entry ticket: fixed game constant (5). */
+    runsPerGiantTicket: z.number().int().positive(),
     /** Wave count per run, fixed per difficulty (Hard 90, Hell+ 100). */
     wavesByDifficulty: z.object({
       hard: z.number().positive(),

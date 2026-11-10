@@ -62,20 +62,15 @@ export function InputPanel() {
         />
       </FieldRow>
 
-
+      <Toggle
+        checked={config.showExpSilver}
+        onChange={(v) => set('showExpSilver', v)}
+        label={t('inputs.showExpSilver')}
+      />
       <div className="my-3 border-t border-slate-700" />
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
         {t('inputs.advanced')}
       </h3>
-      <FieldRow label={t('inputs.runsPerGiantTicket')}>
-        <NumberInput
-          value={config.runsPerGiantTicket}
-          onChange={(v) => set('runsPerGiantTicket', v)}
-          min={1}
-          max={50}
-        />
-      </FieldRow>
-      <p className="mb-2 text-xs text-slate-500">{t('inputs.runsPerGiantTicketHint')}</p>
       <FieldRow label={t('inputs.secPerWave')}>
         <NumberInput
           value={config.secPerWave}

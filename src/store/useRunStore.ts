@@ -10,7 +10,7 @@ export const DEFAULT_CONFIG: RunConfig = {
   ticketMultiplier: 1,
   giantMultiplier: 3,
   cycles: 10,
-  runsPerGiantTicket: 5,
+  showExpSilver: false,
   secPerWave: 12,
   altarWaitSec: 30,
 }
@@ -30,10 +30,11 @@ export const useRunStore = create<RunStore>()(
     }),
     {
       name: 'coop-td-calc-config',
-      // v1–v5 persisted superseded config shapes (v6 drops mutualTicketing
-      // / giantMarkPerGiant — Giant Marks are data-driven now); drop on upgrade.
-      version: 6,
-      migrate: (persisted, version) => (version < 6 ? undefined : (persisted as RunStore)),
+      // v1–v6 persisted superseded config shapes (v7 drops
+      // runsPerGiantTicket — fixed game constant in costs.json — and adds
+      // showExpSilver); drop on upgrade.
+      version: 7,
+      migrate: (persisted, version) => (version < 7 ? undefined : (persisted as RunStore)),
     },
   ),
 )

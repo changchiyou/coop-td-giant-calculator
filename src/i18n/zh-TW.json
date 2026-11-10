@@ -14,10 +14,9 @@
     "ticketMultiplier": "刷票場次的體力倍率",
     "giantMultiplier": "刷巨人場次的體力倍率",
     "advanced": "進階設定",
-    "runsPerGiantTicket": "每張巨人入場券所需場次",
-    "runsPerGiantTicketHint": "含巨人場在內，每累積滿這個場次數量就取得一張巨人入場券（預設 5）。",
     "secPerWave": "每波秒數（1 倍速）",
-    "altarWaitSec": "祭壇挑選等待（秒，地獄以上）"
+    "altarWaitSec": "祭壇挑選等待（秒，地獄以上）",
+    "showExpSilver": "在獎勵表中顯示經驗值與銀幣"
   },
   "mode": {
     "hard": "困難",
