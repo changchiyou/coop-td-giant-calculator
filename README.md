@@ -1,10 +1,10 @@
 # Coop TD Giant Farming Calculator
 
 Static web calculator (GitHub Pages) for planning Giant Invasion farming in
-Coop TD: Together — split into a **ticket-farming** phase (runs earn giant
-tickets, 1 ticket per N runs regardless of stamina multiplier) and a **giant
-phase** (each attempt consumes a ticket; the giant stamina multiplier scales
-the giant's bonus rewards). Reports time, stamina plan vs daily budget
+Coop TD: Together, planned in whole **cycles**: `N` ticket-farming runs (each
+run costs fixed 5 stamina; N runs earn exactly one giant ticket, independent
+of stamina multiplier) plus one giant attempt (the giant stamina multiplier
+scales the giant's bonus rewards). Reports time, stamina plan vs daily budget
 (regen + ad stamina + diamond purchase ladder), extra diamonds needed, and
 rewards per run / total / per hour.
 
@@ -25,9 +25,9 @@ react-i18next (en / zh-TW / ja / ko), zod (data-table validation), vitest.
   - `giant-tiers.json` — placeholder rows for the difficulty × tier(1–5)
     reward mapping (giant type is reward-irrelevant); fill in real values as
     they become available.
-  - `costs.json` — stamina economy: regen rate, daily ad stamina, diamond
-    purchase ladder (50/50/50/100/300/500 then 1000 each, +25 stamina),
-    default assumed purchases, Hell+ altar waits.
+  - `costs.json` — stamina economy: fixed 5 stamina per run at 1x, regen
+    rate, daily ad stamina, diamond purchase ladder (50/50/50/100/300/500
+    then 1000 each, +25 stamina), default assumed purchases, Hell+ altar waits.
 - `src/i18n/` — one JSON per locale; game terms (Hard/Hell/Abyss/Deep Sea,
   resources) are translated per locale.
 - `src/store/` — zustand store; every input has a default and persists to

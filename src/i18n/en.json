@@ -9,15 +9,12 @@
     "boughtNoAdsSpeed2x": "Bought Ad-free + 2x Speed",
     "difficulty": "Giant difficulty",
     "giantTier": "Giant tier cleared",
-    "ticketPhase": "Ticket farming",
+    "cycles": "Cycles planned",
+    "cycleHint": "1 cycle = ticket runs below + 1 giant attempt (the runs earn exactly the ticket the giant spends).",
     "ticketMultiplier": "Stamina multiplier on ticket runs",
-    "ticketRuns": "Ticket runs planned",
-    "runsPerGiantTicket": "Runs per giant ticket",
-    "giantPhase": "Giant attempts",
     "giantMultiplier": "Stamina multiplier on giant runs",
-    "giantAttempts": "Giant attempts planned",
     "advanced": "Advanced",
-    "staminaPerRun": "Stamina per run (1x)",
+    "runsPerGiantTicket": "Runs per giant ticket",
     "secPerWave": "Seconds per wave (1x speed)",
     "altarWaitSec": "Altar pick wait (seconds, Hell+)"
   },
@@ -31,6 +28,8 @@
   "tier": { "n": "Tier {{n}}" },
   "results": {
     "section": "Results",
+    "plan": "Plan",
+    "planValue": "{{cycles}} cycles = {{runs}} ticket runs + {{giants}} giant attempts",
     "totalTime": "Total time",
     "perRunTime": "Time per run",
     "tickets": "Giant tickets",
@@ -54,6 +53,6 @@
     "pearl": "Pearl"
   },
   "footer": {
-    "disclaimer": "Clear rewards seeded from meowdb.com — verify in-game. Giant tier rewards await the official mapping. Assumes 100 waves, 3 altar waits on Hell+, stamina regen 1/6min, +100 ad stamina/day, diamond purchases 50/50/50/100/300/500 then 1000 each for 25 stamina."
+    "disclaimer": "Clear rewards seeded from meowdb.com — verify in-game. Giant tier rewards await the official mapping. Assumes 100 waves, 3 altar waits on Hell+, fixed 5 stamina per run at 1x, stamina regen 1/6min, +100 ad stamina/day, diamond purchases 50/50/50/100/300/500 then 1000 each for 25 stamina."
   }
 }

@@ -86,6 +86,12 @@ export function computeRun(input: CalcInput): CalcResult {
 
   const minutesPerRun = runMinutes(input) / 60
 
+  // Cycle plan: cycles × (N ticket runs + 1 giant attempt).
+  const cycles = Math.max(0, config.cycles)
+  const runsPerCycle = Math.max(1, config.runsPerGiantTicket)
+  const ticketRuns = cycles * runsPerCycle
+  const giantAttempts = cycles
+
   // Ticket farming: base clear rewards scaled by the ticket multiplier.
   const perTicketRun = findRewardRow(rewards, config.difficulty, config.ticketMultiplier)
   // Giant farming: tier rewards scaled by the giant multiplier — this is
@@ -95,14 +101,11 @@ export function computeRun(input: CalcInput): CalcResult {
     config.giantMultiplier,
   )
 
-  const runs = Math.max(0, config.ticketRuns)
-  const attempts = Math.max(0, config.giantAttempts)
-
   const totalRewards = addRewards(
-    scaleRewards(perTicketRun, runs),
-    scaleRewards(perGiantAttempt, attempts),
+    scaleRewards(perTicketRun, ticketRuns),
+    scaleRewards(perGiantAttempt, giantAttempts),
   )
-  const totalMinutes = minutesPerRun * (runs + attempts)
+  const totalMinutes = minutesPerRun * (ticketRuns + giantAttempts)
 
   const perHour: RewardSet = {}
   if (totalMinutes > 0) {
@@ -113,14 +116,14 @@ export function computeRun(input: CalcInput): CalcResult {
   }
 
   // Giant tickets: one per N runs regardless of any stamina multiplier.
-  const ticketsEarned =
-    config.runsPerGiantTicket > 0 ? Math.floor(runs / config.runsPerGiantTicket) : 0
-  const ticketsUsed = attempts
+  // In a whole-cycle plan earnings always cover the attempts.
+  const ticketsEarned = Math.floor(ticketRuns / runsPerCycle)
+  const ticketsUsed = giantAttempts
 
-  // Stamina plan vs budget.
+  // Stamina plan vs budget (stamina per run is fixed in costs.json).
   const staminaNeeded =
-    runs * config.staminaPerRun * config.ticketMultiplier +
-    attempts * config.staminaPerRun * config.giantMultiplier
+    ticketRuns * costs.staminaPerRun * config.ticketMultiplier +
+    giantAttempts * costs.staminaPerRun * config.giantMultiplier
   const staminaBudget =
     Math.floor((24 * 60) / costs.staminaRegenMinutes) +
     costs.adStaminaPerDay +
@@ -133,6 +136,8 @@ export function computeRun(input: CalcInput): CalcResult {
     diamondCostOfPurchases(costs.defaultDiamondPurchases, costs)
 
   return {
+    ticketRuns,
+    giantAttempts,
     minutesPerRun,
     totalMinutes,
     perTicketRun,

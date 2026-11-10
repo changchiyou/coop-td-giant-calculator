@@ -1,5 +1,6 @@
 {
-  "_source": "Stamina economy per owner's rules: 1 stamina / 6 min regen, +100/day from ads, diamond purchases 50/50/50/100/300/500 then 1000 each, +25 stamina per purchase. Default budget assumes purchases bought up to the 500 step (6 purchases).",
+  "_source": "Stamina economy per owner's rules: every run/attempt costs a fixed 5 stamina at 1x; 1 stamina / 6 min regen, +100/day from ads, diamond purchases 50/50/50/100/300/500 then 1000 each, +25 stamina per purchase. Default budget assumes purchases bought up to the 500 step (6 purchases).",
+  "staminaPerRun": 5,
   "staminaRegenMinutes": 6,
   "adStaminaPerDay": 100,
   "diamondPurchaseCosts": [50, 50, 50, 100, 300, 500],

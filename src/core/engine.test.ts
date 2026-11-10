@@ -13,6 +13,7 @@ const REWARDS: RewardRow[] = [
 const TIERS: GiantTierRow[] = [{ difficulty: 'hell', tier: 5, rewards: { tickets: 4, jelly: 10 } }]
 
 const COSTS: CostData = {
+  staminaPerRun: 5,
   staminaRegenMinutes: 6,
   adStaminaPerDay: 100,
   diamondPurchaseCosts: [50, 50, 50, 100, 300, 500],
@@ -57,19 +58,19 @@ describe('findGiantBonus', () => {
 })
 
 describe('run time', () => {
-  it('1x speed, Hell: 100×12s + 3×30s altar = 22.5 min', () => {
+  it('1x speed, Hell: 100×12s + 3×30s altar = 21.5 min', () => {
     const r = computeRun(input(cfg({ boughtNoAdsSpeed2x: false })))
     expect(r.minutesPerRun).toBeCloseTo((100 * 12 + 3 * 30) / 60)
   })
 
-  it('2x speed halves wave time but not altar waits', () => {
-    const r = computeRun(input(cfg({ boughtNoAdsSpeed2x: true })))
+  it('2x speed (default) halves wave time but not altar waits', () => {
+    const r = computeRun(input(cfg()))
     expect(r.minutesPerRun).toBeCloseTo((100 * 12) / 2 / 60 + 3 * 30 / 60)
   })
 
   it('Hard has no altar waits', () => {
     const r = computeRun(input(cfg({ difficulty: 'hard' })))
-    expect(r.minutesPerRun).toBeCloseTo((100 * 12) / 60)
+    expect(r.minutesPerRun).toBeCloseTo((100 * 12) / 2 / 60)
   })
 })
 
@@ -81,11 +82,13 @@ describe('diamond ladder', () => {
   })
 })
 
-describe('computeRun ticket/giant split', () => {
-  it('default plan: 10 ticket runs @1x + 2 giant attempts @3x', () => {
+describe('computeRun cycle model', () => {
+  it('default plan: 10 cycles = 50 ticket runs @1x + 10 giant attempts @3x', () => {
     const r = computeRun(input(cfg()))
-    // Ticket runs: 10 // 5 = 2 tickets earned, 2 used → no shortfall.
-    expect(r.ticketsEarned).toBe(2)
+    expect(r.ticketRuns).toBe(50)
+    expect(r.giantAttempts).toBe(10)
+    // Whole cycles always break even on tickets: 50 // 5 = 10 earned, 10 used.
+    expect(r.ticketsEarned).toBe(10)
     expect(r.ticketsShortfall).toBe(0)
     // per ticket run = hell1x clear rewards at 1x.
     expect(r.perTicketRun.exp).toBe(2500)
@@ -93,35 +96,40 @@ describe('computeRun ticket/giant split', () => {
     expect(r.perGiantAttempt.tickets).toBe(12)
     expect(r.perGiantAttempt.jelly).toBe(30)
     // totals combine both phases.
-    expect(r.totalRewards.exp).toBe(2500 * 10)
-    expect(r.totalRewards.jelly).toBe(30 * 2)
+    expect(r.totalRewards.exp).toBe(2500 * 50)
+    expect(r.totalRewards.jelly).toBe(30 * 10)
+    // stamina: 50×5×1 + 10×5×3 = 400; budget = 240 + 100 + 6×25 = 490 → under.
+    expect(r.staminaNeeded).toBe(400)
     expect(r.staminaBudget).toBe(490)
-    // stamina: 10×20×1 + 2×20×3 = 320; budget = 240 + 100 + 6×25 = 490 → under.
-    expect(r.staminaNeeded).toBe(320)
+    expect(r.extraDiamonds).toBe(0)
   })
 
   it('stamina over budget lists extra purchases and diamond cost', () => {
-    // 40 ticket runs @1x = 800 stamina; budget 490 → 310 over → 13 purchases (325).
-    const r = computeRun(input(cfg({ ticketRuns: 40, giantAttempts: 0 })))
-    expect(r.extraStamina).toBe(310)
-    expect(r.extraPurchases).toBe(13)
-    // purchases 7..19 are all past the ladder → 13 × 1000.
-    expect(r.extraDiamonds).toBe(13000)
+    // Per cycle: 5×5×1 + 1×5×3 = 40 stamina. 13 cycles = 520 → 30 over 490
+    // → 2 purchases; both past the ladder → 2 × 1000.
+    const r = computeRun(input(cfg({ cycles: 13 })))
+    expect(r.staminaNeeded).toBe(520)
+    expect(r.extraStamina).toBe(30)
+    expect(r.extraPurchases).toBe(2)
+    expect(r.extraDiamonds).toBe(2000)
   })
 
   it('ticket count ignores multipliers', () => {
-    const r = computeRun(input(cfg({ ticketRuns: 10, ticketMultiplier: 5 })))
-    expect(r.ticketsEarned).toBe(2)
+    const r = computeRun(input(cfg({ cycles: 4, ticketMultiplier: 5 })))
+    expect(r.ticketsEarned).toBe(4)
   })
 
-  it('reports ticket shortfall when attempts exceed earnings', () => {
-    const r = computeRun(input(cfg({ ticketRuns: 5, giantAttempts: 3 })))
-    expect(r.ticketsEarned).toBe(1)
-    expect(r.ticketsShortfall).toBe(2)
+  it('runs-per-ticket scales the split inside each cycle', () => {
+    const r = computeRun(input(cfg({ cycles: 3, runsPerGiantTicket: 10 })))
+    expect(r.ticketRuns).toBe(30)
+    expect(r.giantAttempts).toBe(3)
+    expect(r.ticketsShortfall).toBe(0)
+    // stamina: 30×5×1 + 3×5×3 = 195.
+    expect(r.staminaNeeded).toBe(195)
   })
 
-  it('zero runs yields zero totals, no NaN per-hour', () => {
-    const r = computeRun(input(cfg({ ticketRuns: 0, giantAttempts: 0 })))
+  it('zero cycles yields zero totals, no NaN per-hour', () => {
+    const r = computeRun(input(cfg({ cycles: 0 })))
     expect(r.totalMinutes).toBe(0)
     expect(r.perHour).toEqual({})
   })

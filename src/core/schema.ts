@@ -32,6 +32,8 @@ export const giantTierRowSchema = z
 
 export const costDataSchema = z
   .object({
+    /** Fixed stamina cost of any run at 1x — economy constant, not an input. */
+    staminaPerRun: z.number().positive(),
     staminaRegenMinutes: z.number().positive(),
     adStaminaPerDay: z.number().nonnegative(),
     diamondPurchaseCosts: z.array(z.number().positive()).nonempty(),

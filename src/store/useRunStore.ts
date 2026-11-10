@@ -4,14 +4,12 @@ import { persist } from 'zustand/middleware'
 import type { RunConfig } from '../core/types'
 
 export const DEFAULT_CONFIG: RunConfig = {
-  boughtNoAdsSpeed2x: false,
+  boughtNoAdsSpeed2x: true,
   difficulty: 'hell',
   giantTier: 5,
   ticketMultiplier: 1,
   giantMultiplier: 3,
-  ticketRuns: 10,
-  giantAttempts: 2,
-  staminaPerRun: 20,
+  cycles: 10,
   runsPerGiantTicket: 5,
   wavesPerRun: 100,
   secPerWave: 12,
@@ -33,9 +31,9 @@ export const useRunStore = create<RunStore>()(
     }),
     {
       name: 'coop-td-calc-config',
-      // v1 persisted the old single-run config shape; drop it on upgrade.
-      version: 2,
-      migrate: (persisted, version) => (version < 2 ? undefined : (persisted as RunStore)),
+      // v1/v2 persisted superseded config shapes; drop them on upgrade.
+      version: 3,
+      migrate: (persisted, version) => (version < 3 ? undefined : (persisted as RunStore)),
     },
   ),
 )

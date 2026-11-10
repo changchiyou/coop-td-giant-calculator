@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
+
 import { computeRun, formatMinutes, RESOURCE_KEYS } from '../core/engine'
 import type { CalcResult, RewardSet } from '../core/types'
 import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
@@ -63,6 +64,14 @@ export function ResultPanel() {
       </h2>
 
       <div className="mb-4 space-y-1">
+        <Stat
+          label={t('results.plan')}
+          value={t('results.planValue', {
+            cycles: config.cycles,
+            runs: result.ticketRuns,
+            giants: result.giantAttempts,
+          })}
+        />
         <Stat label={t('results.perRunTime')} value={formatMinutes(result.minutesPerRun)} />
         <Stat label={t('results.totalTime')} value={formatMinutes(result.totalMinutes)} />
         <Stat

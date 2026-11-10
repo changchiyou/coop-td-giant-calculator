@@ -49,10 +49,11 @@ export function InputPanel() {
         />
       </FieldRow>
 
-      <div className="my-3 border-t border-slate-700" />
-      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-sky-400">
-        {t('inputs.ticketPhase')}
-      </h3>
+      <FieldRow label={t('inputs.cycles')}>
+        <NumberInput value={config.cycles} onChange={(v) => set('cycles', v)} min={0} max={500} />
+      </FieldRow>
+      <p className="mb-2 text-xs text-slate-500">{t('inputs.cycleHint')}</p>
+
       <FieldRow label={t('inputs.ticketMultiplier')}>
         <Segmented
           options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
@@ -60,22 +61,6 @@ export function InputPanel() {
           onChange={(v) => set('ticketMultiplier', v)}
         />
       </FieldRow>
-      <FieldRow label={t('inputs.ticketRuns')}>
-        <NumberInput value={config.ticketRuns} onChange={(v) => set('ticketRuns', v)} min={0} max={500} />
-      </FieldRow>
-      <FieldRow label={t('inputs.runsPerGiantTicket')}>
-        <NumberInput
-          value={config.runsPerGiantTicket}
-          onChange={(v) => set('runsPerGiantTicket', v)}
-          min={1}
-          max={50}
-        />
-      </FieldRow>
-
-      <div className="my-3 border-t border-slate-700" />
-      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-rose-400">
-        {t('inputs.giantPhase')}
-      </h3>
       <FieldRow label={t('inputs.giantMultiplier')}>
         <Segmented
           options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
@@ -83,25 +68,17 @@ export function InputPanel() {
           onChange={(v) => set('giantMultiplier', v)}
         />
       </FieldRow>
-      <FieldRow label={t('inputs.giantAttempts')}>
-        <NumberInput
-          value={config.giantAttempts}
-          onChange={(v) => set('giantAttempts', v)}
-          min={0}
-          max={100}
-        />
-      </FieldRow>
 
       <div className="my-3 border-t border-slate-700" />
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
         {t('inputs.advanced')}
       </h3>
-      <FieldRow label={t('inputs.staminaPerRun')}>
+      <FieldRow label={t('inputs.runsPerGiantTicket')}>
         <NumberInput
-          value={config.staminaPerRun}
-          onChange={(v) => set('staminaPerRun', v)}
+          value={config.runsPerGiantTicket}
+          onChange={(v) => set('runsPerGiantTicket', v)}
           min={1}
-          max={200}
+          max={50}
         />
       </FieldRow>
       <FieldRow label={t('inputs.secPerWave')}>

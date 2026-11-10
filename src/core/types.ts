@@ -4,9 +4,14 @@
 export type Difficulty = 'hard' | 'hell' | 'abyss' | 'deepSea'
 export type RunMultiplier = 1 | 3 | 5
 
-/** Everything the user can tweak. All fields have defaults in the store. */
+/** Everything the user can tweak. All fields have defaults in the store.
+ *
+ *  Planning unit is the CYCLE: one giant run = `runsPerGiantTicket`
+ *  ticket-farming runs + one giant attempt (the 5 runs guarantee exactly
+ *  the one ticket the giant fight spends). The user plans whole cycles;
+ *  ticket/giant run counts are derived, never set separately. */
 export interface RunConfig {
-  /** Purchased ad-free + 2x game speed package. */
+  /** Purchased ad-free + 2x game speed package. Default on. */
   boughtNoAdsSpeed2x: boolean
   /** Giant Invasion difficulty being farmed. */
   difficulty: Difficulty
@@ -16,12 +21,8 @@ export interface RunConfig {
   ticketMultiplier: RunMultiplier
   /** Stamina multiplier paid on giant attempts (default 3x). */
   giantMultiplier: RunMultiplier
-  /** Planned ticket-farming runs. */
-  ticketRuns: number
-  /** Planned giant attempts (each consumes one giant ticket). */
-  giantAttempts: number
-  /** Base stamina cost of one run at 1x (multiplier scales it). */
-  staminaPerRun: number
+  /** Planned full cycles (each = runsPerGiantTicket runs + 1 giant attempt). */
+  cycles: number
   /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
   runsPerGiantTicket: number
   /** Waves per run. */
@@ -52,8 +53,10 @@ export interface GiantTierRow {
   rewards: RewardSet
 }
 
-/** Entry of data/costs.json — stamina economy + diamond purchase ladder. */
+/** Entry of data/costs.json — fixed economy numbers (not user inputs). */
 export interface CostData {
+  /** Fixed stamina cost of any run/attempt at 1x (multiplier scales it). */
+  staminaPerRun: number
   /** Minutes per natural stamina regen tick (1 stamina per tick). */
   staminaRegenMinutes: number
   /** Free stamina per day from watching ads. */
@@ -78,6 +81,10 @@ export interface CalcInput {
 }
 
 export interface CalcResult {
+  /** Derived from cycles: ticket-farming runs = cycles × runsPerGiantTicket. */
+  ticketRuns: number
+  /** Derived from cycles: giant attempts = cycles. */
+  giantAttempts: number
   /** Real-time minutes per run (waves + altar waits, after speed modifier). */
   minutesPerRun: number
   totalMinutes: number
