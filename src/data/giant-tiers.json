@@ -1,5 +1,5 @@
 {
-  "_source": "OCR from official wiki 擊殺獎勵 tables (2026-11), quantities owner-confirmed. 超大型巨人: tier N = giant cleared at stage N; stage rewards are claimed SEPARATELY per stage (owner's rule, 2026-11) — a kill at stage N pays ONLY stage N's listed amount, not the sum of stages 1..N. Values are the 1x wiki column; 3x/5x wiki columns are exact linear scalings. Range values (e.g. 10~15) stored as midpoints = expected value. Per-stage drops: Hard 魔神石 1~2/2~3/3~5/5~7/7~10; Hell 魔神石 3~5, 5~7 (stages 1-2), 隨機解放石 3~5/5~7/7~10 (stages 3-5); Abyss 果凍 10~15/15~20/20~30/30~50/50~70; Deep Sea 果凍 30~50, 50~70 (stages 1-2), 皇家果凍 5~7/7~10/10~15 (stages 3-5). Base gacha tickets: 1 per giant run (Deep Sea 4). 進攻巨人: every giant kill also drops 文物 relics — 1/3/5 at 1x/3x/5x; modeled as flat 'relics' = 1 at 1x, scaled with the giant multiplier like every other reward.",
+  "_source": "OCR from official wiki 擊殺獎勵 tables (2026-11), quantities owner-confirmed. 超大型巨人: tier N = giant cleared at stage N; stage rewards are claimed SEPARATELY per stage (owner's rule, 2026-11) — a kill at stage N pays ONLY stage N's listed amount, not the sum of stages 1..N. Values are the 1x wiki column; 3x/5x wiki columns are exact linear scalings. Range values (e.g. 10~15) stored as midpoints = expected value. Per-stage drops: Hard 魔神石 1~2/2~3/3~5/5~7/7~10; Hell 魔神石 3~5, 5~7 (stages 1-2), 隨機解放石 3~5/5~7/7~10 (stages 3-5); Abyss 果凍 10~15/15~20/20~30/30~50/50~70; Deep Sea 果凍 30~50, 50~70 (stages 1-2), 皇家果凍 6~8/10~15/10~15 (stages 3-5, owner-updated 2026-11). Base gacha tickets: 1 per giant run (Deep Sea 4). 進攻巨人: every giant kill also drops 文物 relics — 1/3/5 at 1x/3x/5x; modeled as flat 'relics' = 1 at 1x, scaled with the giant multiplier like every other reward.",
   "giantTiers": [
     { "difficulty": "hard", "tier": 1, "rewards": { "tickets": 1, "godStones": 1.5, "relics": 1 } },
     { "difficulty": "hard", "tier": 2, "rewards": { "tickets": 1, "godStones": 2.5, "relics": 1 } },
@@ -21,8 +21,8 @@
 
     { "difficulty": "deepSea", "tier": 1, "rewards": { "tickets": 4, "jelly": 40, "relics": 1 } },
     { "difficulty": "deepSea", "tier": 2, "rewards": { "tickets": 4, "jelly": 60, "relics": 1 } },
-    { "difficulty": "deepSea", "tier": 3, "rewards": { "tickets": 4, "royalJelly": 6, "relics": 1 } },
-    { "difficulty": "deepSea", "tier": 4, "rewards": { "tickets": 4, "royalJelly": 8.5, "relics": 1 } },
+    { "difficulty": "deepSea", "tier": 3, "rewards": { "tickets": 4, "royalJelly": 7, "relics": 1 } },
+    { "difficulty": "deepSea", "tier": 4, "rewards": { "tickets": 4, "royalJelly": 12.5, "relics": 1 } },
     { "difficulty": "deepSea", "tier": 5, "rewards": { "tickets": 4, "royalJelly": 12.5, "relics": 1 } }
   ]
 }
