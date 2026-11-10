@@ -53,7 +53,7 @@
     "totalRewards": "총 보상",
     "perHour": "시간당",
     "budgetFormula": "하루 예산 {{total}} = 자연 회복 {{regen}}(24시간×60분 ÷ {{regenMin}}분당 1) + 광고 {{ads}} + 다이아 구매 {{n}}회×{{each}}={{purchases}}",
-    "economyRules": "경제 규칙: 1전은 1배 기준 스태미너 {{stamina}} 고정(배율 비례); {{regenMin}}분마다 스태미너 1 회복; 광고로 매일 +{{ads}}; 다이아 구매 {{ladder}}(회당 +{{each}}); 웨이브는 하드 90, 지옥 이상 100."
+    "calculationBasis": "계산 기준: 1전은 1배 기준 스태미너 {{stamina}} 고정(배율 비례); {{regenMin}}분마다 스태미너 1 회복; 광고로 매일 +{{ads}}; 다이아 구매 {{ladder}}(회당 +{{each}}); 웨이브는 하드 90, 지옥 이상 100."
   },
   "resource": {
     "exp": "경험치",

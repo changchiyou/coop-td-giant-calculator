@@ -53,7 +53,7 @@
     "totalRewards": "Total rewards",
     "perHour": "Per hour",
     "budgetFormula": "Daily budget {{total}} = regen {{regen}} (24h × 60min ÷ 1 per {{regenMin}} min) + ads {{ads}} + diamond buys {{n}} × {{each}} = {{purchases}}",
-    "economyRules": "Economy rules: every run costs a fixed {{stamina}} stamina at 1x (multipliers scale it); 1 stamina regenerates every {{regenMin}} min; ads give +{{ads}}/day; diamond purchases {{ladder}} (+{{each}} stamina each); runs are 90 waves on Hard, 100 on Hell+."
+    "calculationBasis": "Calculation basis: every run costs a fixed {{stamina}} stamina at 1x (multipliers scale it); 1 stamina regenerates every {{regenMin}} min; ads give +{{ads}}/day; diamond purchases {{ladder}} (+{{each}} stamina each); runs are 90 waves on Hard, 100 on Hell+."
   },
   "resource": {
     "exp": "EXP",

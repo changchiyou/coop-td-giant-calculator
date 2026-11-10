@@ -116,7 +116,7 @@ export function ResultPanel() {
           )}
         </div>
         <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
-          {t('results.economyRules', {
+          {t('results.calculationBasis', {
             stamina: COSTS.staminaPerRun,
             regenMin: COSTS.staminaRegenMinutes,
             ads: COSTS.adStaminaPerDay,
