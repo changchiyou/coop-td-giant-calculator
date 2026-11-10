@@ -27,8 +27,14 @@
     "abyss": "Abyss",
     "deepSea": "Deep Sea"
   },
-  "multiplier": { "1": "1x", "3": "3x", "5": "5x" },
-  "tier": { "n": "T{{n}}" },
+  "multiplier": {
+    "1": "1x",
+    "3": "3x",
+    "5": "5x"
+  },
+  "tier": {
+    "n": "T{{n}}"
+  },
   "results": {
     "section": "Results",
     "plan": "Plan",
@@ -57,9 +63,10 @@
     "pearl": "Pearl",
     "godStones": "God Stones",
     "superGodStones": "Super God Release Stones",
+    "relics": "Relics",
     "giantMarks": "Giant Marks"
   },
   "footer": {
-    "disclaimer": "Clear rewards seeded from meowdb.com; giant kill rewards (base gacha tickets + per-stage God Stones / Jelly / Royal Jelly) from the official wiki multiplier table, range values taken as midpoints. In-game values are authoritative. Defaults: 100 waves, 3 altar waits on Hell+, fixed 5 stamina per run at 1x, 1 stamina per 6 min, +100 stamina/day from ads, diamond buys 50/50/50/100/300/500 then 1000 each (+25 stamina each)."
+    "disclaimer": "Clear rewards seeded from meowdb.com; giant kill rewards (base gacha tickets + per-stage God Stones / Jelly / Royal Jelly + relics) from the official wiki multiplier table, range values taken as midpoints. In-game values are authoritative. Defaults: 100 waves, 3 altar waits on Hell+, fixed 5 stamina per run at 1x, 1 stamina per 6 min, +100 stamina/day from ads, diamond buys 50/50/50/100/300/500 then 1000 each (+25 stamina each)."
   }
 }

@@ -47,6 +47,7 @@ export type ResourceKey =
   | 'pearl'
   | 'godStones'
   | 'superGodStones'
+  | 'relics'
   | 'giantMarks'
 
 export type RewardSet = Partial<Record<ResourceKey, number>>

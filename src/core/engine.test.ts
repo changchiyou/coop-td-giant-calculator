@@ -78,6 +78,7 @@ describe('rewards', () => {
     expect(r.perGiantAttempt.godStones).toBeCloseTo(30)
     expect(r.perGiantAttempt.superGodStones).toBeCloseTo(55.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
+    expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
     expect(r.perGiantAttempt.giantMarks).toBeUndefined()
   })
   it('mutual ticketing adds flat Giant Marks per giant kill', () => {
@@ -96,8 +97,9 @@ describe('rewards', () => {
     const r = computeRun(input())
     // powder only from clear rows: 40×20 + 10×60 = 1400
     expect(r.totalRewards.powder).toBeCloseTo(1400)
-    // gacha tickets: 40×2 + 10×9 = 170
     expect(r.totalRewards.tickets).toBeCloseTo(170)
+    // relics only from giants: 10 × (1 × 3) = 30
+    expect(r.totalRewards.relics).toBeCloseTo(30)
   })
 })
 
