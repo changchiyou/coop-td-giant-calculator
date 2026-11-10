@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next'
 
-import type { Difficulty, GiantType, RunMultiplier } from '../core/types'
+import type { Difficulty, RunMultiplier } from '../core/types'
 import { useRunStore } from '../store/useRunStore'
 import { FieldRow, NumberInput, Segmented, Toggle } from './fields'
 
 const DIFFICULTIES: Difficulty[] = ['hard', 'hell', 'abyss', 'deepSea']
-const GIANT_TYPES: (GiantType | 'any')[] = ['any', 'hitCount', 'shield', 'healing']
 const MULTIPLIERS: RunMultiplier[] = [1, 3, 5]
 
 export function InputPanel() {
@@ -29,31 +28,10 @@ export function InputPanel() {
       </div>
 
       <Toggle
-        label={t('inputs.bought3xStamina')}
-        checked={config.bought3xStamina}
-        onChange={(v) => set('bought3xStamina', v)}
-      />
-      <Toggle
         label={t('inputs.boughtNoAdsSpeed2x')}
         checked={config.boughtNoAdsSpeed2x}
         onChange={(v) => set('boughtNoAdsSpeed2x', v)}
       />
-      <Toggle
-        label={t('inputs.useAdDoubleReward')}
-        checked={config.useAdDoubleReward}
-        onChange={(v) => set('useAdDoubleReward', v)}
-      />
-
-      <FieldRow label={t('inputs.runMultiplier')}>
-        <Segmented
-          options={MULTIPLIERS.map((m) => ({
-            value: m,
-            label: t(`multiplier.${m}` as const),
-          }))}
-          value={config.runMultiplier}
-          onChange={(v) => set('runMultiplier', v)}
-        />
-      </FieldRow>
 
       <FieldRow label={t('inputs.difficulty')}>
         <Segmented
@@ -71,20 +49,76 @@ export function InputPanel() {
         />
       </FieldRow>
 
-      <FieldRow label={t('inputs.giantType')}>
+      <div className="my-3 border-t border-slate-700" />
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-sky-400">
+        {t('inputs.ticketPhase')}
+      </h3>
+      <FieldRow label={t('inputs.ticketMultiplier')}>
         <Segmented
-          options={GIANT_TYPES.map((g) => ({ value: g, label: t(`giantType.${g}`) }))}
-          value={config.giantType}
-          onChange={(v) => set('giantType', v)}
+          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
+          value={config.ticketMultiplier}
+          onChange={(v) => set('ticketMultiplier', v)}
+        />
+      </FieldRow>
+      <FieldRow label={t('inputs.ticketRuns')}>
+        <NumberInput value={config.ticketRuns} onChange={(v) => set('ticketRuns', v)} min={0} max={500} />
+      </FieldRow>
+      <FieldRow label={t('inputs.runsPerGiantTicket')}>
+        <NumberInput
+          value={config.runsPerGiantTicket}
+          onChange={(v) => set('runsPerGiantTicket', v)}
+          min={1}
+          max={50}
         />
       </FieldRow>
 
-      <FieldRow label={t('inputs.runMinutes')}>
-        <NumberInput value={config.runMinutes} onChange={(v) => set('runMinutes', v)} min={1} max={240} />
+      <div className="my-3 border-t border-slate-700" />
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-rose-400">
+        {t('inputs.giantPhase')}
+      </h3>
+      <FieldRow label={t('inputs.giantMultiplier')}>
+        <Segmented
+          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
+          value={config.giantMultiplier}
+          onChange={(v) => set('giantMultiplier', v)}
+        />
+      </FieldRow>
+      <FieldRow label={t('inputs.giantAttempts')}>
+        <NumberInput
+          value={config.giantAttempts}
+          onChange={(v) => set('giantAttempts', v)}
+          min={0}
+          max={100}
+        />
       </FieldRow>
 
-      <FieldRow label={t('inputs.sessions')}>
-        <NumberInput value={config.sessions} onChange={(v) => set('sessions', v)} min={1} max={200} />
+      <div className="my-3 border-t border-slate-700" />
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {t('inputs.advanced')}
+      </h3>
+      <FieldRow label={t('inputs.staminaPerRun')}>
+        <NumberInput
+          value={config.staminaPerRun}
+          onChange={(v) => set('staminaPerRun', v)}
+          min={1}
+          max={200}
+        />
+      </FieldRow>
+      <FieldRow label={t('inputs.secPerWave')}>
+        <NumberInput
+          value={config.secPerWave}
+          onChange={(v) => set('secPerWave', v)}
+          min={1}
+          max={120}
+        />
+      </FieldRow>
+      <FieldRow label={t('inputs.altarWaitSec')}>
+        <NumberInput
+          value={config.altarWaitSec}
+          onChange={(v) => set('altarWaitSec', v)}
+          min={0}
+          max={300}
+        />
       </FieldRow>
     </section>
   )

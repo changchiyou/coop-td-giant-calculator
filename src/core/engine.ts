@@ -1,10 +1,13 @@
 import type {
   CalcInput,
   CalcResult,
+  CostData,
+  Difficulty,
   GiantTierRow,
   RewardSet,
   RewardRow,
   ResourceKey,
+  RunMultiplier,
 } from './types'
 
 export const RESOURCE_KEYS: ResourceKey[] = [
@@ -16,13 +19,13 @@ export const RESOURCE_KEYS: ResourceKey[] = [
   'pearl',
 ]
 
-/** Find the reward row for difficulty × multiplier. Falls back to the 1x
- *  row scaled by the multiplier when the table omits a row (the game
+/** Find the clear-reward row for difficulty × multiplier. Falls back to the
+ *  1x row scaled by the multiplier when the table omits a row (the game
  *  scales every reward in lockstep, per the official reward matrix). */
 export function findRewardRow(
   rows: RewardRow[],
-  difficulty: CalcInput['config']['difficulty'],
-  multiplier: 1 | 3 | 5,
+  difficulty: Difficulty,
+  multiplier: RunMultiplier,
 ): RewardSet {
   const exact = rows.find((r) => r.difficulty === difficulty && r.multiplier === multiplier)
   if (exact) return exact.rewards
@@ -31,20 +34,13 @@ export function findRewardRow(
   return scaleRewards(base.rewards, multiplier)
 }
 
-/** Giant tier bonus: prefer the exact (difficulty, tier, type) row,
- *  fall back to the 'any' blend row for the same tier. */
+/** Giant tier bonus for difficulty × tier. Giant type is reward-irrelevant. */
 export function findGiantBonus(
   rows: GiantTierRow[],
-  difficulty: CalcInput['config']['difficulty'],
+  difficulty: Difficulty,
   tier: number,
-  type: CalcInput['config']['giantType'],
 ): RewardSet {
-  const exact = rows.find(
-    (r) => r.difficulty === difficulty && r.tier === tier && r.type === type,
-  )
-  if (exact) return exact.rewards
-  const blend = rows.find((r) => r.difficulty === difficulty && r.tier === tier && r.type === 'any')
-  return blend?.rewards ?? {}
+  return rows.find((r) => r.difficulty === difficulty && r.tier === tier)?.rewards ?? {}
 }
 
 export function addRewards(a: RewardSet, b: RewardSet): RewardSet {
@@ -65,29 +61,48 @@ export function scaleRewards(a: RewardSet, factor: number): RewardSet {
   return out
 }
 
-/** Ad-double uplift: expected value when ~1/5 of runs opt into the
- *  watch-ad double reward (impossible with the no-ads package). */
-export function adBonusFactor(adDouble: boolean, noAds: boolean): number {
-  // 1/5 of runs gain +100% → 0.2 × 2 = expected factor 1.4 on those runs.
-  return adDouble && !noAds ? 1 + 0.2 : 1
+/** Real-time minutes per run: waves × sec/wave ÷ speed, plus altar idle
+ *  on Hell and above. */
+export function runMinutes(input: CalcInput): number {
+  const { config, costs } = input
+  const speed = config.boughtNoAdsSpeed2x ? 2 : 1
+  const altars = config.difficulty === 'hard' ? 0 : costs.altarWaitsHellPlus
+  return (config.wavesPerRun * config.secPerWave) / speed + altars * config.altarWaitSec
 }
 
-export function computeRun(input: CalcInput, runsPerDay: number): CalcResult {
-  const { config, rewards, giantTiers } = input
+/** Diamonds for n stamina purchases walking the ladder, then repeat cost. */
+export function diamondCostOfPurchases(n: number, costs: CostData): number {
+  let total = 0
+  for (let i = 0; i < n; i++) {
+    total += i < costs.diamondPurchaseCosts.length
+      ? costs.diamondPurchaseCosts[i]
+      : costs.diamondPurchaseRepeatCost
+  }
+  return total
+}
 
-  const speed = config.boughtNoAdsSpeed2x ? 0.5 : 1
-  const minutesPerRun = config.runMinutes * speed
+export function computeRun(input: CalcInput): CalcResult {
+  const { config, rewards, giantTiers, costs } = input
 
-  const base = findRewardRow(rewards, config.difficulty, config.runMultiplier)
-  const giant = findGiantBonus(giantTiers, config.difficulty, config.giantTier, config.giantType)
-  const adFactor = adBonusFactor(config.useAdDoubleReward, config.boughtNoAdsSpeed2x)
+  const minutesPerRun = runMinutes(input) / 60
 
-  const perRunRaw = addRewards(base, giant)
-  const perRun = scaleRewards(perRunRaw, adFactor)
+  // Ticket farming: base clear rewards scaled by the ticket multiplier.
+  const perTicketRun = findRewardRow(rewards, config.difficulty, config.ticketMultiplier)
+  // Giant farming: tier rewards scaled by the giant multiplier — this is
+  // where the multiplier genuinely pays out.
+  const perGiantAttempt = scaleRewards(
+    findGiantBonus(giantTiers, config.difficulty, config.giantTier),
+    config.giantMultiplier,
+  )
 
-  const n = Math.max(0, config.sessions)
-  const totalMinutes = minutesPerRun * n
-  const totalRewards = scaleRewards(perRun, n)
+  const runs = Math.max(0, config.ticketRuns)
+  const attempts = Math.max(0, config.giantAttempts)
+
+  const totalRewards = addRewards(
+    scaleRewards(perTicketRun, runs),
+    scaleRewards(perGiantAttempt, attempts),
+  )
+  const totalMinutes = minutesPerRun * (runs + attempts)
 
   const perHour: RewardSet = {}
   if (totalMinutes > 0) {
@@ -97,14 +112,41 @@ export function computeRun(input: CalcInput, runsPerDay: number): CalcResult {
     }
   }
 
+  // Giant tickets: one per N runs regardless of any stamina multiplier.
+  const ticketsEarned =
+    config.runsPerGiantTicket > 0 ? Math.floor(runs / config.runsPerGiantTicket) : 0
+  const ticketsUsed = attempts
+
+  // Stamina plan vs budget.
+  const staminaNeeded =
+    runs * config.staminaPerRun * config.ticketMultiplier +
+    attempts * config.staminaPerRun * config.giantMultiplier
+  const staminaBudget =
+    Math.floor((24 * 60) / costs.staminaRegenMinutes) +
+    costs.adStaminaPerDay +
+    costs.defaultDiamondPurchases * costs.staminaPerPurchase
+  const extraStamina = Math.max(0, staminaNeeded - staminaBudget)
+  const extraPurchases =
+    costs.staminaPerPurchase > 0 ? Math.ceil(extraStamina / costs.staminaPerPurchase) : 0
+  const extraDiamonds =
+    diamondCostOfPurchases(costs.defaultDiamondPurchases + extraPurchases, costs) -
+    diamondCostOfPurchases(costs.defaultDiamondPurchases, costs)
+
   return {
     minutesPerRun,
     totalMinutes,
+    perTicketRun,
+    perGiantAttempt,
     totalRewards,
     perHour,
-    perRun,
-    adBonusFactor: adFactor,
-    runsPerDay,
+    ticketsEarned,
+    ticketsUsed,
+    ticketsShortfall: Math.max(0, ticketsUsed - ticketsEarned),
+    staminaNeeded,
+    staminaBudget,
+    extraStamina,
+    extraPurchases,
+    extraDiamonds,
   }
 }
 

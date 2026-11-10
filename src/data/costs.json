@@ -1,8 +1,10 @@
 {
-  "_source": "PLACEHOLDER stamina economy — every number is user-editable via UI defaults; replace with official values when confirmed.",
-  "staminaPackDailyBonus": 0,
-  "staminaRegenPerTick": 1,
+  "_source": "Stamina economy per owner's rules: 1 stamina / 6 min regen, +100/day from ads, diamond purchases 50/50/50/100/300/500 then 1000 each, +25 stamina per purchase. Default budget assumes purchases bought up to the 500 step (6 purchases).",
   "staminaRegenMinutes": 6,
-  "runsPerDayBase": 10,
-  "runsPerDay3x": 30
+  "adStaminaPerDay": 100,
+  "diamondPurchaseCosts": [50, 50, 50, 100, 300, 500],
+  "diamondPurchaseRepeatCost": 1000,
+  "staminaPerPurchase": 25,
+  "defaultDiamondPurchases": 6,
+  "altarWaitsHellPlus": 3
 }

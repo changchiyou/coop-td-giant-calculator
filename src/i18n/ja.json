@@ -1,20 +1,25 @@
 {
   "app": {
     "title": "Coop TD ジャイアント周回収益計算",
-    "subtitle": "ジャイアント襲来周回にかかる時間と報酬を試算",
+    "subtitle": "ジャイアント襲来周回にかかる時間・スタミナ・報酬を試算",
     "reset": "初期値に戻す"
   },
   "inputs": {
     "section": "入力",
-    "bought3xStamina": "3倍スタミナパック購入済み",
     "boughtNoAdsSpeed2x": "広告除去 + 2倍速購入済み",
-    "runMultiplier": "周回ごとのスタミナ倍率",
     "difficulty": "ジャイアント難易度",
     "giantTier": "周回できるジャイアント階級",
-    "giantType": "想定ジャイアントタイプ",
-    "runMinutes": "1周あたりの実時間（分）",
-    "sessions": "周回予定回数",
-    "useAdDoubleReward": "広告視聴で報酬2倍（約1/5の周回）"
+    "ticketPhase": "チケット稼ぎ",
+    "ticketMultiplier": "チケット稼ぎ周回のスタミナ倍率",
+    "ticketRuns": "チケット稼ぎの予定周回数",
+    "runsPerGiantTicket": "ジャイアントチケット1枚あたりの周回数",
+    "giantPhase": "ジャイアント戦",
+    "giantMultiplier": "ジャイアント戦のスタミナ倍率",
+    "giantAttempts": "ジャイアント戦の予定回数",
+    "advanced": "詳細設定",
+    "staminaPerRun": "1周あたりのスタミナ消費（1倍）",
+    "secPerWave": "1ウェーブあたりの秒数（1倍速）",
+    "altarWaitSec": "祭壇選択の待ち時間（秒、ヘル以上）"
   },
   "mode": {
     "hard": "ハード",
@@ -22,23 +27,23 @@
     "abyss": "アビス",
     "deepSea": "ディープシー"
   },
-  "giantType": {
-    "any": "任意／混合",
-    "hitCount": "攻撃回数型",
-    "shield": "シールド型",
-    "healing": "回復型"
-  },
   "multiplier": { "1": "1倍", "3": "3倍", "5": "5倍" },
   "tier": { "n": "{{n}}階" },
   "results": {
     "section": "計算結果",
     "totalTime": "合計時間",
     "perRunTime": "1周あたり",
+    "tickets": "ジャイアントチケット",
+    "ticketsValue": "獲得 {{earned}} / 使用 {{used}}",
+    "stamina": "スタミナ計画",
+    "staminaNeeded": "必要スタミナ",
+    "staminaBudget": "1日の予算（自然回復 + 広告 + 初期ダイヤ購入）",
+    "extraStamina": "予算超過スタミナ",
+    "extraDiamonds": "追加ダイヤ（{{n}}回購入）",
+    "perTicketRun": "チケット稼ぎ1周あたり",
+    "perGiantAttempt": "ジャイアント戦1回あたり",
     "totalRewards": "合計報酬",
-    "perRun": "1周平均",
-    "perHour": "1時間平均",
-    "runsPerDay": "1日あたりの周回数（スタミナ上限）",
-    "empty": "入力を変更すると結果が表示されます。"
+    "perHour": "1時間平均"
   },
   "resource": {
     "exp": "経験値",
@@ -49,6 +54,6 @@
     "pearl": "パール"
   },
   "footer": {
-    "disclaimer": "報酬表は meowdb.com のシードデータです。ゲーム内数値を確認してください。ジャイアント階級報酬は公式マップ待ち。"
+    "disclaimer": "クリア報酬は meowdb.com のシードデータです。ゲーム内数値を確認してください。ジャイアント階級報酬は公式マップ待ち。前提：100ウェーブ、ヘル以上で祭壇待機3回、6分毎にスタミナ1回復、広告で1日+100、ダイヤ購入は 50/50/50/100/300/500 の以降は1回1000で+25スタミナ。"
   }
 }

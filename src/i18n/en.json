@@ -1,20 +1,25 @@
 {
   "app": {
     "title": "Coop TD Giant Farming Calculator",
-    "subtitle": "Estimate time and rewards for farming Giant Invasion",
+    "subtitle": "Estimate time, stamina, and rewards for farming Giant Invasion",
     "reset": "Reset to defaults"
   },
   "inputs": {
     "section": "Inputs",
-    "bought3xStamina": "Bought 3x Stamina pack",
     "boughtNoAdsSpeed2x": "Bought Ad-free + 2x Speed",
-    "runMultiplier": "Stamina multiplier per run",
     "difficulty": "Giant difficulty",
     "giantTier": "Giant tier cleared",
-    "giantType": "Expected Giant type",
-    "runMinutes": "Minutes per run (real time)",
-    "sessions": "Planned runs",
-    "useAdDoubleReward": "Watch ads for double reward (~1/5 of runs)"
+    "ticketPhase": "Ticket farming",
+    "ticketMultiplier": "Stamina multiplier on ticket runs",
+    "ticketRuns": "Ticket runs planned",
+    "runsPerGiantTicket": "Runs per giant ticket",
+    "giantPhase": "Giant attempts",
+    "giantMultiplier": "Stamina multiplier on giant runs",
+    "giantAttempts": "Giant attempts planned",
+    "advanced": "Advanced",
+    "staminaPerRun": "Stamina per run (1x)",
+    "secPerWave": "Seconds per wave (1x speed)",
+    "altarWaitSec": "Altar pick wait (seconds, Hell+)"
   },
   "mode": {
     "hard": "Hard",
@@ -22,23 +27,23 @@
     "abyss": "Abyss",
     "deepSea": "Deep Sea"
   },
-  "giantType": {
-    "any": "Any / mixed",
-    "hitCount": "Hit-count",
-    "shield": "Shield",
-    "healing": "Healing"
-  },
   "multiplier": { "1": "1x", "3": "3x", "5": "5x" },
   "tier": { "n": "Tier {{n}}" },
   "results": {
     "section": "Results",
     "totalTime": "Total time",
     "perRunTime": "Time per run",
+    "tickets": "Giant tickets",
+    "ticketsValue": "{{earned}} earned / {{used}} used",
+    "stamina": "Stamina plan",
+    "staminaNeeded": "Stamina needed",
+    "staminaBudget": "Daily budget (regen + ads + default gems)",
+    "extraStamina": "Stamina over budget",
+    "extraDiamonds": "Extra diamonds ({{n}} purchases)",
+    "perTicketRun": "Per ticket run",
+    "perGiantAttempt": "Per giant attempt",
     "totalRewards": "Total rewards",
-    "perRun": "Per run",
-    "perHour": "Per hour",
-    "runsPerDay": "Runs / day (stamina cap)",
-    "empty": "Pick inputs to see results."
+    "perHour": "Per hour"
   },
   "resource": {
     "exp": "EXP",
@@ -49,6 +54,6 @@
     "pearl": "Pearl"
   },
   "footer": {
-    "disclaimer": "Reward tables are seed data from meowdb.com — verify in-game. Giant tier bonuses await official mapping."
+    "disclaimer": "Clear rewards seeded from meowdb.com — verify in-game. Giant tier rewards await the official mapping. Assumes 100 waves, 3 altar waits on Hell+, stamina regen 1/6min, +100 ad stamina/day, diamond purchases 50/50/50/100/300/500 then 1000 each for 25 stamina."
   }
 }

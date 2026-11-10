@@ -1,20 +1,25 @@
 {
   "app": {
     "title": "Coop TD 巨人刷取收益計算器",
-    "subtitle": "估算刷巨人入侵所花費的時間與收益",
+    "subtitle": "估算刷巨人入侵所花費的時間、體力與收益",
     "reset": "恢復預設值"
   },
   "inputs": {
     "section": "輸入條件",
-    "bought3xStamina": "已購買三倍體力",
     "boughtNoAdsSpeed2x": "已購買免廣告 + 遊戲速度 x2",
-    "runMultiplier": "每次開場體力倍率",
     "difficulty": "巨人難度",
     "giantTier": "可刷到的巨人階級",
-    "giantType": "預期巨人類型",
-    "runMinutes": "單次花費時間（真實分鐘）",
-    "sessions": "預計刷取次數",
-    "useAdDoubleReward": "觀看廣告領取雙倍獎勵（約 1/5 場次）"
+    "ticketPhase": "刷票階段",
+    "ticketMultiplier": "刷票場次的體力倍率",
+    "ticketRuns": "預計刷票場次",
+    "runsPerGiantTicket": "每張巨人入場券所需場次",
+    "giantPhase": "刷巨人階段",
+    "giantMultiplier": "刷巨人場次的體力倍率",
+    "giantAttempts": "預計刷巨人次數",
+    "advanced": "進階設定",
+    "staminaPerRun": "單場體力消耗（1 倍）",
+    "secPerWave": "每波秒數（1 倍速）",
+    "altarWaitSec": "祭壇挑選等待（秒，地獄以上）"
   },
   "mode": {
     "hard": "困難",
@@ -22,23 +27,23 @@
     "abyss": "深淵",
     "deepSea": "深海"
   },
-  "giantType": {
-    "any": "任意／混合",
-    "hitCount": "攻擊次數型",
-    "shield": "護盾型",
-    "healing": "治療型"
-  },
   "multiplier": { "1": "1 倍", "3": "3 倍", "5": "5 倍" },
   "tier": { "n": "{{n}} 階" },
   "results": {
     "section": "計算結果",
     "totalTime": "總花費時間",
-    "perRunTime": "單次時間",
+    "perRunTime": "單場時間",
+    "tickets": "巨人入場券",
+    "ticketsValue": "取得 {{earned}} 張／使用 {{used}} 張",
+    "stamina": "體力規劃",
+    "staminaNeeded": "所需體力",
+    "staminaBudget": "每日體力預算（回體＋廣告＋預設鑽石購買）",
+    "extraStamina": "超出預算體力",
+    "extraDiamonds": "額外鑽石花費（{{n}} 次購買）",
+    "perTicketRun": "平均每刷票場",
+    "perGiantAttempt": "平均每刷巨人場",
     "totalRewards": "總收益",
-    "perRun": "平均每場",
-    "perHour": "平均每小時",
-    "runsPerDay": "每日可刷場次（體力上限）",
-    "empty": "調整輸入條件即可查看結果。"
+    "perHour": "平均每小時"
   },
   "resource": {
     "exp": "經驗值",
@@ -49,6 +54,6 @@
     "pearl": "珍珠"
   },
   "footer": {
-    "disclaimer": "獎勵表為 meowdb.com 種子資料，請以遊戲內數值為準；巨人階級獎勵待官方對照表。"
+    "disclaimer": "通關獎勵以 meowdb.com 種子資料為準，請以遊戲內數值為準；巨人階級獎勵待官方對照表。預設：100 波、地獄以上 3 次祭壇等待、每 6 分鐘回 1 點體力、看廣告每日 +100 體力、鑽石買體 50/50/50/100/300/500 後每次 1000（各 +25 體力）。"
   }
 }

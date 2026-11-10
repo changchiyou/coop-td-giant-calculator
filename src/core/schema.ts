@@ -3,15 +3,6 @@ import { z } from 'zod'
 /** Zod schemas for the JSON data files. Mapping tables the user supplies
  *  later must validate against these before the engine touches them. */
 
-export const resourceKeySchema = z.enum([
-  'exp',
-  'silver',
-  'tickets',
-  'powder',
-  'jelly',
-  'pearl',
-])
-
 export const rewardSetSchema = z
   .object({
     exp: z.number().nonnegative().optional(),
@@ -35,18 +26,19 @@ export const giantTierRowSchema = z
   .object({
     difficulty: z.enum(['hard', 'hell', 'abyss', 'deepSea']),
     tier: z.number().int().min(1).max(5),
-    type: z.enum(['hitCount', 'shield', 'healing', 'any']),
     rewards: rewardSetSchema,
   })
   .strict()
 
 export const costDataSchema = z
   .object({
-    staminaPackDailyBonus: z.number().nonnegative(),
-    staminaRegenPerTick: z.number().nonnegative(),
     staminaRegenMinutes: z.number().positive(),
-    runsPerDayBase: z.number().int().nonnegative(),
-    runsPerDay3x: z.number().int().nonnegative(),
+    adStaminaPerDay: z.number().nonnegative(),
+    diamondPurchaseCosts: z.array(z.number().positive()).nonempty(),
+    diamondPurchaseRepeatCost: z.number().positive(),
+    staminaPerPurchase: z.number().positive(),
+    defaultDiamondPurchases: z.number().int().nonnegative(),
+    altarWaitsHellPlus: z.number().int().nonnegative(),
   })
   .strict()
 

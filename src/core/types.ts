@@ -1,37 +1,42 @@
 /** Canonical game vocabulary. Keys (not display strings) flow through
- *  i18n as `mode.hell`, `giantType.healing`, `resource.jelly`, … */
+ *  i18n as `mode.hell`, `resource.jelly`, … */
 
 export type Difficulty = 'hard' | 'hell' | 'abyss' | 'deepSea'
-export type GiantType = 'hitCount' | 'shield' | 'healing'
 export type RunMultiplier = 1 | 3 | 5
 
 /** Everything the user can tweak. All fields have defaults in the store. */
 export interface RunConfig {
-  /** Purchased 3x stamina boost pack (extra daily stamina). */
-  bought3xStamina: boolean
   /** Purchased ad-free + 2x game speed package. */
   boughtNoAdsSpeed2x: boolean
-  /** Stamina multiplier paid per run. Independent of the 3x stamina pack. */
-  runMultiplier: RunMultiplier
   /** Giant Invasion difficulty being farmed. */
   difficulty: Difficulty
   /** Giant tier farmed, 1–5. */
   giantTier: number
-  /** Expected Giant type for this farming session ('any' blends the table). */
-  giantType: GiantType | 'any'
-  /** Typical real-time minutes per full run (waves 1–100 + giant fight). */
-  runMinutes: number
-  /** Planned runs for this session. */
-  sessions: number
-  /** Ad-watch double-reward on ~1/5 of runs when no-ads package is OFF. */
-  useAdDoubleReward: boolean
+  /** Stamina multiplier paid on ticket-farming runs (default 1x). */
+  ticketMultiplier: RunMultiplier
+  /** Stamina multiplier paid on giant attempts (default 3x). */
+  giantMultiplier: RunMultiplier
+  /** Planned ticket-farming runs. */
+  ticketRuns: number
+  /** Planned giant attempts (each consumes one giant ticket). */
+  giantAttempts: number
+  /** Base stamina cost of one run at 1x (multiplier scales it). */
+  staminaPerRun: number
+  /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
+  runsPerGiantTicket: number
+  /** Waves per run. */
+  wavesPerRun: number
+  /** Seconds per wave at 1x game speed. */
+  secPerWave: number
+  /** Idle seconds spent per altar pick (Hell+ only). */
+  altarWaitSec: number
 }
 
 export type ResourceKey = 'exp' | 'silver' | 'tickets' | 'powder' | 'jelly' | 'pearl'
 
 export type RewardSet = Partial<Record<ResourceKey, number>>
 
-/** Entry of data/rewards.json — rewards per clear keyed by
+/** Entry of data/rewards.json — clear rewards per run keyed by
  *  difficulty × runMultiplier (mirrors the meowdb Rewards matrix). */
 export interface RewardRow {
   difficulty: Difficulty
@@ -39,46 +44,63 @@ export interface RewardRow {
   rewards: RewardSet
 }
 
-/** Entry of data/giant-tiers.json — Giant kill rewards keyed by
- *  difficulty × tier (1–5) × type ('any' = blended expectation). */
+/** Entry of data/giant-tiers.json — giant kill rewards keyed by
+ *  difficulty × tier (1–5). Giant type is NOT reward-relevant. */
 export interface GiantTierRow {
   difficulty: Difficulty
   tier: number
-  type: GiantType | 'any'
   rewards: RewardSet
 }
 
-/** Entry of data/costs.json — one-time / per-run cost knobs. */
+/** Entry of data/costs.json — stamina economy + diamond purchase ladder. */
 export interface CostData {
-  /** Extra stamina granted per day by the 3x stamina pack. */
-  staminaPackDailyBonus: number
-  /** Base stamina recovered per natural regen tick. */
-  staminaRegenPerTick: number
-  /** Minutes per stamina regen tick. */
+  /** Minutes per natural stamina regen tick (1 stamina per tick). */
   staminaRegenMinutes: number
-  /** Runs per day without the pack (stamina budget / per-run cost). */
-  runsPerDayBase: number
-  /** Runs per day with the 3x stamina pack. */
-  runsPerDay3x: number
+  /** Free stamina per day from watching ads. */
+  adStaminaPerDay: number
+  /** Diamond ladder: cost of each stamina purchase, in order. */
+  diamondPurchaseCosts: number[]
+  /** Cost per purchase once the ladder is exhausted. */
+  diamondPurchaseRepeatCost: number
+  /** Stamina granted per diamond purchase. */
+  staminaPerPurchase: number
+  /** Purchases assumed already budgeted (default plan buys up to the 500 step). */
+  defaultDiamondPurchases: number
+  /** Altar picks mid-run on Hell and above. */
+  altarWaitsHellPlus: number
 }
 
 export interface CalcInput {
   config: RunConfig
   rewards: RewardRow[]
   giantTiers: GiantTierRow[]
+  costs: CostData
 }
 
 export interface CalcResult {
-  /** Real-time minutes per run after the 2x speed modifier. */
+  /** Real-time minutes per run (waves + altar waits, after speed modifier). */
   minutesPerRun: number
   totalMinutes: number
+  /** Clear rewards for one ticket run at ticketMultiplier. */
+  perTicketRun: RewardSet
+  /** Giant rewards for one attempt at giantMultiplier. */
+  perGiantAttempt: RewardSet
   totalRewards: RewardSet
-  /** Reward per hour of real time (runs × rewardsPerRun × 60 / minutes). */
+  /** Reward per hour of real time. */
   perHour: RewardSet
-  /** Reward per run (per-run values, incl. giant tier bonus). */
-  perRun: RewardSet
-  /** Ad-double uplift baked into perRun when applicable. */
-  adBonusFactor: number
-  /** Effective runs/day given the stamina pack choice. */
-  runsPerDay: number
+  /** Giant tickets earned from ticket runs (ignores multipliers). */
+  ticketsEarned: number
+  /** Tickets the planned giant attempts consume. */
+  ticketsUsed: number
+  ticketsShortfall: number
+  /** Total stamina the plan needs. */
+  staminaNeeded: number
+  /** Daily stamina: regen + ads + default diamond purchases. */
+  staminaBudget: number
+  /** Stamina above budget. */
+  extraStamina: number
+  /** Extra diamond purchases required above the default budget. */
+  extraPurchases: number
+  /** Diamonds those extra purchases cost. */
+  extraDiamonds: number
 }
