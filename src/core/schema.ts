@@ -14,7 +14,7 @@ export const rewardSetSchema = z
     royalJelly: z.number().nonnegative().optional(),
     pearl: z.number().nonnegative().optional(),
     godStones: z.number().nonnegative().optional(),
-    superGodStones: z.number().nonnegative().optional(),
+    liberationStones: z.number().nonnegative().optional(),
     /** Generic relics (文物): general~Super-God-exclusive drops. */
     relics: z.number().nonnegative().optional(),
     giantMarks: z.number().nonnegative().optional(),

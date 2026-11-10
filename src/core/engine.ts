@@ -19,7 +19,7 @@ export const RESOURCE_KEYS: ResourceKey[] = [
   'royalJelly',
   'pearl',
   'godStones',
-  'superGodStones',
+  'liberationStones',
   'relics',
   'giantMarks',
 ]

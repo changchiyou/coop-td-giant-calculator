@@ -46,7 +46,7 @@ export type ResourceKey =
   | 'royalJelly'
   | 'pearl'
   | 'godStones'
-  | 'superGodStones'
+  | 'liberationStones'
   | 'relics'
   | 'giantMarks'
 

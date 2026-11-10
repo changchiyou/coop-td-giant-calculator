@@ -70,13 +70,13 @@ describe('rewards', () => {
     expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
   })
   it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
-    // Hell T5 bonus (1x): 1 ticket + 28.5 superGodStones (every stage pays
+    // Hell T5 bonus (1x): 1 ticket + 28.5 liberationStones (every stage pays
     // Hell's own special) + 1 relic. At 3x: 3 tickets + 85.5 + 3 relics,
     // plus the Hell 3x clear row (6 tickets, powder 60, …). No godStones.
     const r = computeRun(input())
     expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
     expect(r.perGiantAttempt.godStones).toBeUndefined()
-    expect(r.perGiantAttempt.superGodStones).toBeCloseTo(85.5)
+    expect(r.perGiantAttempt.liberationStones).toBeCloseTo(85.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
     expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
     expect(r.perGiantAttempt.giantMarks).toBeUndefined()
