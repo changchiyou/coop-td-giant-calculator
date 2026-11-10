@@ -19,8 +19,6 @@ const DEFAULT: RunConfig = {
   ticketMultiplier: 1,
   giantMultiplier: 3,
   cycles: 10,
-  mutualTicketing: false,
-  giantMarkPerGiant: 1,
   runsPerGiantTicket: 5,
   secPerWave: 12,
   altarWaitSec: 30,
@@ -69,22 +67,24 @@ describe('rewards', () => {
     const r = computeRun(input({ ticketMultiplier: 5 }))
     expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
   })
-  it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
+  it('giant run = clear rewards at its multiplier + tier bonus scaled', () => {
     // Stage rewards are claimed per stage: a Hell T5 kill pays ONLY stage 5
-    // (1 ticket + 8.5 liberationStones + 1 relic at 1x). At 3x: 3 tickets +
-    // 25.5 + 3 relics, plus the Hell 3x clear row (6 tickets, powder 60, …).
+    // (1 ticket + 8.5 liberationStones + 1 relic + 13.5 marks (base 1 +
+    // 10~15 midpoint) at 1x). At 3x: 3 tickets + 25.5 + 3 relics, plus the
+    // Hell 3x clear row (6 tickets, powder 60, …).
     const r = computeRun(input())
     expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
     expect(r.perGiantAttempt.godStones).toBeUndefined()
     expect(r.perGiantAttempt.liberationStones).toBeCloseTo(25.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
     expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
-    expect(r.perGiantAttempt.giantMarks).toBeUndefined()
+    expect(r.perGiantAttempt.giantMarks).toBeCloseTo(40.5) // (1 + 12.5) × 3x
   })
-  it('mutual ticketing adds flat Giant Marks per giant kill', () => {
-    const r = computeRun(input({ mutualTicketing: true, giantMarkPerGiant: 2 }))
-    expect(r.perGiantAttempt.giantMarks).toBe(2)
-    expect(r.totalRewards.giantMarks).toBe(20)
+  it('Giant Marks are data-driven per difficulty × stage', () => {
+    // Hard T1: base 1 + 1~2 midpoint 1.5 = 2.5 at 1x → 12.5 over 10 cycles.
+    const r = computeRun(input({ difficulty: 'hard', giantTier: 1, giantMultiplier: 1 }))
+    expect(r.perGiantAttempt.giantMarks).toBeCloseTo(2.5)
+    expect(r.totalRewards.giantMarks).toBeCloseTo(25)
   })
   it('deepSea stages 1-2 pay Jelly, 3-5 Royal Jelly', () => {
     const r = computeRun(input({ difficulty: 'deepSea', giantTier: 1 }))

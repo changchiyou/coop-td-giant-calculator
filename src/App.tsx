@@ -36,7 +36,7 @@ export default function App() {
           <LanguageSwitcher />
         </header>
 
-        <main className="grid gap-4 lg:grid-cols-2">
+        <main className="flex flex-col gap-6">
           <InputPanel />
           <ResultPanel />
         </main>

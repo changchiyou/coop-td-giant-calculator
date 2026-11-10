@@ -13,8 +13,6 @@
     "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run; the giant run itself counts as one ticket-progress run, so entry tickets always break even.",
     "ticketMultiplier": "Stamina multiplier for ticket runs",
     "giantMultiplier": "Stamina multiplier for giant runs",
-    "mutualTicketing": "Mutual ticketing (swap entry tickets with teammates)",
-    "giantMarkPerGiant": "Extra Giant Marks per giant run",
     "advanced": "Advanced",
     "runsPerGiantTicket": "Runs per giant entry ticket",
     "runsPerGiantTicketHint": "Every run — giant runs included — adds one progress unit; a full set earns one giant entry ticket (default 5).",

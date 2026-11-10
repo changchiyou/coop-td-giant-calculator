@@ -13,8 +13,6 @@
     "cycleHint": "1사이클 = (입장권 1장 필요 횟수 − 1)회 티켓 파밍 + 자이언트 1회. 자이언트전도 티켓 진행 1회를 적립하므로 입장권은 항상 수지맞습니다.",
     "ticketMultiplier": "티켓 파밍 스태미너 배율",
     "giantMultiplier": "자이언트전 스태미너 배율",
-    "mutualTicketing": "티켓 교환 (팀원과 입장권 상호 교환)",
-    "giantMarkPerGiant": "자이언트전당 추가 자이언트 각인",
     "advanced": "고급 설정",
     "runsPerGiantTicket": "자이언트 입장권 1장 필요 횟수",
     "runsPerGiantTicketHint": "자이언트전을 포함해 이 횟수를 채우면 입장권 1장을 획득합니다 (기본 5).",

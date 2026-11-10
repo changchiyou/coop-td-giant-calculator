@@ -112,18 +112,16 @@ export function computeRun(input: CalcInput): CalcResult {
   const perTicketRun = findRewardRow(rewards, config.difficulty, config.ticketMultiplier)
 
   // Giant farming: a giant attempt ALSO earns the normal run clear rewards
-  // (incl. base gacha tickets) at its own multiplier; the wiki tier rewards
-  // carry EXTRA gacha tickets accumulated on top. Mutual ticketing adds
-  // Giant Marks per kill (flat, unscaled).
+  // (incl. base gacha tickets) at its own multiplier; the tier table adds
+  // that stage's drop (extra gacha tickets, stage resource, relics, and
+  // Giant Marks = base 1 + stage range) — everything scales with the
+  // giant multiplier, matching the official 3x/5x columns.
   const perGiantAttempt = addRewards(
-    addRewards(
-      findRewardRow(rewards, config.difficulty, config.giantMultiplier),
-      scaleRewards(
-        findGiantBonus(giantTiers, config.difficulty, config.giantTier),
-        config.giantMultiplier,
-      ),
+    findRewardRow(rewards, config.difficulty, config.giantMultiplier),
+    scaleRewards(
+      findGiantBonus(giantTiers, config.difficulty, config.giantTier),
+      config.giantMultiplier,
     ),
-    config.mutualTicketing ? { giantMarks: config.giantMarkPerGiant } : {},
   )
 
   const totalRewards = addRewards(

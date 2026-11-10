@@ -26,10 +26,9 @@ export interface RunConfig {
   giantMultiplier: RunMultiplier
   /** Planned full cycles (each = runsPerGiantTicket − 1 runs + 1 giant). */
   cycles: number
-  /** Ticket exchange with teammates: adds Giant Marks per giant kill. */
-  mutualTicketing: boolean
-  /** Giant Marks gained per giant kill when trading tickets. */
-  giantMarkPerGiant: number
+  /** Giant Marks are NOT an input: each giant kill pays base 1 + the
+   *  stage drop, both baked into giant-tiers.json `giantMarks` and
+   *  scaled by the giant multiplier (3x/5x are linear per the table). */
   /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
   runsPerGiantTicket: number
   /** Seconds per wave at 1x game speed. */

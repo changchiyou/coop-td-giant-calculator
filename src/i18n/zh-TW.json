@@ -13,8 +13,6 @@
     "cycleHint": "一輪＝（每張入場券所需場次 − 1）場刷票＋一場巨人；巨人場本身也會累積一次刷票進度，所以入場券正好收支平衡。",
     "ticketMultiplier": "刷票場次的體力倍率",
     "giantMultiplier": "刷巨人場次的體力倍率",
-    "mutualTicketing": "互票（與隊友交換入場券）",
-    "giantMarkPerGiant": "每場巨人額外獲得的巨人印記",
     "advanced": "進階設定",
     "runsPerGiantTicket": "每張巨人入場券所需場次",
     "runsPerGiantTicketHint": "含巨人場在內，每累積滿這個場次數量就取得一張巨人入場券（預設 5）。",

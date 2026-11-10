@@ -5,9 +5,10 @@ Coop TD: Together, planned in whole **cycles**: `N−1` ticket-farming runs +
 one giant attempt (each run costs fixed 5 stamina; EVERY run including the
 giant attempt adds one unit of ticket progress, so `N` runs earn exactly one
 giant entry ticket and tickets always break even; N is adjustable, default 5).
-Giant fights pay extra gacha tickets and stage rewards (God Stones / Jelly /
-Royal Jelly per the official wiki table, ranges taken as midpoints); an
-optional mutual-ticketing toggle adds Giant Marks per kill. Reports time,
+Giant fights pay extra gacha tickets and stage rewards (God Stones / Liberation
+Stones / Jelly / Royal Jelly / Giant Marks per the official announcement
+tables, ranges taken as midpoints; each giant kill pays base 1 mark + the
+stage range, all data-driven). Reports time,
 stamina plan vs daily budget (regen + ad stamina + diamond purchase ladder),
 extra diamonds needed, and rewards per run / total / per hour.
 

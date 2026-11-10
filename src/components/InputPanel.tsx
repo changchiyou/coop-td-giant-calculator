@@ -62,21 +62,6 @@ export function InputPanel() {
         />
       </FieldRow>
 
-      <Toggle
-        checked={config.mutualTicketing}
-        onChange={(v) => set('mutualTicketing', v)}
-        label={t('inputs.mutualTicketing')}
-      />
-      {config.mutualTicketing && (
-        <FieldRow label={t('inputs.giantMarkPerGiant')}>
-          <NumberInput
-            value={config.giantMarkPerGiant}
-            onChange={(v) => set('giantMarkPerGiant', v)}
-            min={0}
-            max={99}
-          />
-        </FieldRow>
-      )}
 
       <div className="my-3 border-t border-slate-700" />
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
