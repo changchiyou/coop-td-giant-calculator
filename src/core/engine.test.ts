@@ -70,13 +70,13 @@ describe('rewards', () => {
     expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
   })
   it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
-    // Hell T5 bonus (1x): 1 ticket + 10 godStones + 18.5 superGodStones.
-    // At 3x: 3 tickets + 30 godStones + 55.5 superGodStones, plus the Hell
-    // 3x clear row (6 tickets, powder 60, …).
+    // Hell T5 bonus (1x): 1 ticket + 28.5 superGodStones (every stage pays
+    // Hell's own special) + 1 relic. At 3x: 3 tickets + 85.5 + 3 relics,
+    // plus the Hell 3x clear row (6 tickets, powder 60, …). No godStones.
     const r = computeRun(input())
     expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
-    expect(r.perGiantAttempt.godStones).toBeCloseTo(30)
-    expect(r.perGiantAttempt.superGodStones).toBeCloseTo(55.5)
+    expect(r.perGiantAttempt.godStones).toBeUndefined()
+    expect(r.perGiantAttempt.superGodStones).toBeCloseTo(85.5)
     expect(r.perGiantAttempt.powder).toBeCloseTo(60)
     expect(r.perGiantAttempt.relics).toBeCloseTo(3) // 1 relic × 3x
     expect(r.perGiantAttempt.giantMarks).toBeUndefined()
@@ -86,12 +86,13 @@ describe('rewards', () => {
     expect(r.perGiantAttempt.giantMarks).toBe(2)
     expect(r.totalRewards.giantMarks).toBe(20)
   })
-  it('deepSea base is 4 gacha tickets scaled by giant multiplier', () => {
+  it('deepSea giant stages pay only Royal Jelly', () => {
     const r = computeRun(input({ difficulty: 'deepSea', giantTier: 1 }))
     // clear row 3x: tickets 9; bonus 3x: 4×3=12 → 21
     expect(r.perGiantAttempt.tickets).toBeCloseTo(21)
-    // jelly: clear 3x row 6 + bonus 40×3 = 126
-    expect(r.perGiantAttempt.jelly).toBeCloseTo(126)
+    // jelly only from the clear row (3x = 6); stages pay royalJelly 40×3
+    expect(r.perGiantAttempt.jelly).toBeCloseTo(6)
+    expect(r.perGiantAttempt.royalJelly).toBeCloseTo(120)
   })
   it('totals accumulate both phases', () => {
     const r = computeRun(input())
