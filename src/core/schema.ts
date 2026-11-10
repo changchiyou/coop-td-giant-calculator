@@ -7,10 +7,15 @@ export const rewardSetSchema = z
   .object({
     exp: z.number().nonnegative().optional(),
     silver: z.number().nonnegative().optional(),
+    /** Gacha tickets (抽獎券), not giant entry tickets. */
     tickets: z.number().nonnegative().optional(),
     powder: z.number().nonnegative().optional(),
     jelly: z.number().nonnegative().optional(),
+    royalJelly: z.number().nonnegative().optional(),
     pearl: z.number().nonnegative().optional(),
+    godStones: z.number().nonnegative().optional(),
+    superGodStones: z.number().nonnegative().optional(),
+    giantMarks: z.number().nonnegative().optional(),
   })
   .strict()
 

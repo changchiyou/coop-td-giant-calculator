@@ -1,25 +1,28 @@
 {
-  "_source": "PLACEHOLDER — replace with the official difficulty × tier(1–5) reward mapping. Rows with empty rewards contribute 0 until filled. Giant type is reward-irrelevant and not part of the key.",
+  "_source": "OCR from official wiki 擊殺獎勵-超大型巨人 table (2026-11). Tier N = giant cleared through stage N; rewards are CUMULATIVE (base ticket + stages 1..N) at 1x — 3x/5x columns in the wiki are exact linear scalings. Range values (e.g. 10~15) stored as midpoints = expected value. Stage drop types: Hard 魔神石; Hell stages1-2 魔神石 + 3-5 隨機超魔神解放石; Abyss 果凍; Deep Sea stages1-2 果凍 + 3-5 皇家果凍. Base gacha tickets: 1 (Deep Sea 4). The separate 進攻巨人 relic table (1個一般~魔神/超魔神專用文物) is non-numeric and intentionally not modeled.",
   "giantTiers": [
-    { "difficulty": "hard", "tier": 1, "rewards": {} },
-    { "difficulty": "hard", "tier": 2, "rewards": {} },
-    { "difficulty": "hard", "tier": 3, "rewards": {} },
-    { "difficulty": "hard", "tier": 4, "rewards": {} },
-    { "difficulty": "hard", "tier": 5, "rewards": {} },
-    { "difficulty": "hell", "tier": 1, "rewards": {} },
-    { "difficulty": "hell", "tier": 2, "rewards": {} },
-    { "difficulty": "hell", "tier": 3, "rewards": {} },
-    { "difficulty": "hell", "tier": 4, "rewards": {} },
-    { "difficulty": "hell", "tier": 5, "rewards": {} },
-    { "difficulty": "abyss", "tier": 1, "rewards": {} },
-    { "difficulty": "abyss", "tier": 2, "rewards": {} },
-    { "difficulty": "abyss", "tier": 3, "rewards": {} },
-    { "difficulty": "abyss", "tier": 4, "rewards": {} },
-    { "difficulty": "abyss", "tier": 5, "rewards": {} },
-    { "difficulty": "deepSea", "tier": 1, "rewards": {} },
-    { "difficulty": "deepSea", "tier": 2, "rewards": {} },
-    { "difficulty": "deepSea", "tier": 3, "rewards": {} },
-    { "difficulty": "deepSea", "tier": 4, "rewards": {} },
-    { "difficulty": "deepSea", "tier": 5, "rewards": {} }
+    { "difficulty": "hard", "tier": 1, "rewards": { "tickets": 1, "godStones": 1.5 } },
+    { "difficulty": "hard", "tier": 2, "rewards": { "tickets": 1, "godStones": 4 } },
+    { "difficulty": "hard", "tier": 3, "rewards": { "tickets": 1, "godStones": 8 } },
+    { "difficulty": "hard", "tier": 4, "rewards": { "tickets": 1, "godStones": 14 } },
+    { "difficulty": "hard", "tier": 5, "rewards": { "tickets": 1, "godStones": 22.5 } },
+
+    { "difficulty": "hell", "tier": 1, "rewards": { "tickets": 1, "godStones": 4 } },
+    { "difficulty": "hell", "tier": 2, "rewards": { "tickets": 1, "godStones": 10 } },
+    { "difficulty": "hell", "tier": 3, "rewards": { "tickets": 1, "godStones": 10, "superGodStones": 4 } },
+    { "difficulty": "hell", "tier": 4, "rewards": { "tickets": 1, "godStones": 10, "superGodStones": 10 } },
+    { "difficulty": "hell", "tier": 5, "rewards": { "tickets": 1, "godStones": 10, "superGodStones": 18.5 } },
+
+    { "difficulty": "abyss", "tier": 1, "rewards": { "tickets": 1, "jelly": 12.5 } },
+    { "difficulty": "abyss", "tier": 2, "rewards": { "tickets": 1, "jelly": 30 } },
+    { "difficulty": "abyss", "tier": 3, "rewards": { "tickets": 1, "jelly": 55 } },
+    { "difficulty": "abyss", "tier": 4, "rewards": { "tickets": 1, "jelly": 95 } },
+    { "difficulty": "abyss", "tier": 5, "rewards": { "tickets": 1, "jelly": 155 } },
+
+    { "difficulty": "deepSea", "tier": 1, "rewards": { "tickets": 4, "jelly": 40 } },
+    { "difficulty": "deepSea", "tier": 2, "rewards": { "tickets": 4, "jelly": 100 } },
+    { "difficulty": "deepSea", "tier": 3, "rewards": { "tickets": 4, "jelly": 100, "royalJelly": 6 } },
+    { "difficulty": "deepSea", "tier": 4, "rewards": { "tickets": 4, "jelly": 100, "royalJelly": 14.5 } },
+    { "difficulty": "deepSea", "tier": 5, "rewards": { "tickets": 4, "jelly": 100, "royalJelly": 27 } }
   ]
 }

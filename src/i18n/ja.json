@@ -1,57 +1,65 @@
 {
   "app": {
-    "title": "Coop TD ジャイアント周回収益計算",
-    "subtitle": "ジャイアント襲来周回にかかる時間・スタミナ・報酬を試算",
+    "title": "Coop TD ジャイアント周回収益計算機",
+    "subtitle": "ジャイアント侵攻の周回時間・スタミナ・報酬を推定",
     "reset": "初期値に戻す"
   },
   "inputs": {
-    "section": "入力",
-    "boughtNoAdsSpeed2x": "広告除去 + 2倍速購入済み",
+    "section": "入力条件",
+    "boughtNoAdsSpeed2x": "広告削除 + ゲーム速度 x2 購入済み",
     "difficulty": "ジャイアント難易度",
-    "cycleHint": "1サイクル＝下記のチケット稼ぎ周回＋ジャイアント戦1回（周回でちょうど必要チケット1枚が溜まり、ジャイアント戦で消費）。",
+    "giantTier": "周回できるジャイアント階級",
     "cycles": "予定サイクル数",
-    "ticketMultiplier": "チケット稼ぎ周回のスタミナ倍率",
+    "cycleHint": "1サイクル＝（入場券1枚に必要な周回回数 − 1）回のチケット周回＋ジャイアント戦1回。ジャイアント戦自体もチケット進行を1回分稼ぐため、入場券は必ず釣り合います。",
+    "ticketMultiplier": "チケット周回のスタミナ倍率",
     "giantMultiplier": "ジャイアント戦のスタミナ倍率",
+    "mutualTicketing": "互換チケット（チームメイトと入場券を交換）",
+    "giantMarkPerGiant": "ジャイアント戦ごとの追加ジャイアントの刻印",
     "advanced": "詳細設定",
-    "runsPerGiantTicket": "ジャイアントチケット1枚あたりの周回数",
-    "secPerWave": "1ウェーブあたりの秒数（1倍速）",
-    "altarWaitSec": "祭壇選択の待ち時間（秒、ヘル以上）"
+    "runsPerGiantTicket": "ジャイアント入場券1枚に必要な周回回数",
+    "runsPerGiantTicketHint": "ジャイアント戦も含め、この回数だけ周回すると入場券が1枚入手できます（デフォルト 5）。",
+    "secPerWave": "1ウェーブの秒数（1倍速）",
+    "altarWaitSec": "祭壇選択の待ち時間（秒、地獄以上）"
   },
   "mode": {
-    "hard": "ハード",
-    "hell": "ヘル",
-    "abyss": "アビス",
-    "deepSea": "ディープシー"
+    "hard": "困難",
+    "hell": "地獄",
+    "abyss": "深淵",
+    "deepSea": "深海"
   },
   "multiplier": { "1": "1倍", "3": "3倍", "5": "5倍" },
   "tier": { "n": "{{n}}階" },
   "results": {
     "section": "計算結果",
-    "plan": "プラン",
-    "planValue": "{{cycles}} サイクル＝チケット稼ぎ {{runs}} 周回＋ジャイアント戦 {{giants}} 回",
-    "totalTime": "合計時間",
-    "perRunTime": "1周あたり",
-    "tickets": "ジャイアントチケット",
-    "ticketsValue": "獲得 {{earned}} / 使用 {{used}}",
+    "plan": "計画",
+    "planValue": "{{cycles}} サイクル＝チケット周回 {{runs}} 回＋ジャイアント戦 {{giants}} 回",
+    "totalTime": "総所要時間",
+    "perRunTime": "1回あたりの時間",
+    "tickets": "ジャイアント入場券",
+    "ticketsValue": "入手 {{earned}} 枚／使用 {{used}} 枚",
     "stamina": "スタミナ計画",
     "staminaNeeded": "必要スタミナ",
-    "staminaBudget": "1日の予算（自然回復 + 広告 + 初期ダイヤ購入）",
+    "staminaBudget": "1日あたりスタミナ予算（自然回復＋広告＋デフォルトのダイヤ購入）",
     "extraStamina": "予算超過スタミナ",
-    "extraDiamonds": "追加ダイヤ（{{n}}回購入）",
-    "perTicketRun": "チケット稼ぎ1周あたり",
+    "extraDiamonds": "追加ダイヤ消費（{{n}} 回購入）",
+    "perTicketRun": "チケット周回1回あたり",
     "perGiantAttempt": "ジャイアント戦1回あたり",
-    "totalRewards": "合計報酬",
-    "perHour": "1時間平均"
+    "totalRewards": "総報酬",
+    "perHour": "1時間あたり"
   },
   "resource": {
     "exp": "経験値",
     "silver": "シルバー",
-    "tickets": "チケット",
+    "tickets": "ガチャチケット",
     "powder": "マジックパウダー",
     "jelly": "ゼリー",
-    "pearl": "パール"
+    "royalJelly": "ロイヤルゼリー",
+    "pearl": "パール",
+    "godStones": "魔神石",
+    "superGodStones": "超魔神解放石",
+    "giantMarks": "ジャイアントの刻印"
   },
   "footer": {
-    "disclaimer": "クリア報酬は meowdb.com のシードデータです。ゲーム内数値を確認してください。ジャイアント階級報酬は公式マップ待ち。前提：100ウェーブ、ヘル以上で祭壇待機3回、1周固定スタミナ5（1倍）、6分毎にスタミナ1回復、広告で1日+100、ダイヤ購入は 50/50/50/100/300/500 の以降は1回1000で+25スタミナ。"
+    "disclaimer": "通常クリア報酬は meowdb.com のシードデータ、ジャイアント撃破報酬（基本ガチャチケット＋各ステージの魔神石／ゼリー／ロイヤルゼリー）は公式Wikiの倍率表に基づく。範囲値は中央値を期待値として使用。ゲーム内数値を正としてください。デフォルト：100ウェーブ、地獄以上は祭壇待機3回、1戦固定スタミナ5（1倍）、6分ごとにスタミナ1回復、広告で毎日+100、ダイヤ購入は 50/50/50/100/300/500、以降は毎回1000（各+25）。"
   }
 }

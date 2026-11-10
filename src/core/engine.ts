@@ -16,7 +16,11 @@ export const RESOURCE_KEYS: ResourceKey[] = [
   'tickets',
   'powder',
   'jelly',
+  'royalJelly',
   'pearl',
+  'godStones',
+  'superGodStones',
+  'giantMarks',
 ]
 
 /** Find the clear-reward row for difficulty × multiplier. Falls back to the
@@ -34,7 +38,8 @@ export function findRewardRow(
   return scaleRewards(base.rewards, multiplier)
 }
 
-/** Giant tier bonus for difficulty × tier. Giant type is reward-irrelevant. */
+/** Giant kill rewards (cumulative through `tier`) for difficulty × tier.
+ *  Giant type is reward-irrelevant. */
 export function findGiantBonus(
   rows: GiantTierRow[],
   difficulty: Difficulty,
@@ -85,20 +90,30 @@ export function computeRun(input: CalcInput): CalcResult {
   const { config, rewards, giantTiers, costs } = input
 
   const minutesPerRun = runMinutes(input) / 60
-
-  // Cycle plan: cycles × (N ticket runs + 1 giant attempt).
+  // Cycle plan: cycles × (N−1 ticket runs + 1 giant attempt). The giant
+  // attempt itself accrues one unit of ticket progress, so only N−1
+  // farming runs are needed per cycle to keep tickets break-even.
   const cycles = Math.max(0, config.cycles)
   const runsPerCycle = Math.max(1, config.runsPerGiantTicket)
-  const ticketRuns = cycles * runsPerCycle
+  const ticketRuns = cycles * (runsPerCycle - 1)
   const giantAttempts = cycles
 
   // Ticket farming: base clear rewards scaled by the ticket multiplier.
   const perTicketRun = findRewardRow(rewards, config.difficulty, config.ticketMultiplier)
-  // Giant farming: tier rewards scaled by the giant multiplier — this is
-  // where the multiplier genuinely pays out.
-  const perGiantAttempt = scaleRewards(
-    findGiantBonus(giantTiers, config.difficulty, config.giantTier),
-    config.giantMultiplier,
+
+  // Giant farming: a giant attempt ALSO earns the normal run clear rewards
+  // (incl. base gacha tickets) at its own multiplier; the wiki tier rewards
+  // carry EXTRA gacha tickets accumulated on top. Mutual ticketing adds
+  // Giant Marks per kill (flat, unscaled).
+  const perGiantAttempt = addRewards(
+    addRewards(
+      findRewardRow(rewards, config.difficulty, config.giantMultiplier),
+      scaleRewards(
+        findGiantBonus(giantTiers, config.difficulty, config.giantTier),
+        config.giantMultiplier,
+      ),
+    ),
+    config.mutualTicketing ? { giantMarks: config.giantMarkPerGiant } : {},
   )
 
   const totalRewards = addRewards(
@@ -115,9 +130,9 @@ export function computeRun(input: CalcInput): CalcResult {
     }
   }
 
-  // Giant tickets: one per N runs regardless of any stamina multiplier.
-  // In a whole-cycle plan earnings always cover the attempts.
-  const ticketsEarned = Math.floor(ticketRuns / runsPerCycle)
+  // Giant-ticket progress accrues on EVERY run including the giant
+  // attempt itself; multipliers don't affect it.
+  const ticketsEarned = Math.floor((ticketRuns + giantAttempts) / runsPerCycle)
   const ticketsUsed = giantAttempts
 
   // Stamina plan vs budget (stamina per run is fixed in costs.json).

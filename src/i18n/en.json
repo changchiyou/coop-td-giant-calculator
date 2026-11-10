@@ -1,22 +1,25 @@
 {
   "app": {
-    "title": "Coop TD Giant Farming Calculator",
-    "subtitle": "Estimate time, stamina, and rewards for farming Giant Invasion",
-    "reset": "Reset to defaults"
+    "title": "Coop TD Giant Farm Calculator",
+    "subtitle": "Estimate time, stamina and rewards from farming Giant Invasion",
+    "reset": "Reset defaults"
   },
   "inputs": {
     "section": "Inputs",
-    "boughtNoAdsSpeed2x": "Bought Ad-free + 2x Speed",
+    "boughtNoAdsSpeed2x": "Ad-free + 2x game speed purchased",
     "difficulty": "Giant difficulty",
-    "giantTier": "Giant tier cleared",
+    "giantTier": "Giant tier you can farm",
     "cycles": "Cycles planned",
-    "cycleHint": "1 cycle = ticket runs below + 1 giant attempt (the runs earn exactly the ticket the giant spends).",
-    "ticketMultiplier": "Stamina multiplier on ticket runs",
-    "giantMultiplier": "Stamina multiplier on giant runs",
+    "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run; the giant run itself counts as one ticket-progress run, so entry tickets always break even.",
+    "ticketMultiplier": "Stamina multiplier for ticket runs",
+    "giantMultiplier": "Stamina multiplier for giant runs",
+    "mutualTicketing": "Mutual ticketing (swap entry tickets with teammates)",
+    "giantMarkPerGiant": "Extra Giant Marks per giant run",
     "advanced": "Advanced",
-    "runsPerGiantTicket": "Runs per giant ticket",
+    "runsPerGiantTicket": "Runs per giant entry ticket",
+    "runsPerGiantTicketHint": "Every run — giant runs included — adds one progress unit; a full set earns one giant entry ticket (default 5).",
     "secPerWave": "Seconds per wave (1x speed)",
-    "altarWaitSec": "Altar pick wait (seconds, Hell+)"
+    "altarWaitSec": "Altar pick wait (sec, Hell+)"
   },
   "mode": {
     "hard": "Hard",
@@ -25,34 +28,38 @@
     "deepSea": "Deep Sea"
   },
   "multiplier": { "1": "1x", "3": "3x", "5": "5x" },
-  "tier": { "n": "Tier {{n}}" },
+  "tier": { "n": "T{{n}}" },
   "results": {
     "section": "Results",
     "plan": "Plan",
-    "planValue": "{{cycles}} cycles = {{runs}} ticket runs + {{giants}} giant attempts",
+    "planValue": "{{cycles}} cycles = {{runs}} ticket runs + {{giants}} giant runs",
     "totalTime": "Total time",
     "perRunTime": "Time per run",
-    "tickets": "Giant tickets",
+    "tickets": "Giant entry tickets",
     "ticketsValue": "{{earned}} earned / {{used}} used",
     "stamina": "Stamina plan",
     "staminaNeeded": "Stamina needed",
-    "staminaBudget": "Daily budget (regen + ads + default gems)",
+    "staminaBudget": "Daily stamina budget (regen + ads + default diamond buys)",
     "extraStamina": "Stamina over budget",
-    "extraDiamonds": "Extra diamonds ({{n}} purchases)",
+    "extraDiamonds": "Extra diamond cost ({{n}} purchases)",
     "perTicketRun": "Per ticket run",
-    "perGiantAttempt": "Per giant attempt",
+    "perGiantAttempt": "Per giant run",
     "totalRewards": "Total rewards",
     "perHour": "Per hour"
   },
   "resource": {
     "exp": "EXP",
     "silver": "Silver",
-    "tickets": "Tickets",
+    "tickets": "Gacha tickets",
     "powder": "Magic Powder",
     "jelly": "Jelly",
-    "pearl": "Pearl"
+    "royalJelly": "Royal Jelly",
+    "pearl": "Pearl",
+    "godStones": "God Stones",
+    "superGodStones": "Super God Release Stones",
+    "giantMarks": "Giant Marks"
   },
   "footer": {
-    "disclaimer": "Clear rewards seeded from meowdb.com — verify in-game. Giant tier rewards await the official mapping. Assumes 100 waves, 3 altar waits on Hell+, fixed 5 stamina per run at 1x, stamina regen 1/6min, +100 ad stamina/day, diamond purchases 50/50/50/100/300/500 then 1000 each for 25 stamina."
+    "disclaimer": "Clear rewards seeded from meowdb.com; giant kill rewards (base gacha tickets + per-stage God Stones / Jelly / Royal Jelly) from the official wiki multiplier table, range values taken as midpoints. In-game values are authoritative. Defaults: 100 waves, 3 altar waits on Hell+, fixed 5 stamina per run at 1x, 1 stamina per 6 min, +100 stamina/day from ads, diamond buys 50/50/50/100/300/500 then 1000 each (+25 stamina each)."
   }
 }

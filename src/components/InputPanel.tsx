@@ -18,19 +18,12 @@ export function InputPanel() {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
           {t('inputs.section')}
         </h2>
-        <button
-          type="button"
-          onClick={() => useRunStore.getState().reset()}
-          className="text-xs text-slate-400 underline-offset-2 hover:text-slate-200 hover:underline"
-        >
-          {t('app.reset')}
-        </button>
       </div>
 
       <Toggle
-        label={t('inputs.boughtNoAdsSpeed2x')}
         checked={config.boughtNoAdsSpeed2x}
         onChange={(v) => set('boughtNoAdsSpeed2x', v)}
+        label={t('inputs.boughtNoAdsSpeed2x')}
       />
 
       <FieldRow label={t('inputs.difficulty')}>
@@ -56,18 +49,34 @@ export function InputPanel() {
 
       <FieldRow label={t('inputs.ticketMultiplier')}>
         <Segmented
-          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
+          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}`) }))}
           value={config.ticketMultiplier}
           onChange={(v) => set('ticketMultiplier', v)}
         />
       </FieldRow>
       <FieldRow label={t('inputs.giantMultiplier')}>
         <Segmented
-          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}` as const) }))}
+          options={MULTIPLIERS.map((m) => ({ value: m, label: t(`multiplier.${m}`) }))}
           value={config.giantMultiplier}
           onChange={(v) => set('giantMultiplier', v)}
         />
       </FieldRow>
+
+      <Toggle
+        checked={config.mutualTicketing}
+        onChange={(v) => set('mutualTicketing', v)}
+        label={t('inputs.mutualTicketing')}
+      />
+      {config.mutualTicketing && (
+        <FieldRow label={t('inputs.giantMarkPerGiant')}>
+          <NumberInput
+            value={config.giantMarkPerGiant}
+            onChange={(v) => set('giantMarkPerGiant', v)}
+            min={0}
+            max={99}
+          />
+        </FieldRow>
+      )}
 
       <div className="my-3 border-t border-slate-700" />
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -81,6 +90,7 @@ export function InputPanel() {
           max={50}
         />
       </FieldRow>
+      <p className="mb-2 text-xs text-slate-500">{t('inputs.runsPerGiantTicketHint')}</p>
       <FieldRow label={t('inputs.secPerWave')}>
         <NumberInput
           value={config.secPerWave}

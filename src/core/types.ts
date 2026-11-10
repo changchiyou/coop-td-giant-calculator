@@ -6,12 +6,12 @@ export type RunMultiplier = 1 | 3 | 5
 
 /** Everything the user can tweak. All fields have defaults in the store.
  *
- *  Planning unit is the CYCLE: one giant run = `runsPerGiantTicket`
- *  ticket-farming runs + one giant attempt (the 5 runs guarantee exactly
- *  the one ticket the giant fight spends). The user plans whole cycles;
- *  ticket/giant run counts are derived, never set separately. */
+ *  Planning unit is the CYCLE: one giant run = `runsPerGiantTicket` − 1
+ *  ticket-farming runs + one giant attempt. Every run INCLUDING the giant
+ *  attempt itself adds one unit of ticket progress, keeping tickets
+ *  break-even. Ticket "tickets" are gacha tickets (抽獎券), not giant
+ *  entry tickets; giant fights hand out extra gacha tickets on top. */
 export interface RunConfig {
-  /** Purchased ad-free + 2x game speed package. Default on. */
   boughtNoAdsSpeed2x: boolean
   /** Giant Invasion difficulty being farmed. */
   difficulty: Difficulty
@@ -21,8 +21,12 @@ export interface RunConfig {
   ticketMultiplier: RunMultiplier
   /** Stamina multiplier paid on giant attempts (default 3x). */
   giantMultiplier: RunMultiplier
-  /** Planned full cycles (each = runsPerGiantTicket runs + 1 giant attempt). */
+  /** Planned full cycles (each = runsPerGiantTicket − 1 runs + 1 giant). */
   cycles: number
+  /** Ticket exchange with teammates: adds Giant Marks per giant kill. */
+  mutualTicketing: boolean
+  /** Giant Marks gained per giant kill when trading tickets. */
+  giantMarkPerGiant: number
   /** Runs needed to earn one giant ticket (multiplier does NOT affect this). */
   runsPerGiantTicket: number
   /** Waves per run. */
@@ -33,7 +37,17 @@ export interface RunConfig {
   altarWaitSec: number
 }
 
-export type ResourceKey = 'exp' | 'silver' | 'tickets' | 'powder' | 'jelly' | 'pearl'
+export type ResourceKey =
+  | 'exp'
+  | 'silver'
+  | 'tickets'
+  | 'powder'
+  | 'jelly'
+  | 'royalJelly'
+  | 'pearl'
+  | 'godStones'
+  | 'superGodStones'
+  | 'giantMarks'
 
 export type RewardSet = Partial<Record<ResourceKey, number>>
 
@@ -45,8 +59,10 @@ export interface RewardRow {
   rewards: RewardSet
 }
 
-/** Entry of data/giant-tiers.json — giant kill rewards keyed by
- *  difficulty × tier (1–5). Giant type is NOT reward-relevant. */
+/** Entry of data/giant-tiers.json — cumulative giant kill rewards
+ *  (base ticket + stages 1..tier) keyed by difficulty × tier (1–5),
+ *  stored at 1x; the 3x/5x columns scale linearly. Giant type is
+ *  NOT reward-relevant. */
 export interface GiantTierRow {
   difficulty: Difficulty
   tier: number
@@ -90,12 +106,12 @@ export interface CalcResult {
   totalMinutes: number
   /** Clear rewards for one ticket run at ticketMultiplier. */
   perTicketRun: RewardSet
-  /** Giant rewards for one attempt at giantMultiplier. */
+  /** Giant rewards for one attempt at giantMultiplier (+ Giant Marks). */
   perGiantAttempt: RewardSet
   totalRewards: RewardSet
   /** Reward per hour of real time. */
   perHour: RewardSet
-  /** Giant tickets earned from ticket runs (ignores multipliers). */
+  /** Giant tickets earned from ALL runs incl. giant attempts (ignores multipliers). */
   ticketsEarned: number
   /** Tickets the planned giant attempts consume. */
   ticketsUsed: number

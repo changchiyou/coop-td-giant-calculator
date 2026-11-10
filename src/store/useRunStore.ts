@@ -10,6 +10,8 @@ export const DEFAULT_CONFIG: RunConfig = {
   ticketMultiplier: 1,
   giantMultiplier: 3,
   cycles: 10,
+  mutualTicketing: false,
+  giantMarkPerGiant: 1,
   runsPerGiantTicket: 5,
   wavesPerRun: 100,
   secPerWave: 12,
@@ -31,9 +33,9 @@ export const useRunStore = create<RunStore>()(
     }),
     {
       name: 'coop-td-calc-config',
-      // v1/v2 persisted superseded config shapes; drop them on upgrade.
-      version: 3,
-      migrate: (persisted, version) => (version < 3 ? undefined : (persisted as RunStore)),
+      // v1–v3 persisted superseded config shapes; drop them on upgrade.
+      version: 4,
+      migrate: (persisted, version) => (version < 4 ? undefined : (persisted as RunStore)),
     },
   ),
 )

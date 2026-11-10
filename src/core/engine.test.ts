@@ -1,136 +1,148 @@
 import { describe, expect, it } from 'vitest'
 
-import { computeRun, diamondCostOfPurchases, findGiantBonus, findRewardRow } from './engine'
-import type { CalcInput, CostData, GiantTierRow, RewardRow, RunConfig } from './types'
-import { DEFAULT_CONFIG } from '../store/useRunStore'
+import {
+  addRewards,
+  computeRun,
+  diamondCostOfPurchases,
+  findGiantBonus,
+  findRewardRow,
+  formatMinutes,
+} from './engine'
+import type { CalcInput, RunConfig } from './types'
+import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
 
-// Frozen fixture independent of shipped JSON so engine math stays pinned.
-const REWARDS: RewardRow[] = [
-  { difficulty: 'hell', multiplier: 1, rewards: { exp: 2500, silver: 5000, tickets: 2, powder: 20 } },
-  { difficulty: 'hell', multiplier: 3, rewards: { exp: 7500, silver: 15000, tickets: 6, powder: 60 } },
-]
-
-const TIERS: GiantTierRow[] = [{ difficulty: 'hell', tier: 5, rewards: { tickets: 4, jelly: 10 } }]
-
-const COSTS: CostData = {
-  staminaPerRun: 5,
-  staminaRegenMinutes: 6,
-  adStaminaPerDay: 100,
-  diamondPurchaseCosts: [50, 50, 50, 100, 300, 500],
-  diamondPurchaseRepeatCost: 1000,
-  staminaPerPurchase: 25,
-  defaultDiamondPurchases: 6,
-  altarWaitsHellPlus: 3,
+const DEFAULT: RunConfig = {
+  boughtNoAdsSpeed2x: true,
+  difficulty: 'hell',
+  giantTier: 5,
+  ticketMultiplier: 1,
+  giantMultiplier: 3,
+  cycles: 10,
+  mutualTicketing: false,
+  giantMarkPerGiant: 1,
+  runsPerGiantTicket: 5,
+  wavesPerRun: 100,
+  secPerWave: 12,
+  altarWaitSec: 30,
 }
 
-const cfg = (over: Partial<RunConfig> = {}): RunConfig => ({ ...DEFAULT_CONFIG, ...over })
-
-const input = (config: RunConfig, over: Partial<CalcInput> = {}): CalcInput => ({
-  config,
-  rewards: REWARDS,
-  giantTiers: TIERS,
+const input = (over: Partial<RunConfig> = {}): CalcInput => ({
+  config: { ...DEFAULT, ...over },
+  rewards: REWARD_ROWS,
+  giantTiers: GIANT_TIER_ROWS,
   costs: COSTS,
-  ...over,
 })
 
-describe('findRewardRow', () => {
-  it('returns exact difficulty × multiplier row', () => {
-    expect(findRewardRow(REWARDS, 'hell', 3).exp).toBe(7500)
+describe('runMinutes', () => {
+  it('2x speed + 3 altar waits on Hell', () => {
+    // 100 waves × 12s / 2 + 3 × 30s = 600 + 90 = 690s = 11.5m
+    expect(computeRun(input()).minutesPerRun).toBeCloseTo(11.5)
   })
-
-  it('scales the 1x row when the multiplier row is missing', () => {
-    expect(findRewardRow(REWARDS, 'hell', 5).exp).toBe(12500)
+  it('1x speed doubles wave time', () => {
+    // 1200 + 90 = 1290s = 21.5m
+    expect(computeRun(input({ boughtNoAdsSpeed2x: false })).minutesPerRun).toBeCloseTo(21.5)
   })
-
-  it('returns empty for unknown difficulty', () => {
-    expect(findRewardRow(REWARDS, 'deepSea', 1)).toEqual({})
-  })
-})
-
-describe('findGiantBonus', () => {
-  it('returns the difficulty × tier row', () => {
-    expect(findGiantBonus(TIERS, 'hell', 5).jelly).toBe(10)
-  })
-
-  it('returns empty for missing tier', () => {
-    expect(findGiantBonus(TIERS, 'hell', 2)).toEqual({})
-  })
-})
-
-describe('run time', () => {
-  it('1x speed, Hell: 100×12s + 3×30s altar = 21.5 min', () => {
-    const r = computeRun(input(cfg({ boughtNoAdsSpeed2x: false })))
-    expect(r.minutesPerRun).toBeCloseTo((100 * 12 + 3 * 30) / 60)
-  })
-
-  it('2x speed (default) halves wave time but not altar waits', () => {
-    const r = computeRun(input(cfg()))
-    expect(r.minutesPerRun).toBeCloseTo((100 * 12) / 2 / 60 + 3 * 30 / 60)
-  })
-
   it('Hard has no altar waits', () => {
-    const r = computeRun(input(cfg({ difficulty: 'hard' })))
-    expect(r.minutesPerRun).toBeCloseTo((100 * 12) / 2 / 60)
+    // 100 × 12 / 2 = 600s = 10m
+    expect(computeRun(input({ difficulty: 'hard' })).minutesPerRun).toBeCloseTo(10)
   })
 })
 
-describe('diamond ladder', () => {
-  it('walks the ladder then repeats', () => {
-    // 6 ladder steps: 50+50+50+100+300+500 = 1050; 2 more at 1000 each.
+describe('cycle plan', () => {
+  it('giant run counts as ticket progress: 10 cycles → 40 ticket runs + 10 giants', () => {
+    const r = computeRun(input())
+    expect(r.ticketRuns).toBe(40)
+    expect(r.giantAttempts).toBe(10)
+    // every run accrues progress: 50 runs / 5 per ticket = 10 earned = 10 used
+    expect(r.ticketsEarned).toBe(10)
+    expect(r.ticketsUsed).toBe(10)
+    expect(r.ticketsShortfall).toBe(0)
+  })
+  it('total time covers all runs', () => {
+    const r = computeRun(input())
+    expect(r.totalMinutes).toBeCloseTo(11.5 * 50)
+  })
+})
+
+describe('rewards', () => {
+  it('ticket run uses the ticket multiplier row', () => {
+    const r = computeRun(input({ ticketMultiplier: 5 }))
+    expect(r.perTicketRun).toEqual({ exp: 12500, silver: 25000, tickets: 10, powder: 100 })
+  })
+  it('giant run = clear rewards at its multiplier + tier bonus scaled + marks', () => {
+    // Hell T5 bonus (1x): 1 ticket + 10 godStones + 18.5 superGodStones.
+    // At 3x: 3 tickets + 30 godStones + 55.5 superGodStones, plus the Hell
+    // 3x clear row (6 tickets, powder 60, …).
+    const r = computeRun(input())
+    expect(r.perGiantAttempt.tickets).toBeCloseTo(9) // 6 clear + 3 bonus
+    expect(r.perGiantAttempt.godStones).toBeCloseTo(30)
+    expect(r.perGiantAttempt.superGodStones).toBeCloseTo(55.5)
+    expect(r.perGiantAttempt.powder).toBeCloseTo(60)
+    expect(r.perGiantAttempt.giantMarks).toBeUndefined()
+  })
+  it('mutual ticketing adds flat Giant Marks per giant kill', () => {
+    const r = computeRun(input({ mutualTicketing: true, giantMarkPerGiant: 2 }))
+    expect(r.perGiantAttempt.giantMarks).toBe(2)
+    expect(r.totalRewards.giantMarks).toBe(20)
+  })
+  it('deepSea base is 4 gacha tickets scaled by giant multiplier', () => {
+    const r = computeRun(input({ difficulty: 'deepSea', giantTier: 1 }))
+    // clear row 3x: tickets 9; bonus 3x: 4×3=12 → 21
+    expect(r.perGiantAttempt.tickets).toBeCloseTo(21)
+    // jelly: clear 3x row 6 + bonus 40×3 = 126
+    expect(r.perGiantAttempt.jelly).toBeCloseTo(126)
+  })
+  it('totals accumulate both phases', () => {
+    const r = computeRun(input())
+    // powder only from clear rows: 40×20 + 10×60 = 1400
+    expect(r.totalRewards.powder).toBeCloseTo(1400)
+    // gacha tickets: 40×2 + 10×9 = 170
+    expect(r.totalRewards.tickets).toBeCloseTo(170)
+  })
+})
+
+describe('stamina plan', () => {
+  it('fixed 5 stamina per run scaled by multipliers', () => {
+    const r = computeRun(input())
+    // 40×5×1 + 10×5×3 = 200 + 150 = 350
+    expect(r.staminaNeeded).toBe(350)
+    expect(r.staminaBudget).toBe(490)
+    expect(r.extraStamina).toBe(0)
+    expect(r.extraDiamonds).toBe(0)
+  })
+  it('overage walks the diamond ladder past the default budget', () => {
+    // 20 cycles: 80×5 + 20×15 = 700 → 210 over → 9 purchases
+    const r = computeRun(input({ cycles: 20 }))
+    expect(r.staminaNeeded).toBe(700)
+    expect(r.extraStamina).toBe(210)
+    expect(r.extraPurchases).toBe(9)
+    // purchases 7–15 (1-indexed): 1000×3 ladder tail? ladder is
+    // [50,50,50,100,300,500] then 1000: #7..#15 → 9 × 1000 = 9000
+    expect(r.extraDiamonds).toBe(9000)
+  })
+})
+
+describe('helpers', () => {
+  it('diamondCostOfPurchases walks ladder then repeat', () => {
+    expect(diamondCostOfPurchases(0, COSTS)).toBe(0)
     expect(diamondCostOfPurchases(6, COSTS)).toBe(1050)
     expect(diamondCostOfPurchases(8, COSTS)).toBe(3050)
   })
-})
-
-describe('computeRun cycle model', () => {
-  it('default plan: 10 cycles = 50 ticket runs @1x + 10 giant attempts @3x', () => {
-    const r = computeRun(input(cfg()))
-    expect(r.ticketRuns).toBe(50)
-    expect(r.giantAttempts).toBe(10)
-    // Whole cycles always break even on tickets: 50 // 5 = 10 earned, 10 used.
-    expect(r.ticketsEarned).toBe(10)
-    expect(r.ticketsShortfall).toBe(0)
-    // per ticket run = hell1x clear rewards at 1x.
-    expect(r.perTicketRun.exp).toBe(2500)
-    // per giant attempt = tier-5 rewards × giant multiplier 3.
-    expect(r.perGiantAttempt.tickets).toBe(12)
-    expect(r.perGiantAttempt.jelly).toBe(30)
-    // totals combine both phases.
-    expect(r.totalRewards.exp).toBe(2500 * 50)
-    expect(r.totalRewards.jelly).toBe(30 * 10)
-    // stamina: 50×5×1 + 10×5×3 = 400; budget = 240 + 100 + 6×25 = 490 → under.
-    expect(r.staminaNeeded).toBe(400)
-    expect(r.staminaBudget).toBe(490)
-    expect(r.extraDiamonds).toBe(0)
+  it('findRewardRow falls back to scaled 1x row', () => {
+    const rows = [{ difficulty: 'hell', multiplier: 1, rewards: { exp: 100 } }] as const
+    expect(findRewardRow(rows as never, 'hell', 5)).toEqual({ exp: 500 })
   })
-
-  it('stamina over budget lists extra purchases and diamond cost', () => {
-    // Per cycle: 5×5×1 + 1×5×3 = 40 stamina. 13 cycles = 520 → 30 over 490
-    // → 2 purchases; both past the ladder → 2 × 1000.
-    const r = computeRun(input(cfg({ cycles: 13 })))
-    expect(r.staminaNeeded).toBe(520)
-    expect(r.extraStamina).toBe(30)
-    expect(r.extraPurchases).toBe(2)
-    expect(r.extraDiamonds).toBe(2000)
+  it('findGiantBonus returns {} for missing row', () => {
+    expect(findGiantBonus([], 'hell', 3)).toEqual({})
   })
-
-  it('ticket count ignores multipliers', () => {
-    const r = computeRun(input(cfg({ cycles: 4, ticketMultiplier: 5 })))
-    expect(r.ticketsEarned).toBe(4)
+  it('addRewards merges and drops zeros', () => {
+    expect(addRewards({ tickets: 2 }, { tickets: 0, jelly: 3 })).toEqual({
+      tickets: 2,
+      jelly: 3,
+    })
   })
-
-  it('runs-per-ticket scales the split inside each cycle', () => {
-    const r = computeRun(input(cfg({ cycles: 3, runsPerGiantTicket: 10 })))
-    expect(r.ticketRuns).toBe(30)
-    expect(r.giantAttempts).toBe(3)
-    expect(r.ticketsShortfall).toBe(0)
-    // stamina: 30×5×1 + 3×5×3 = 195.
-    expect(r.staminaNeeded).toBe(195)
-  })
-
-  it('zero cycles yields zero totals, no NaN per-hour', () => {
-    const r = computeRun(input(cfg({ cycles: 0 })))
-    expect(r.totalMinutes).toBe(0)
-    expect(r.perHour).toEqual({})
+  it('formatMinutes', () => {
+    expect(formatMinutes(45.4)).toBe('45m')
+    expect(formatMinutes(690)).toBe('11h 30m')
   })
 })

@@ -1,12 +1,15 @@
 # Coop TD Giant Farming Calculator
 
 Static web calculator (GitHub Pages) for planning Giant Invasion farming in
-Coop TD: Together, planned in whole **cycles**: `N` ticket-farming runs (each
-run costs fixed 5 stamina; N runs earn exactly one giant ticket, independent
-of stamina multiplier) plus one giant attempt (the giant stamina multiplier
-scales the giant's bonus rewards). Reports time, stamina plan vs daily budget
-(regen + ad stamina + diamond purchase ladder), extra diamonds needed, and
-rewards per run / total / per hour.
+Coop TD: Together, planned in whole **cycles**: `N−1` ticket-farming runs +
+one giant attempt (each run costs fixed 5 stamina; EVERY run including the
+giant attempt adds one unit of ticket progress, so `N` runs earn exactly one
+giant entry ticket and tickets always break even; N is adjustable, default 5).
+Giant fights pay extra gacha tickets and stage rewards (God Stones / Jelly /
+Royal Jelly per the official wiki table, ranges taken as midpoints); an
+optional mutual-ticketing toggle adds Giant Marks per kill. Reports time,
+stamina plan vs daily budget (regen + ad stamina + diamond purchase ladder),
+extra diamonds needed, and rewards per run / total / per hour.
 
 Live: https://changchiyou.github.io/coop-td-giant-calculator/
 
@@ -22,9 +25,9 @@ react-i18next (en / zh-TW / ja / ko), zod (data-table validation), vitest.
 - `src/data/` — data-driven reward tables (JSON, zod-validated at load):
   - `rewards.json` — difficulty × run-multiplier clear rewards
     (seeded from <https://meowdb.com/db/coop-td/rewards>).
-  - `giant-tiers.json` — placeholder rows for the difficulty × tier(1–5)
-    reward mapping (giant type is reward-irrelevant); fill in real values as
-    they become available.
+  - `giant-tiers.json` — cumulative giant kill rewards for difficulty ×
+    tier(1–5) at 1x (base gacha tickets + stage drops, OCR'd from the
+    official wiki table; giant type is reward-irrelevant).
   - `costs.json` — stamina economy: fixed 5 stamina per run at 1x, regen
     rate, daily ad stamina, diamond purchase ladder (50/50/50/100/300/500
     then 1000 each, +25 stamina), default assumed purchases, Hell+ altar waits.
