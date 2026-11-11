@@ -136,12 +136,13 @@ export function computeRun(input: CalcInput): CalcResult {
   )
   const totalMinutes = minutesPerRun * (ticketRuns + giantAttempts)
 
-  // Optional: replace the total draw-ticket payout with the equivalent
-  // resources from the owner's measured gacha session (per-ticket rates
-  // = session rewards ÷ draws; the session's own ticket returns are NOT
-  // re-injected — they merely offset part of the measured spend).
+  // Per-ticket equivalents from the owner's measured gacha session
+  // (session rewards ÷ draws; the session's own ticket returns are NOT
+  // re-injected — they merely offset part of the measured spend). Always
+  // computed: the diamond ledger below needs it even when the totals
+  // display toggle is off.
   let ticketEquivalent: RewardSet | undefined
-  if (config.convertTicketsToGacha && gacha.draws > 0) {
+  if (gacha.draws > 0) {
     const tickets = totalRewards.tickets ?? 0
     ticketEquivalent = {}
     for (const [k, v] of Object.entries(gacha.rewards)) {
@@ -150,6 +151,8 @@ export function computeRun(input: CalcInput): CalcResult {
       const gained = per * tickets
       if (gained !== 0) ticketEquivalent[k as ResourceKey] = gained
     }
+  }
+  if (config.convertTicketsToGacha && ticketEquivalent) {
     const rest: RewardSet = { ...totalRewards }
     delete rest.tickets
     totalRewards = addRewards(rest, ticketEquivalent)
@@ -183,6 +186,17 @@ export function computeRun(input: CalcInput): CalcResult {
     diamondCostOfPurchases(costs.defaultDiamondPurchases + extraPurchases, costs) -
     diamondCostOfPurchases(costs.defaultDiamondPurchases, costs)
 
+  // Diamond ledger: the daily budget above silently assumes the default
+  // purchases are bought every day (50+50+50+100+300+500 = 1,050 diamonds).
+  // Compare that whole-plan spend (plus any extra purchases) against the
+  // draw-ticket-equivalent diamond income; a negative net means the
+  // stamina budget is optimistic — the plan cannot fund its own purchases.
+  const estimatedDays = Math.max(1, Math.ceil(totalMinutes / (24 * 60)))
+  const dailyPurchaseDiamonds = diamondCostOfPurchases(costs.defaultDiamondPurchases, costs)
+  const planPurchaseDiamonds = dailyPurchaseDiamonds * estimatedDays
+  const totalDiamondSpend = planPurchaseDiamonds + extraDiamonds
+  const diamondIncome = ticketEquivalent?.diamonds ?? 0
+  const diamondNet = diamondIncome - totalDiamondSpend
   return {
     ticketRuns,
     giantAttempts,
@@ -201,6 +215,12 @@ export function computeRun(input: CalcInput): CalcResult {
     extraStamina,
     extraPurchases,
     extraDiamonds,
+    estimatedDays,
+    dailyPurchaseDiamonds,
+    planPurchaseDiamonds,
+    totalDiamondSpend,
+    diamondIncome,
+    diamondNet,
   }
 }
 

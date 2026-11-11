@@ -153,4 +153,16 @@ export interface CalcResult {
   extraPurchases: number
   /** Diamonds those extra purchases cost. */
   extraDiamonds: number
+  /** Whole-plan calendar days at 24h/day (ceil of totalMinutes / 1440). */
+  estimatedDays: number
+  /** Hidden cost of the default purchases the budget assumes, per day. */
+  dailyPurchaseDiamonds: number
+  /** dailyPurchaseDiamonds × estimatedDays. */
+  planPurchaseDiamonds: number
+  /** planPurchaseDiamonds + extraDiamonds. */
+  totalDiamondSpend: number
+  /** Draw-ticket-equivalent diamonds (always computed from gacha rates). */
+  diamondIncome: number
+  /** diamondIncome − totalDiamondSpend; negative = budget is optimistic. */
+  diamondNet: number
 }

@@ -52,7 +52,13 @@
     "perHour": "시간당",
     "budgetFormula": "하루 예산 {{total}} = 자연 회복 {{regen}}(24시간×60분 ÷ {{regenMin}}분당 1) + 광고 {{ads}} + 다이아 구매 {{n}}회×{{each}}={{purchases}}",
     "calculationBasis": "계산 기준: 1전은 1배 기준 스태미너 {{stamina}} 고정(배율 비례); {{regenMin}}분마다 스태미너 1 회복; 광고로 매일 +{{ads}}; 다이아 구매 {{ladder}}(회당 +{{each}}); 웨이브는 하드 90, 지옥 이상 100.",
-    "gachaConverted": "총량의 추첨 티켓은 실측 세션({{draws}}회 → {{parts}})의 동등 자원으로 환산되었습니다. 횟수당 수치는 원본 티켓 그대로 표시."
+    "gachaConverted": "총량의 추첨 티켓은 실측 세션({{draws}}회 → {{parts}})의 동등 자원으로 환산되었습니다. 횟수당 수치는 원본 티켓 그대로 표시.",
+    "diamondLedger": "다이아 수지",
+    "diamondIncome": "다이아 수입(추첨 티켓 환산)",
+    "diamondSpend": "다이아 지출({{days}}일 × 기본 구매 + 추가 구매)",
+    "diamondNet": "다이아 순액",
+    "diamondLedgerWarn": "수입이 기본 구매 예산(매일 {{daily}} 다이아 × {{n}}회)을 감당하지 못합니다: 체력 예산이 낙관적입니다. 구매를 줄이거나 다이아 부족을 예상하세요.",
+    "diamondLedgerOk": "체력 예산에 포함된 기본 구매의 숨은 비용(매일 {{daily}} 다이아 × {{n}}회)을 감당할 수 있습니다."
   },
   "resource": {
     "exp": "경험치",

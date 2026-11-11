@@ -52,7 +52,13 @@
     "perHour": "1時間あたり",
     "budgetFormula": "1日予算 {{total}} ＝ 自然回復 {{regen}}（24時間×60分 ÷ {{regenMin}}分に1）＋ 広告 {{ads}} ＋ ダイヤ購入 {{n}}回×{{each}}＝{{purchases}}",
     "calculationBasis": "計算の前提：1戦は1倍時スタミナ{{stamina}}固定（倍率で線形増加）；{{regenMin}}分ごとにスタミナ1回復；広告で毎日+{{ads}}；ダイヤ購入 {{ladder}}（1回ごとに+{{each}}）；ウェイブ数はハード90、地獄以上100。",
-    "gachaConverted": "合計の抽選チケットは実測セッション（{{draws}} 回 → {{parts}}）の等価リソースに換算済み。1回あたりの数値はそのまま表示。"
+    "gachaConverted": "合計の抽選チケットは実測セッション（{{draws}} 回 → {{parts}}）の等価リソースに換算済み。1回あたりの数値はそのまま表示。",
+    "diamondLedger": "ダイヤ収支",
+    "diamondIncome": "ダイヤ収入（抽選チケット換算）",
+    "diamondSpend": "ダイヤ支出（{{days}} 日 × 既定の購入 + 追加購入）",
+    "diamondNet": "ダイヤ収支差額",
+    "diamondLedgerWarn": "収入が既定の購入予算（毎日 {{daily}} ダイヤ × {{n}} 回）を賄えません：スタミナ予算は楽観的です。購入を減らすかダイヤ不足を見込んでください。",
+    "diamondLedgerOk": "スタミナ予算に組み込まれた既定購入の隠れコスト（毎日 {{daily}} ダイヤ × {{n}} 回）を賄えます。"
   },
   "resource": {
     "exp": "経験値",
