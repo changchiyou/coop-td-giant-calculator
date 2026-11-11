@@ -4,7 +4,7 @@ import type { TFunction } from 'i18next'
 
 import { computeRun, formatMinutes, staminaBudgetParts, RESOURCE_KEYS } from '../core/engine'
 import type { CalcResult, RewardSet } from '../core/types'
-import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
+import { COSTS, GACHA_REF, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
 import { useRunStore } from '../store/useRunStore'
 
 const nf = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 })
@@ -46,7 +46,14 @@ export function ResultPanel() {
   const config = useRunStore((s) => s.config)
 
   const result: CalcResult = useMemo(
-    () => computeRun({ config, rewards: REWARD_ROWS, giantTiers: GIANT_TIER_ROWS, costs: COSTS }),
+    () =>
+      computeRun({
+        config,
+        rewards: REWARD_ROWS,
+        giantTiers: GIANT_TIER_ROWS,
+        costs: COSTS,
+        gacha: GACHA_REF,
+      }),
     [config],
   )
 
@@ -131,7 +138,20 @@ export function ResultPanel() {
       <div className="space-y-4">
         {block(t('results.perTicketRun'), result.perTicketRun)}
         {block(t('results.perGiantAttempt'), result.perGiantAttempt)}
-        {block(t('results.totalRewards'), result.totalRewards)}
+        <div>
+          {block(t('results.totalRewards'), result.totalRewards)}
+          {result.ticketEquivalent && (
+            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+              {t('results.gachaConverted', {
+                draws: GACHA_REF.draws,
+                parts: Object.entries(GACHA_REF.rewards)
+                  .filter(([k]) => k !== 'tickets')
+                  .map(([k, v]) => `${nf.format(v!)} ${t(`resource.${k}`)}`)
+                  .join(' / '),
+              })}
+            </p>
+          )}
+        </div>
         {block(t('results.perHour'), result.perHour)}
       </div>
     </section>

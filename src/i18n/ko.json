@@ -16,7 +16,8 @@
     "advanced": "고급 설정",
     "secPerWave": "웨이브당 초 (1배속)",
     "altarWaitSec": "제단 선택 대기 (초, 지옥 이상)",
-    "showExpSilver": "보상 표에 경험치와 은화 표시"
+    "showExpSilver": "보상 표에 경험치와 은화 표시",
+    "convertTicketsToGacha": "추첨 티켓 총량을 동등 자원으로 환산(실측 가챠 비율 기준)"
   },
   "mode": {
     "hard": "어려움",
@@ -50,7 +51,8 @@
     "totalRewards": "총 보상",
     "perHour": "시간당",
     "budgetFormula": "하루 예산 {{total}} = 자연 회복 {{regen}}(24시간×60분 ÷ {{regenMin}}분당 1) + 광고 {{ads}} + 다이아 구매 {{n}}회×{{each}}={{purchases}}",
-    "calculationBasis": "계산 기준: 1전은 1배 기준 스태미너 {{stamina}} 고정(배율 비례); {{regenMin}}분마다 스태미너 1 회복; 광고로 매일 +{{ads}}; 다이아 구매 {{ladder}}(회당 +{{each}}); 웨이브는 하드 90, 지옥 이상 100."
+    "calculationBasis": "계산 기준: 1전은 1배 기준 스태미너 {{stamina}} 고정(배율 비례); {{regenMin}}분마다 스태미너 1 회복; 광고로 매일 +{{ads}}; 다이아 구매 {{ladder}}(회당 +{{each}}); 웨이브는 하드 90, 지옥 이상 100.",
+    "gachaConverted": "총량의 추첨 티켓은 실측 세션({draws}회 → {parts})의 동등 자원으로 환산되었습니다. 횟수당 수치는 원본 티켓 그대로 표시."
   },
   "resource": {
     "exp": "경험치",
@@ -63,7 +65,12 @@
     "godStones": "마신석",
     "liberationStones": "해방석",
     "relics": "유물",
-    "giantMarks": "자이언트 각인"
+    "giantMarks": "자이언트 각인",
+    "diamonds": "다이아몬드",
+    "relicsGod": "신급 유물",
+    "relicsSuperGod": "초신급 유물",
+    "monsters": "일반 몬스터",
+    "rareMonsters": "희귀 몬스터"
   },
   "footer": {
     "disclaimer": "일반 클리어 보상은 meowdb.com 시드 데이터, 자이언트 격파 보상(기본 뽑기 티켓 + 각 스테이지 마신석/젤리/로얄 젤리 + 유물)은 공식 게임 공지 기준이며 범위 값은 중간값을 기댓값으로 사용했습니다. 게임 내 수치가 기준입니다."

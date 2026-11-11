@@ -67,6 +67,11 @@ export function InputPanel() {
         onChange={(v) => set('showExpSilver', v)}
         label={t('inputs.showExpSilver')}
       />
+      <Toggle
+        checked={config.convertTicketsToGacha}
+        onChange={(v) => set('convertTicketsToGacha', v)}
+        label={t('inputs.convertTicketsToGacha')}
+      />
       <div className="my-3 border-t border-slate-700" />
       <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
         {t('inputs.advanced')}

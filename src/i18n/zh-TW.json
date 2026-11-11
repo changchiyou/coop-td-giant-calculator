@@ -16,7 +16,8 @@
     "advanced": "進階設定",
     "secPerWave": "每波秒數（1 倍速）",
     "altarWaitSec": "祭壇挑選等待（秒，地獄以上）",
-    "showExpSilver": "在獎勵表中顯示經驗值與銀幣"
+    "showExpSilver": "在獎勵表中顯示經驗值與銀幣",
+    "convertTicketsToGacha": "將抽獎券總量換算為等價資源（以我的實測抽獎結果為基準）"
   },
   "mode": {
     "hard": "困難",
@@ -50,7 +51,8 @@
     "totalRewards": "總收益",
     "perHour": "平均每小時",
     "budgetFormula": "每日預算 {{total}} ＝ 自然回體 {{regen}}（24 小時 × 60 分 ÷ 每 {{regenMin}} 分鐘 1 點）＋ 廣告 {{ads}} ＋ 鑽石 {{n}} 次 × {{each}} ＝ {{purchases}}",
-    "calculationBasis": "計算依據：單場固定 {{stamina}} 點體力（1 倍，倍率線性加成）；每 {{regenMin}} 分鐘回 1 點；看廣告每日 +{{ads}}；鑽石買體 {{ladder}}（每次 +{{each}} 體力）；困難 90 波、地獄以上 100 波。"
+    "calculationBasis": "計算依據：單場固定 {{stamina}} 點體力（1 倍，倍率線性加成）；每 {{regenMin}} 分鐘回 1 點；看廣告每日 +{{ads}}；鑽石買體 {{ladder}}（每次 +{{each}} 體力）；困難 90 波、地獄以上 100 波。",
+    "gachaConverted": "總計中的抽獎券已依實測結果換算為等價資源（{draws} 抽 → {parts}）。每場數值仍顯示原始抽獎券。"
   },
   "resource": {
     "exp": "經驗值",
@@ -63,7 +65,12 @@
     "godStones": "魔神石",
     "liberationStones": "隨機解放石",
     "relics": "文物",
-    "giantMarks": "巨人印記"
+    "giantMarks": "巨人印記",
+    "diamonds": "鑽石",
+    "relicsGod": "魔神文物",
+    "relicsSuperGod": "超魔神文物",
+    "monsters": "一般魔物",
+    "rareMonsters": "稀有魔物"
   },
   "footer": {
     "disclaimer": "一般通關獎勵以 meowdb.com 種子資料為準；巨人擊殺獎勵（基本抽獎券＋各階段魔神石／果凍／皇家果凍＋文物）以官方提供遊戲公告為準，區間值取中值期望。請以遊戲內數值為準。"

@@ -18,6 +18,11 @@ export const rewardSetSchema = z
     /** Generic relics (文物): general~Super-God-exclusive drops. */
     relics: z.number().nonnegative().optional(),
     giantMarks: z.number().nonnegative().optional(),
+    diamonds: z.number().nonnegative().optional(),
+    relicsGod: z.number().nonnegative().optional(),
+    relicsSuperGod: z.number().nonnegative().optional(),
+    monsters: z.number().nonnegative().optional(),
+    rareMonsters: z.number().nonnegative().optional(),
   })
   .strict()
 
@@ -59,6 +64,10 @@ export const costDataSchema = z
     }),
   })
   .strict()
+
+export const gachaFileSchema = z.object({
+  gacha: z.object({ draws: z.number().int().positive(), rewards: rewardSetSchema }).strict(),
+})
 
 export const rewardsFileSchema = z.object({ rewards: z.array(rewardRowSchema) })
 export const giantTiersFileSchema = z.object({ giantTiers: z.array(giantTierRowSchema) })

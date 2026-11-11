@@ -16,7 +16,8 @@
     "advanced": "詳細設定",
     "secPerWave": "1ウェーブの秒数（1倍速）",
     "altarWaitSec": "祭壇選択の待ち時間（秒、地獄以上）",
-    "showExpSilver": "報酬表に経験値とシルバーを表示"
+    "showExpSilver": "報酬表に経験値とシルバーを表示",
+    "convertTicketsToGacha": "抽選チケットの合計を等価リソースに換算（実測ガチャレート基準）"
   },
   "mode": {
     "hard": "困難",
@@ -50,7 +51,8 @@
     "totalRewards": "総報酬",
     "perHour": "1時間あたり",
     "budgetFormula": "1日予算 {{total}} ＝ 自然回復 {{regen}}（24時間×60分 ÷ {{regenMin}}分に1）＋ 広告 {{ads}} ＋ ダイヤ購入 {{n}}回×{{each}}＝{{purchases}}",
-    "calculationBasis": "計算の前提：1戦は1倍時スタミナ{{stamina}}固定（倍率で線形増加）；{{regenMin}}分ごとにスタミナ1回復；広告で毎日+{{ads}}；ダイヤ購入 {{ladder}}（1回ごとに+{{each}}）；ウェイブ数はハード90、地獄以上100。"
+    "calculationBasis": "計算の前提：1戦は1倍時スタミナ{{stamina}}固定（倍率で線形増加）；{{regenMin}}分ごとにスタミナ1回復；広告で毎日+{{ads}}；ダイヤ購入 {{ladder}}（1回ごとに+{{each}}）；ウェイブ数はハード90、地獄以上100。",
+    "gachaConverted": "合計の抽選チケットは実測セッション（{draws} 回 → {parts}）の等価リソースに換算済み。1回あたりの数値はそのまま表示。"
   },
   "resource": {
     "exp": "経験値",
@@ -63,7 +65,12 @@
     "godStones": "魔神石",
     "liberationStones": "解放石",
     "relics": "遺物",
-    "giantMarks": "ジャイアントの刻印"
+    "giantMarks": "ジャイアントの刻印",
+    "diamonds": "ダイヤモンド",
+    "relicsGod": "ゴッドレリック",
+    "relicsSuperGod": "スーパーゴッドレリック",
+    "monsters": "一般モンスター",
+    "rareMonsters": "レアモンスター"
   },
   "footer": {
     "disclaimer": "通常クリア報酬は meowdb.com のシードデータ、ジャイアント撃破報酬（基本ガチャチケット＋各ステージの魔神石／ゼリー／ロイヤルゼリー＋遺物）は公式のゲーム告知に基づく。範囲値は中央値を期待値として使用。ゲーム内数値を正としてください。"

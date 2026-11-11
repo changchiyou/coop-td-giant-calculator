@@ -10,8 +10,8 @@ export type RunMultiplier = 1 | 3 | 5
  *  one giant attempt (runs per giant entry ticket are FIXED at 5 in
  *  costs.json, not an input). Every run INCLUDING the giant attempt itself
  *  adds one unit of ticket progress, keeping tickets break-even. Ticket
- *  "tickets" are gacha tickets (抽獎券), not giant entry tickets; giant
- *  fights hand out extra gacha tickets on top.
+ *  "tickets" are draw tickets (抽獎券), not giant entry tickets; giant
+ *  fights hand out extra draw tickets on top.
  *
  *  Waves per run is NOT an input: it is fixed per difficulty in
  *  costs.json (Hard 90, Hell and above 100). */
@@ -30,6 +30,9 @@ export interface RunConfig {
   /** Show EXP / silver rows in the reward tables (hidden by default —
    *  they dwarf every other number and skew the per-hour view). */
   showExpSilver: boolean
+  /** Convert the total draw-ticket payout into equivalent resources using
+   *  the owner's measured gacha session (data/gacha-reference.json). */
+  convertTicketsToGacha: boolean
   /** Giant Marks are NOT an input: each giant kill pays base 1 + the
    *  stage drop, both baked into giant-tiers.json `giantMarks` and
    *  scaled by the giant multiplier (3x/5x are linear per the table). */
@@ -51,6 +54,11 @@ export type ResourceKey =
   | 'liberationStones'
   | 'relics'
   | 'giantMarks'
+  | 'diamonds'
+  | 'relicsGod'
+  | 'relicsSuperGod'
+  | 'monsters'
+  | 'rareMonsters'
 
 export type RewardSet = Partial<Record<ResourceKey, number>>
 
@@ -96,11 +104,20 @@ export interface CostData {
   runsPerGiantTicket: number
 }
 
+/** Entry of data/gacha-reference.json — one measured draw-ticket (抽獎券)
+ *  gacha session: `draws` tickets spent, `rewards` yielded (the 55 tickets
+ *  in it are re-draws partially offsetting the spend). */
+export interface GachaReference {
+  draws: number
+  rewards: RewardSet
+}
+
 export interface CalcInput {
   config: RunConfig
   rewards: RewardRow[]
   giantTiers: GiantTierRow[]
   costs: CostData
+  gacha: GachaReference
 }
 
 export interface CalcResult {
@@ -116,6 +133,9 @@ export interface CalcResult {
   /** Giant rewards for one attempt at giantMultiplier (+ Giant Marks). */
   perGiantAttempt: RewardSet
   totalRewards: RewardSet
+  /** When convertTicketsToGacha: total draw tickets replaced by the
+   *  equivalent resources from the measured session; else undefined. */
+  ticketEquivalent?: RewardSet
   /** Reward per hour of real time. */
   perHour: RewardSet
   /** Giant tickets earned from ALL runs incl. giant attempts (ignores multipliers). */

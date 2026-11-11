@@ -10,7 +10,7 @@ import {
   staminaBudgetParts,
 } from './engine'
 import type { CalcInput, RunConfig } from './types'
-import { COSTS, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
+import { COSTS, GACHA_REF, GIANT_TIER_ROWS, REWARD_ROWS } from '../data'
 
 const DEFAULT: RunConfig = {
   boughtNoAdsSpeed2x: true,
@@ -20,6 +20,8 @@ const DEFAULT: RunConfig = {
   giantMultiplier: 3,
   cycles: 10,
   showExpSilver: false,
+  // Raw-reward tests opt out; the gacha conversion has its own tests.
+  convertTicketsToGacha: false,
   secPerWave: 12,
   altarWaitSec: 30,
 }
@@ -29,6 +31,7 @@ const input = (over: Partial<RunConfig> = {}): CalcInput => ({
   rewards: REWARD_ROWS,
   giantTiers: GIANT_TIER_ROWS,
   costs: COSTS,
+  gacha: GACHA_REF,
 })
 
 describe('runMinutes', () => {
@@ -101,6 +104,28 @@ describe('rewards', () => {
     expect(r.totalRewards.tickets).toBeCloseTo(170)
     // relics only from giants: 10 × (1 × 3) = 30
     expect(r.totalRewards.relics).toBeCloseTo(30)
+  })
+  it('gacha conversion replaces total draw tickets with equivalent resources', () => {
+    // Default plan totals 170 tickets. Owner session: 1389 draws →
+    // 314000 silver etc. Per-ticket rates × 170; session ticket returns
+    // (55/1389) are NOT re-injected.
+    const r = computeRun(input({ convertTicketsToGacha: true }))
+    expect(r.totalRewards.tickets).toBeUndefined()
+    const per = (n: number) => (n / GACHA_REF.draws) * 170
+    // silver also comes from clear rows: 40×5000 + 10×15000 = 350000
+    expect(r.totalRewards.silver).toBeCloseTo(per(314000) + 350000)
+    expect(r.totalRewards.diamonds).toBeCloseTo(per(28500))
+    expect(r.totalRewards.godStones).toBeCloseTo(per(1730))
+    expect(r.totalRewards.powder).toBeCloseTo(per(282) + 1400) // merged with clears
+    expect(r.totalRewards.relics).toBeCloseTo(per(50) + 30)
+    expect(r.totalRewards.relicsGod).toBeCloseTo(per(25))
+    expect(r.totalRewards.monsters).toBeCloseTo(per(1405))
+    expect(r.ticketEquivalent?.tickets).toBeUndefined()
+  })
+  it('gacha conversion leaves per-run rows untouched', () => {
+    const r = computeRun(input({ convertTicketsToGacha: true }))
+    expect(r.perGiantAttempt.tickets).toBeCloseTo(9)
+    expect(r.perTicketRun.tickets).toBeCloseTo(2)
   })
 })
 

@@ -1,0 +1,18 @@
+{
+  "_source": "Owner's own measured draw (抽獎券) gacha session, 2026-11: spending 1389 draw tickets returned the resources below (the 55 tickets include re-draws offsetting part of the spend; yields are the gross return of that session). Per-ticket equivalence = each amount / draws.",
+  "gacha": {
+    "draws": 1389,
+    "rewards": {
+      "silver": 314000,
+      "diamonds": 28500,
+      "godStones": 1730,
+      "tickets": 55,
+      "powder": 282,
+      "relics": 50,
+      "relicsGod": 25,
+      "relicsSuperGod": 20,
+      "monsters": 1405,
+      "rareMonsters": 1305
+    }
+  }
+}

@@ -22,6 +22,11 @@ export const RESOURCE_KEYS: ResourceKey[] = [
   'liberationStones',
   'relics',
   'giantMarks',
+  'diamonds',
+  'relicsGod',
+  'relicsSuperGod',
+  'monsters',
+  'rareMonsters',
 ]
 
 /** Find the clear-reward row for difficulty × multiplier. Falls back to the
@@ -97,7 +102,7 @@ export function diamondCostOfPurchases(n: number, costs: CostData): number {
 }
 
 export function computeRun(input: CalcInput): CalcResult {
-  const { config, rewards, giantTiers, costs } = input
+  const { config, rewards, giantTiers, costs, gacha } = input
 
   const minutesPerRun = runMinutes(input) / 60
   // Cycle plan: cycles × (4 ticket runs + 1 giant attempt). The giant
@@ -125,11 +130,30 @@ export function computeRun(input: CalcInput): CalcResult {
     ),
   )
 
-  const totalRewards = addRewards(
+  let totalRewards = addRewards(
     scaleRewards(perTicketRun, ticketRuns),
     scaleRewards(perGiantAttempt, giantAttempts),
   )
   const totalMinutes = minutesPerRun * (ticketRuns + giantAttempts)
+
+  // Optional: replace the total draw-ticket payout with the equivalent
+  // resources from the owner's measured gacha session (per-ticket rates
+  // = session rewards ÷ draws; the session's own ticket returns are NOT
+  // re-injected — they merely offset part of the measured spend).
+  let ticketEquivalent: RewardSet | undefined
+  if (config.convertTicketsToGacha && gacha.draws > 0) {
+    const tickets = totalRewards.tickets ?? 0
+    ticketEquivalent = {}
+    for (const [k, v] of Object.entries(gacha.rewards)) {
+      const per = (v as number) / gacha.draws
+      if (k === 'tickets') continue
+      const gained = per * tickets
+      if (gained !== 0) ticketEquivalent[k as ResourceKey] = gained
+    }
+    const rest: RewardSet = { ...totalRewards }
+    delete rest.tickets
+    totalRewards = addRewards(rest, ticketEquivalent)
+  }
 
   const perHour: RewardSet = {}
   if (totalMinutes > 0) {
@@ -167,6 +191,7 @@ export function computeRun(input: CalcInput): CalcResult {
     perTicketRun,
     perGiantAttempt,
     totalRewards,
+    ticketEquivalent,
     perHour,
     ticketsEarned,
     ticketsUsed,
