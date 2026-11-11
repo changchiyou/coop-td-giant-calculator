@@ -165,7 +165,7 @@ export function ResultPanel() {
         <div>
           {block(t('results.totalRewards'), result.totalRewards)}
           {config.convertTicketsToGacha && result.ticketEquivalent && (
-            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+            <p className="mt-1 text-[11px] leading-snug text-slate-500">
               {t('results.gachaConverted', {
                 draws: nf.format(GACHA_REF.draws),
                 parts: Object.entries(GACHA_REF.rewards)

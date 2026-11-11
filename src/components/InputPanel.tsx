@@ -45,7 +45,7 @@ export function InputPanel() {
       <FieldRow label={t('inputs.cycles')}>
         <NumberInput value={config.cycles} onChange={(v) => set('cycles', v)} min={0} max={500} />
       </FieldRow>
-      <p className="mb-2 text-xs text-slate-500">{t('inputs.cycleHint')}</p>
+      <p className="mb-2 text-[11px] leading-snug text-slate-500">{t('inputs.cycleHint')}</p>
 
       <FieldRow label={t('inputs.ticketMultiplier')}>
         <Segmented

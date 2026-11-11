@@ -10,7 +10,7 @@
     "difficulty": "Giant difficulty",
     "giantTier": "Giant tier you can farm",
     "cycles": "Cycles planned",
-    "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run; the giant run itself counts as one ticket-progress run, so entry tickets always break even.",
+    "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run.",
     "ticketMultiplier": "Stamina multiplier for ticket runs",
     "giantMultiplier": "Stamina multiplier for giant runs",
     "advanced": "Advanced",

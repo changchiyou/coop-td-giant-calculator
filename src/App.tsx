@@ -41,7 +41,7 @@ export default function App() {
           <ResultPanel />
         </main>
 
-        <footer className="mt-6 text-xs text-slate-500">{t('footer.disclaimer')}</footer>
+        <footer className="mt-6 text-[11px] leading-snug text-slate-500">{t('footer.disclaimer')}</footer>
       </div>
     </div>
   )
