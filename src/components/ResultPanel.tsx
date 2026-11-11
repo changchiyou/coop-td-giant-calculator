@@ -135,29 +135,28 @@ export function ResultPanel() {
         </p>
       </div>
 
-      <div className="mb-4 rounded-lg border border-slate-700 bg-slate-900/40 p-3">
-        <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          {t('results.diamondLedger')}
-        </h3>
-        <div className="space-y-1">
-          <Stat
-            label={t('results.diamondIncome')}
-            value={nf.format(Math.round(result.diamondIncome))}
-          />
-          <Stat
-            label={t('results.diamondSpend', { days: result.estimatedDays })}
-            value={nf.format(result.totalDiamondSpend)}
-          />
-          <Stat
-            label={t('results.diamondNet')}
-            value={nf.format(Math.round(result.diamondNet))}
-            warn={result.diamondNet < 0}
-          />
-        </div>
-        <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
-          {!config.convertTicketsToGacha
-            ? t('results.diamondLedgerNoConvert')
-            : result.diamondNet < 0
+      {config.convertTicketsToGacha && (
+        <div className="mb-4 rounded-lg border border-slate-700 bg-slate-900/40 p-3">
+          <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+            {t('results.diamondLedger')}
+          </h3>
+          <div className="space-y-1">
+            <Stat
+              label={t('results.diamondIncome')}
+              value={nf.format(Math.round(result.diamondIncome))}
+            />
+            <Stat
+              label={t('results.diamondSpend', { days: result.estimatedDays })}
+              value={nf.format(result.totalDiamondSpend)}
+            />
+            <Stat
+              label={t('results.diamondNet')}
+              value={nf.format(Math.round(result.diamondNet))}
+              warn={result.diamondNet < 0}
+            />
+          </div>
+          <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
+            {result.diamondNet < 0
               ? t('results.diamondLedgerWarn', {
                   daily: nf.format(result.dailyPurchaseDiamonds),
                   n: COSTS.defaultDiamondPurchases,
@@ -166,8 +165,9 @@ export function ResultPanel() {
                   daily: nf.format(result.dailyPurchaseDiamonds),
                   n: COSTS.defaultDiamondPurchases,
                 })}
-        </p>
-      </div>
+          </p>
+        </div>
+      )}
 
       <div className="space-y-4">
         {block(t('results.perTicketRun'), result.perTicketRun)}
