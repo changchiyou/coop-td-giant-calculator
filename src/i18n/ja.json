@@ -50,15 +50,15 @@
     "perGiantAttempt": "ジャイアント戦1回あたり",
     "totalRewards": "総報酬",
     "perHour": "1時間あたり",
-    "budgetFormula": "1日予算 {{total}} ＝ 自然回復 {{regen}}（24時間×60分 ÷ {{regenMin}}分に1）＋ 広告 {{ads}} ＋ ダイヤ購入 {{n}}回×{{each}}＝{{purchases}}",
-    "calculationBasis": "計算の前提：1戦は1倍時スタミナ{{stamina}}固定（倍率で線形増加）；{{regenMin}}分ごとにスタミナ1回復；広告で毎日+{{ads}}；ダイヤ購入 {{ladder}}（1回ごとに+{{each}}）；ウェイブ数はハード90、地獄以上100。",
     "gachaConverted": "合計の抽選チケットは実測セッション（{{draws}} 回 → {{parts}}）の等価リソースに換算済み。1回あたりの数値はそのまま表示。",
     "diamondLedger": "ダイヤ収支",
     "diamondIncome": "ダイヤ収入（抽選チケット換算）",
     "diamondSpend": "ダイヤ支出（{{days}} 日 × 既定の購入 + 追加購入）",
     "diamondNet": "ダイヤ収支差額",
-    "diamondLedgerWarn": "収入が予算に含まれる既定のスタミナ購入（毎日{{top}}ダイヤ枠まで購入：{{steps}} ＝ 毎日{{daily}}ダイヤ）を賄えません：スタミナ予算は楽観的です。購入回数を減らすかダイヤ不足を見込んでください。",
-    "diamondLedgerOk": "予算に含まれる既定のスタミナ購入の隠れコスト（毎日{{top}}ダイヤ枠まで購入：{{steps}} ＝ 毎日{{daily}}ダイヤ）を賄えます。"
+    "basisRun": "1戦あたり1倍時スタミナ{{stamina}}固定（倍率は線形増加）；ハード{{hard}}ウェイブ、地獄以上{{other}}ウェイブ",
+    "basisDaily": "1日あたり体力：{{regenMin}}分ごとに1回復＝{{regen}}、広告で+{{ads}}",
+    "basisBuys": "ダイヤ買い増し {{ladder}}、1回ごとに+{{each}}",
+    "basisBudget": "1日予算 {{total}} ＝ 自然回復 {{regen}} ＋ 広告 {{ads}} ＋ 購入 {{n}}回×{{each}}＝{{purchases}}"
   },
   "resource": {
     "exp": "経験値",

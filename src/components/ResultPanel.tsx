@@ -67,11 +67,6 @@ export function ResultPanel() {
   const staminaOver = result.extraStamina > 0
   const parts = staminaBudgetParts(COSTS)
   const ladder = [...COSTS.diamondPurchaseCosts, `${COSTS.diamondPurchaseRepeatCost}×N`].join('/')
-  // The default purchase budget buys up to this ladder step each day.
-  const defaultSteps = COSTS.diamondPurchaseCosts
-    .slice(0, COSTS.defaultDiamondPurchases)
-    .join('/')
-  const defaultTopStep = COSTS.diamondPurchaseCosts[COSTS.defaultDiamondPurchases - 1]
 
   return (
     <section className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
@@ -107,17 +102,6 @@ export function ResultPanel() {
         <div className="space-y-1">
           <Stat label={t('results.staminaNeeded')} value={nf.format(result.staminaNeeded)} />
           <Stat label={t('results.staminaBudget')} value={nf.format(result.staminaBudget)} />
-          <p className="pt-1 text-xs leading-relaxed text-slate-500">
-            {t('results.budgetFormula', {
-              regen: parts.regen,
-              regenMin: COSTS.staminaRegenMinutes,
-              ads: parts.ads,
-              purchases: parts.purchases,
-              n: COSTS.defaultDiamondPurchases,
-              each: COSTS.staminaPerPurchase,
-              total: parts.total,
-            })}
-          </p>
           {staminaOver && (
             <>
               <Stat label={t('results.extraStamina')} value={nf.format(result.extraStamina)} warn />
@@ -129,15 +113,27 @@ export function ResultPanel() {
             </>
           )}
         </div>
-        <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
-          {t('results.calculationBasis', {
-            stamina: COSTS.staminaPerRun,
-            regenMin: COSTS.staminaRegenMinutes,
-            ads: COSTS.adStaminaPerDay,
-            ladder,
-            each: COSTS.staminaPerPurchase,
-          })}
-        </p>
+        <ul className="mt-2 list-disc space-y-0.5 border-t border-slate-700/60 pt-2 pl-4 text-[11px] leading-snug text-slate-500">
+          <li>
+            {t('results.basisRun', {
+              stamina: COSTS.staminaPerRun,
+              hard: COSTS.wavesByDifficulty.hard,
+              other: COSTS.wavesByDifficulty.hell,
+            })}
+          </li>
+          <li>{t('results.basisDaily', { regenMin: COSTS.staminaRegenMinutes, regen: parts.regen, ads: parts.ads })}</li>
+          <li>{t('results.basisBuys', { ladder, each: COSTS.staminaPerPurchase })}</li>
+          <li>
+            {t('results.basisBudget', {
+              total: parts.total,
+              regen: parts.regen,
+              ads: parts.ads,
+              n: COSTS.defaultDiamondPurchases,
+              each: COSTS.staminaPerPurchase,
+              purchases: parts.purchases,
+            })}
+          </li>
+        </ul>
       </div>
 
       {config.convertTicketsToGacha && (
@@ -160,19 +156,6 @@ export function ResultPanel() {
               warn={result.diamondNet < 0}
             />
           </div>
-          <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
-            {result.diamondNet < 0
-              ? t('results.diamondLedgerWarn', {
-                  daily: nf.format(result.dailyPurchaseDiamonds),
-                  top: defaultTopStep,
-                  steps: defaultSteps,
-                })
-              : t('results.diamondLedgerOk', {
-                  daily: nf.format(result.dailyPurchaseDiamonds),
-                  top: defaultTopStep,
-                  steps: defaultSteps,
-                })}
-          </p>
         </div>
       )}
 
@@ -181,7 +164,7 @@ export function ResultPanel() {
         {block(t('results.perGiantAttempt'), result.perGiantAttempt)}
         <div>
           {block(t('results.totalRewards'), result.totalRewards)}
-          {result.ticketEquivalent && (
+          {config.convertTicketsToGacha && result.ticketEquivalent && (
             <p className="mt-1 text-xs leading-relaxed text-slate-500">
               {t('results.gachaConverted', {
                 draws: nf.format(GACHA_REF.draws),

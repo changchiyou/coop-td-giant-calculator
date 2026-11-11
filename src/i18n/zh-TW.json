@@ -50,15 +50,15 @@
     "perGiantAttempt": "平均每刷巨人場",
     "totalRewards": "總收益",
     "perHour": "平均每小時",
-    "budgetFormula": "每日預算 {{total}} ＝ 自然回體 {{regen}}（24 小時 × 60 分 ÷ 每 {{regenMin}} 分鐘 1 點）＋ 廣告 {{ads}} ＋ 鑽石 {{n}} 次 × {{each}} ＝ {{purchases}}",
-    "calculationBasis": "計算依據：單場固定 {{stamina}} 點體力（1 倍，倍率線性加成）；每 {{regenMin}} 分鐘回 1 點；看廣告每日 +{{ads}}；鑽石買體 {{ladder}}（每次 +{{each}} 體力）；困難 90 波、地獄以上 100 波。",
     "gachaConverted": "總計中的抽獎券已依實測結果換算為等價資源（{{draws}} 抽 → {{parts}}）。每場數值仍顯示原始抽獎券。",
     "diamondLedger": "鑽石帳務",
     "diamondIncome": "鑽石收入（抽獎券等價換算）",
     "diamondSpend": "鑽石支出（{{days}} 天 × 預設加購 + 額外加購）",
     "diamondNet": "鑽石淨額",
-    "diamondLedgerWarn": "收入不足以支應體力預算內含的預設加購（每天買到 {{top}} 鑽那檔：{{steps}} ＝ 每天 {{daily}} 鑽）：體力預算偏樂觀，請減少加購或預期鑽石缺口。",
-    "diamondLedgerOk": "足以支應體力預算內含的預設加購隱性成本（每天買到 {{top}} 鑽那檔：{{steps}} ＝ 每天 {{daily}} 鑽）。"
+    "basisRun": "單場固定 {{stamina}} 點體力（1 倍，倍率線性加成）；困難 {{hard}} 波、地獄以上 {{other}} 波",
+    "basisDaily": "每日體力：每 {{regenMin}} 分鐘回 1 點＝ {{regen}}，看廣告每日 +{{ads}}",
+    "basisBuys": "鑽石買體 {{ladder}}，每次 +{{each}} 體力",
+    "basisBudget": "每日預算 {{total}} ＝ 自然回體 {{regen}} ＋ 廣告 {{ads}} ＋ 加購 {{n}} 次 × {{each}} ＝ {{purchases}}"
   },
   "resource": {
     "exp": "經驗值",
