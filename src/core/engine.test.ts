@@ -129,20 +129,26 @@ describe('rewards', () => {
   })
   it('diamond ledger nets ticket-equivalent income vs purchase spend', () => {
     // Default plan: 9h35m → 1 estimated day; daily default purchases
-    // cost 50+50+50+100+300+500 = 1050; no extra purchases.
-    const r = computeRun(input())
+    // cost 50+50+50+100+300+500 = 1050; no extra purchases. Income only
+    // exists while convertTicketsToGacha is on (same option that swaps
+    // the totals rows).
+    const r = computeRun(input({ convertTicketsToGacha: true }))
     expect(r.estimatedDays).toBe(1)
     expect(r.dailyPurchaseDiamonds).toBe(1050)
     expect(r.totalDiamondSpend).toBe(1050)
-    // Income is computed from gacha rates even with the display toggle off.
     expect(r.diamondIncome).toBeCloseTo((28500 / GACHA_REF.draws) * 170)
     expect(r.diamondNet).toBeCloseTo(r.diamondIncome - 1050)
     expect(r.diamondNet).toBeGreaterThan(0)
   })
+  it('diamond ledger has no income with conversion off', () => {
+    const r = computeRun(input())
+    expect(r.diamondIncome).toBe(0)
+    expect(r.diamondNet).toBe(-1050)
+  })
   it('diamond ledger warns when spend outgrows income', () => {
     // 200 cycles → 1000 runs × 11.5m ≈ 192h → 8 days of purchase spend
     // (8×1050) plus extra purchases, far above ticket-equivalent income.
-    const r = computeRun(input({ cycles: 200 }))
+    const r = computeRun(input({ cycles: 200, convertTicketsToGacha: true }))
     expect(r.totalDiamondSpend).toBeGreaterThan(r.diamondIncome)
     expect(r.diamondNet).toBeLessThan(0)
   })

@@ -138,9 +138,10 @@ export function computeRun(input: CalcInput): CalcResult {
 
   // Per-ticket equivalents from the owner's measured gacha session
   // (session rewards ÷ draws; the session's own ticket returns are NOT
-  // re-injected — they merely offset part of the measured spend). Always
-  // computed: the diamond ledger below needs it even when the totals
-  // display toggle is off.
+  // re-injected — they merely offset part of the measured spend). Used
+  // for the totals display AND the diamond ledger income — both only
+  // when convertTicketsToGacha is on: with conversion off the plan has
+  // no diamond income from draw tickets.
   let ticketEquivalent: RewardSet | undefined
   if (gacha.draws > 0) {
     const tickets = totalRewards.tickets ?? 0
@@ -195,7 +196,7 @@ export function computeRun(input: CalcInput): CalcResult {
   const dailyPurchaseDiamonds = diamondCostOfPurchases(costs.defaultDiamondPurchases, costs)
   const planPurchaseDiamonds = dailyPurchaseDiamonds * estimatedDays
   const totalDiamondSpend = planPurchaseDiamonds + extraDiamonds
-  const diamondIncome = ticketEquivalent?.diamonds ?? 0
+  const diamondIncome = config.convertTicketsToGacha ? (ticketEquivalent?.diamonds ?? 0) : 0
   const diamondNet = diamondIncome - totalDiamondSpend
   return {
     ticketRuns,

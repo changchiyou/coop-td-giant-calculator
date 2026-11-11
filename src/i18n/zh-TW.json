@@ -58,7 +58,8 @@
     "diamondSpend": "鑽石支出（{{days}} 天 × 預設加購 + 額外加購）",
     "diamondNet": "鑽石淨額",
     "diamondLedgerWarn": "收入不足以支應預設加購預算（每天 {{daily}} 鑽買 {{n}} 次）：體力預算偏樂觀，請減少加購或預期鑽石缺口。",
-    "diamondLedgerOk": "足以支應體力預算內含的預設加購隱性成本（每天 {{daily}} 鑽買 {{n}} 次）。"
+    "diamondLedgerOk": "足以支應體力預算內含的預設加購隱性成本（每天 {{daily}} 鑽買 {{n}} 次）。",
+    "diamondLedgerNoConvert": "換算未開啟：此處不把抽獎券折算為鑽石收入（收入為 0）。開啟「將抽獎券總量換算為等價資源」後才會計入。"
   },
   "resource": {
     "exp": "經驗值",

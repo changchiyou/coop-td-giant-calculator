@@ -58,7 +58,8 @@
     "diamondSpend": "Diamond spend ({{days}} days × default purchases + extra)",
     "diamondNet": "Diamond net",
     "diamondLedgerWarn": "Income cannot fund the default purchase budget ({{daily}} diamonds/day for {{n}} purchases): the stamina budget is optimistic. Reduce purchases or expect a diamond deficit.",
-    "diamondLedgerOk": "Covers the hidden cost of the default purchase budget ({{daily}} diamonds/day for {{n}} purchases) baked into the stamina budget."
+    "diamondLedgerOk": "Covers the hidden cost of the default purchase budget ({{daily}} diamonds/day for {{n}} purchases) baked into the stamina budget.",
+    "diamondLedgerNoConvert": "Conversion is off: draw tickets are not valued as diamonds, so income is 0 here. Turn on \"convert draw tickets\" to include them."
   },
   "resource": {
     "exp": "EXP",

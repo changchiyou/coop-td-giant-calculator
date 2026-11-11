@@ -155,15 +155,17 @@ export function ResultPanel() {
           />
         </div>
         <p className="mt-2 border-t border-slate-700/60 pt-2 text-xs leading-relaxed text-slate-500">
-          {result.diamondNet < 0
-            ? t('results.diamondLedgerWarn', {
-                daily: nf.format(result.dailyPurchaseDiamonds),
-                n: COSTS.defaultDiamondPurchases,
-              })
-            : t('results.diamondLedgerOk', {
-                daily: nf.format(result.dailyPurchaseDiamonds),
-                n: COSTS.defaultDiamondPurchases,
-              })}
+          {!config.convertTicketsToGacha
+            ? t('results.diamondLedgerNoConvert')
+            : result.diamondNet < 0
+              ? t('results.diamondLedgerWarn', {
+                  daily: nf.format(result.dailyPurchaseDiamonds),
+                  n: COSTS.defaultDiamondPurchases,
+                })
+              : t('results.diamondLedgerOk', {
+                  daily: nf.format(result.dailyPurchaseDiamonds),
+                  n: COSTS.defaultDiamondPurchases,
+                })}
         </p>
       </div>
 
