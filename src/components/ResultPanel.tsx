@@ -66,7 +66,12 @@ export function ResultPanel() {
 
   const staminaOver = result.extraStamina > 0
   const parts = staminaBudgetParts(COSTS)
-  const ladder = [...COSTS.diamondPurchaseCosts, `…${COSTS.diamondPurchaseRepeatCost}`].join('/')
+  const ladder = [...COSTS.diamondPurchaseCosts, `${COSTS.diamondPurchaseRepeatCost}×N`].join('/')
+  // The default purchase budget buys up to this ladder step each day.
+  const defaultSteps = COSTS.diamondPurchaseCosts
+    .slice(0, COSTS.defaultDiamondPurchases)
+    .join('/')
+  const defaultTopStep = COSTS.diamondPurchaseCosts[COSTS.defaultDiamondPurchases - 1]
 
   return (
     <section className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
@@ -159,11 +164,13 @@ export function ResultPanel() {
             {result.diamondNet < 0
               ? t('results.diamondLedgerWarn', {
                   daily: nf.format(result.dailyPurchaseDiamonds),
-                  n: COSTS.defaultDiamondPurchases,
+                  top: defaultTopStep,
+                  steps: defaultSteps,
                 })
               : t('results.diamondLedgerOk', {
                   daily: nf.format(result.dailyPurchaseDiamonds),
-                  n: COSTS.defaultDiamondPurchases,
+                  top: defaultTopStep,
+                  steps: defaultSteps,
                 })}
           </p>
         </div>
