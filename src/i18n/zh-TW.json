@@ -52,7 +52,7 @@
     "perHour": "平均每小時",
     "budgetFormula": "每日預算 {{total}} ＝ 自然回體 {{regen}}（24 小時 × 60 分 ÷ 每 {{regenMin}} 分鐘 1 點）＋ 廣告 {{ads}} ＋ 鑽石 {{n}} 次 × {{each}} ＝ {{purchases}}",
     "calculationBasis": "計算依據：單場固定 {{stamina}} 點體力（1 倍，倍率線性加成）；每 {{regenMin}} 分鐘回 1 點；看廣告每日 +{{ads}}；鑽石買體 {{ladder}}（每次 +{{each}} 體力）；困難 90 波、地獄以上 100 波。",
-    "gachaConverted": "總計中的抽獎券已依實測結果換算為等價資源（{draws} 抽 → {parts}）。每場數值仍顯示原始抽獎券。"
+    "gachaConverted": "總計中的抽獎券已依實測結果換算為等價資源（{{draws}} 抽 → {{parts}}）。每場數值仍顯示原始抽獎券。"
   },
   "resource": {
     "exp": "經驗值",

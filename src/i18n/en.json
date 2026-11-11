@@ -52,7 +52,7 @@
     "perHour": "Per hour",
     "budgetFormula": "Daily budget {{total}} = regen {{regen}} (24h × 60min ÷ 1 per {{regenMin}} min) + ads {{ads}} + diamond buys {{n}} × {{each}} = {{purchases}}",
     "calculationBasis": "Calculation basis: every run costs a fixed {{stamina}} stamina at 1x (multipliers scale it); 1 stamina regenerates every {{regenMin}} min; ads give +{{ads}}/day; diamond purchases {{ladder}} (+{{each}} stamina each); runs are 90 waves on Hard, 100 on Hell+.",
-    "gachaConverted": "Draw tickets in totals are converted to equivalent resources from an owner-measured session ({draws} draws → {parts}). Per-run rows still show raw tickets."
+    "gachaConverted": "Draw tickets in totals are converted to equivalent resources from an owner-measured session ({{draws}} draws → {{parts}}). Per-run rows still show raw tickets."
   },
   "resource": {
     "exp": "EXP",

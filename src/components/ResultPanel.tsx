@@ -143,7 +143,7 @@ export function ResultPanel() {
           {result.ticketEquivalent && (
             <p className="mt-1 text-xs leading-relaxed text-slate-500">
               {t('results.gachaConverted', {
-                draws: GACHA_REF.draws,
+                draws: nf.format(GACHA_REF.draws),
                 parts: Object.entries(GACHA_REF.rewards)
                   .filter(([k]) => k !== 'tickets')
                   .map(([k, v]) => `${nf.format(v!)} ${t(`resource.${k}`)}`)
