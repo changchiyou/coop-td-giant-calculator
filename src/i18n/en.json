@@ -10,7 +10,7 @@
     "difficulty": "Giant difficulty",
     "giantTier": "Giant tier you can farm",
     "cycles": "Cycles planned",
-    "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run.",
+    "cycleHint": "One cycle = (runs per entry ticket − 1) ticket runs + 1 giant run",
     "ticketMultiplier": "Stamina multiplier for ticket runs",
     "giantMultiplier": "Stamina multiplier for giant runs",
     "advanced": "Advanced",
@@ -79,6 +79,6 @@
     "rareMonsters": "Rare Monsters"
   },
   "footer": {
-    "disclaimer": "Clear rewards seeded from meowdb.com; giant kill rewards (base draw tickets + per-stage God Stones / Jelly / Royal Jelly + relics) from the official game announcement, range values taken as midpoints. In-game values are authoritative."
+    "disclaimer": "Clear rewards seeded from meowdb.com; giant kill rewards (base draw tickets + per-stage God Stones / Jelly / Royal Jelly + relics) from the official game announcement, range values taken as midpoints."
   }
 }
