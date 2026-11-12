@@ -13,16 +13,18 @@ export function InputPanel() {
   const set = useRunStore((s) => s.set)
 
   return (
-    <section className="self-start border-t-2 border-stamina bg-sheet p-5 shadow-sheet lg:sticky lg:top-6">
-      <h2 className="mb-3 font-display text-lg font-semibold text-ink">{t('inputs.section')}</h2>
+    <section className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
+      <div className="mb-2 flex items-center justify-between">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+          {t('inputs.section')}
+        </h2>
+      </div>
 
       <Toggle
         checked={config.boughtNoAdsSpeed2x}
         onChange={(v) => set('boughtNoAdsSpeed2x', v)}
         label={t('inputs.boughtNoAdsSpeed2x')}
       />
-
-      <div className="my-1 border-t border-dashed border-rule" />
 
       <FieldRow label={t('inputs.difficulty')}>
         <Segmented
@@ -43,7 +45,7 @@ export function InputPanel() {
       <FieldRow label={t('inputs.cycles')}>
         <NumberInput value={config.cycles} onChange={(v) => set('cycles', v)} min={0} max={500} />
       </FieldRow>
-      <p className="-mt-1 mb-1 text-[11px] leading-snug text-ink-muted">{t('inputs.cycleHint')}</p>
+      <p className="mb-2 text-[11px] leading-snug text-slate-500">{t('inputs.cycleHint')}</p>
 
       <FieldRow label={t('inputs.ticketMultiplier')}>
         <Segmented
@@ -60,8 +62,6 @@ export function InputPanel() {
         />
       </FieldRow>
 
-      <div className="my-1 border-t border-dashed border-rule" />
-
       <Toggle
         checked={config.showExpSilver}
         onChange={(v) => set('showExpSilver', v)}
@@ -72,28 +72,26 @@ export function InputPanel() {
         onChange={(v) => set('convertTicketsToGacha', v)}
         label={t('inputs.convertTicketsToGacha')}
       />
-
-      <div className="mt-3">
-        <h3 className="mb-1 border-b border-rule-soft pb-1 font-display text-[15px] font-medium text-ink">
-          {t('inputs.advanced')}
-        </h3>
-        <FieldRow label={t('inputs.secPerWave')}>
-          <NumberInput
-            value={config.secPerWave}
-            onChange={(v) => set('secPerWave', v)}
-            min={1}
-            max={120}
-          />
-        </FieldRow>
-        <FieldRow label={t('inputs.altarWaitSec')}>
-          <NumberInput
-            value={config.altarWaitSec}
-            onChange={(v) => set('altarWaitSec', v)}
-            min={0}
-            max={300}
-          />
-        </FieldRow>
-      </div>
+      <div className="my-3 border-t border-slate-700" />
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {t('inputs.advanced')}
+      </h3>
+      <FieldRow label={t('inputs.secPerWave')}>
+        <NumberInput
+          value={config.secPerWave}
+          onChange={(v) => set('secPerWave', v)}
+          min={1}
+          max={120}
+        />
+      </FieldRow>
+      <FieldRow label={t('inputs.altarWaitSec')}>
+        <NumberInput
+          value={config.altarWaitSec}
+          onChange={(v) => set('altarWaitSec', v)}
+          min={0}
+          max={300}
+        />
+      </FieldRow>
     </section>
   )
 }

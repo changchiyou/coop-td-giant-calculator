@@ -12,7 +12,7 @@ function LanguageSwitcher() {
       value={current}
       onChange={(e) => void i18n.changeLanguage(e.target.value)}
       aria-label="Language"
-      className="rounded-[4px] border border-rule bg-sheet px-2 py-1 text-sm text-ink-soft focus:border-gem focus:outline-none"
+      className="rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-sm text-slate-200 focus:border-sky-400 focus:outline-none"
     >
       {LANGUAGES.map((l) => (
         <option key={l.code} value={l.code}>
@@ -26,26 +26,22 @@ function LanguageSwitcher() {
 export default function App() {
   const { t } = useTranslation()
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        <header className="mb-8 flex flex-wrap items-end justify-between gap-3 border-b border-rule pb-4">
+    <div className="min-h-screen bg-slate-900 text-slate-100">
+      <div className="mx-auto max-w-5xl px-4 py-8">
+        <header className="mb-6 flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h1 className="font-display text-3xl font-semibold leading-tight text-ink">
-              {t('app.title')}
-            </h1>
-            <p className="mt-1.5 text-sm text-ink-muted">{t('app.subtitle')}</p>
+            <h1 className="text-2xl font-bold">{t('app.title')}</h1>
+            <p className="mt-1 text-sm text-slate-400">{t('app.subtitle')}</p>
           </div>
           <LanguageSwitcher />
         </header>
 
-        <main className="grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        <main className="grid gap-4 lg:grid-cols-2">
           <InputPanel />
           <ResultPanel />
         </main>
 
-        <footer className="mt-8 border-t border-rule pt-3 text-[11px] leading-snug text-ink-muted">
-          {t('footer.disclaimer')}
-        </footer>
+        <footer className="mt-6 text-[11px] leading-snug text-slate-500">{t('footer.disclaimer')}</footer>
       </div>
     </div>
   )

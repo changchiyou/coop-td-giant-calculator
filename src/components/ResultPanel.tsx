@@ -9,23 +9,17 @@ import { useRunStore } from '../store/useRunStore'
 
 const nf = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 })
 
-/** Dotted ledger rule filling the gap between a label and its amount. */
-function Leader() {
-  return <span aria-hidden className="ledger-leader mx-2 h-3 min-w-4 flex-1" />
-}
-
 function RewardGrid({ rewards, t, hideExpSilver }: { rewards: RewardSet; t: TFunction; hideExpSilver: boolean }) {
   const keys = RESOURCE_KEYS.filter(
     (k) => (rewards[k] ?? 0) !== 0 && !(hideExpSilver && (k === 'exp' || k === 'silver')),
   )
-  if (keys.length === 0) return <span className="text-sm text-ink-muted">—</span>
+  if (keys.length === 0) return <span className="text-sm text-slate-500">—</span>
   return (
-    <dl className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+    <dl className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3">
       {keys.map((k) => (
-        <div key={k} className="flex items-end py-0.5">
-          <dt className="text-xs text-ink-soft">{t(`resource.${k}`)}</dt>
-          <Leader />
-          <dd className="font-mono text-[13px] tabular-nums text-ink">
+        <div key={k} className="flex items-baseline justify-between gap-2">
+          <dt className="text-xs text-slate-400">{t(`resource.${k}`)}</dt>
+          <dd className="text-sm font-semibold tabular-nums text-slate-100">
             {nf.format(rewards[k]!)}
           </dd>
         </div>
@@ -36,11 +30,10 @@ function RewardGrid({ rewards, t, hideExpSilver }: { rewards: RewardSet; t: TFun
 
 function Stat({ label, value, warn }: { label: string; value: string; warn?: boolean }) {
   return (
-    <div className="flex items-end py-0.5">
-      <span className="text-xs text-ink-soft">{label}</span>
-      <Leader />
+    <div className="flex items-baseline justify-between gap-3">
+      <span className="text-xs text-slate-400">{label}</span>
       <span
-        className={`font-mono text-[13px] tabular-nums ${warn ? 'font-medium text-alert' : 'text-ink'}`}
+        className={`text-sm font-semibold tabular-nums ${warn ? 'text-amber-400' : 'text-emerald-300'}`}
       >
         {value}
       </span>
@@ -66,9 +59,7 @@ export function ResultPanel() {
 
   const block = (title: string, rewards: RewardSet) => (
     <div>
-      <h3 className="mb-1 border-b border-rule-soft pb-1 font-display text-[15px] font-medium text-ink">
-        {title}
-      </h3>
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{title}</h3>
       <RewardGrid rewards={rewards} t={t} hideExpSilver={!config.showExpSilver} />
     </div>
   )
@@ -78,10 +69,12 @@ export function ResultPanel() {
   const ladder = [...COSTS.diamondPurchaseCosts, `${COSTS.diamondPurchaseRepeatCost}×N`].join('/')
 
   return (
-    <section className="border-t-2 border-ink bg-sheet p-5 shadow-sheet">
-      <h2 className="mb-4 font-display text-lg font-semibold text-ink">{t('results.section')}</h2>
+    <section className="rounded-xl border border-slate-700 bg-slate-800/60 p-4">
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">
+        {t('results.section')}
+      </h2>
 
-      <div className="mb-5 space-y-0.5">
+      <div className="mb-4 space-y-1">
         <Stat
           label={t('results.plan')}
           value={t('results.planValue', {
@@ -102,11 +95,11 @@ export function ResultPanel() {
         />
       </div>
 
-      <div className="mb-5">
-        <h3 className="mb-1 border-b border-rule-soft pb-1 font-display text-[15px] font-medium text-ink">
+      <div className="mb-4 rounded-lg border border-slate-700 bg-slate-900/40 p-3">
+        <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
           {t('results.stamina')}
         </h3>
-        <div className="space-y-0.5">
+        <div className="space-y-1">
           <Stat label={t('results.staminaNeeded')} value={nf.format(result.staminaNeeded)} />
           <Stat label={t('results.staminaBudget')} value={nf.format(result.staminaBudget)} />
           {staminaOver && (
@@ -120,7 +113,7 @@ export function ResultPanel() {
             </>
           )}
         </div>
-        <ul className="mt-2 list-disc space-y-0.5 pl-4 text-[11px] leading-snug text-ink-muted">
+        <ul className="mt-2 list-disc space-y-0.5 border-t border-slate-700/60 pt-2 pl-4 text-[11px] leading-snug text-slate-500">
           <li>
             {t('results.basisRun', {
               stamina: COSTS.staminaPerRun,
@@ -144,11 +137,11 @@ export function ResultPanel() {
       </div>
 
       {config.convertTicketsToGacha && (
-        <div className="mb-5">
-          <h3 className="mb-1 border-b border-rule-soft pb-1 font-display text-[15px] font-medium text-ink">
+        <div className="mb-4 rounded-lg border border-slate-700 bg-slate-900/40 p-3">
+          <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
             {t('results.diamondLedger')}
           </h3>
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             <Stat
               label={t('results.diamondIncome')}
               value={nf.format(Math.round(result.diamondIncome))}
@@ -166,13 +159,13 @@ export function ResultPanel() {
         </div>
       )}
 
-      <div className="space-y-5">
+      <div className="space-y-4">
         {block(t('results.perTicketRun'), result.perTicketRun)}
         {block(t('results.perGiantAttempt'), result.perGiantAttempt)}
         <div>
           {block(t('results.totalRewards'), result.totalRewards)}
           {config.convertTicketsToGacha && result.ticketEquivalent && (
-            <p className="mt-1.5 border-l-2 border-gem pl-2 text-[11px] leading-snug text-ink-muted">
+            <p className="mt-1 text-[11px] leading-snug text-slate-500">
               {t('results.gachaConverted', {
                 draws: nf.format(GACHA_REF.draws),
                 parts: Object.entries(GACHA_REF.rewards)
